@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="git设置代理 开vpn之后，当你还在为能正常打开Github、Youtobe而窃喜时，不知道你是否也遇到过这种情况：\n但当你使用git工具将本地代码文件上传Github时，却总是出现Failed to connect to github.com port 443: Timed out或者OpenSSL SSL_read: Connection was reset, errno 10054等git push失败的情况，让人火大。 或者发现git clone命令速度特别慢，有时还经常卡掉，这很让人着急。 总之，就四个字：失败、火大！于是搜各种教程，经过各种折腾，终于找到解决方案，归根结底还是因为代理设置的不正确！！！本文记录一下解决的方案。\n">
+<title>代理 &amp; 联网问题</title>
+
+<link rel='canonical' href='https://xxcjw.github.io/p/%E4%BB%A3%E7%90%86-%E8%81%94%E7%BD%91%E9%97%AE%E9%A2%98/'>
+
+<link rel="stylesheet" href="/scss/style.min.ecadfb139628a394c81c08548f4d8f20e087bb8f183b587b1b4a7d2cdd03c920.css"><meta property='og:title' content="代理 & 联网问题">
+<meta property='og:description' content="git设置代理 开vpn之后，当你还在为能正常打开Github、Youtobe而窃喜时，不知道你是否也遇到过这种情况：\n但当你使用git工具将本地代码文件上传Github时，却总是出现Failed to connect to github.com port 443: Timed out或者OpenSSL SSL_read: Connection was reset, errno 10054等git push失败的情况，让人火大。 或者发现git clone命令速度特别慢，有时还经常卡掉，这很让人着急。 总之，就四个字：失败、火大！于是搜各种教程，经过各种折腾，终于找到解决方案，归根结底还是因为代理设置的不正确！！！本文记录一下解决的方案。\n">
+<meta property='og:url' content='https://xxcjw.github.io/p/%E4%BB%A3%E7%90%86-%E8%81%94%E7%BD%91%E9%97%AE%E9%A2%98/'>
+<meta property='og:site_name' content='xxcjw&#39;s blog!'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-04-10T20:18:22&#43;08:00'/><meta property='article:modified_time' content='2025-04-10T22:00:43&#43;08:00'/>
+<meta name="twitter:title" content="代理 & 联网问题">
+<meta name="twitter:description" content="git设置代理 开vpn之后，当你还在为能正常打开Github、Youtobe而窃喜时，不知道你是否也遇到过这种情况：\n但当你使用git工具将本地代码文件上传Github时，却总是出现Failed to connect to github.com port 443: Timed out或者OpenSSL SSL_read: Connection was reset, errno 10054等git push失败的情况，让人火大。 或者发现git clone命令速度特别慢，有时还经常卡掉，这很让人着急。 总之，就四个字：失败、火大！于是搜各种教程，经过各种折腾，终于找到解决方案，归根结底还是因为代理设置的不正确！！！本文记录一下解决的方案。\n">
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended">
+
+        <div id="article-toolbar" style="position: sticky;top: 5px;z-index: 1000;">
+            <a href="/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>返回</span>
+            </a>
+        </div>
+    
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#git设置代理">git设置代理</a>
+      <ol>
+        <li><a href="#问题描述">问题描述</a></li>
+        <li><a href="#解决方法">解决方法</a></li>
+        <li><a href="#原理介绍">原理介绍</a></li>
+      </ol>
+    </li>
+    <li><a href="#使用vpn后无法正常上网">使用vpn后无法正常上网</a>
+      <ol>
+        <li><a href="#解决方法-1">解决方法</a></li>
+        <li><a href="#原因分析">原因分析</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/%E4%BB%A3%E7%90%86-%E8%81%94%E7%BD%91%E9%97%AE%E9%A2%98/">代理 &amp; 联网问题</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2025-04-10</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" stroke-width="2"> <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4"></path> <path d="M13.5 6.5l4 4"></path> <path d="M16 19h6"></path> </svg> 
+                <time class="article-words">
+                    1841 字
+                </time>
+            </div>
+        
+
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 4 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+
+
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/" style="background-color: #2a9d8f; color: #fff;">
+                工具使用
+            </a>
+        
+        </header>
+    
+
+</div>
+
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="git设置代理">git设置代理
+</h2><p>开vpn之后，当你还在为能正常打开Github、Youtobe而窃喜时，不知道你是否也遇到过这种情况：</p>
+<ul>
+<li>但当你使用git工具将本地代码文件上传Github时，却总是出现<code>Failed to connect to github.com port 443: Timed out</code>或者<code>OpenSSL SSL_read: Connection was reset, errno 10054</code>等<code>git push失败</code>的情况，让人火大。</li>
+<li>或者发现<code>git clone</code>命令速度特别慢，有时还经常卡掉，这很让人着急。</li>
+</ul>
+<p>总之，就四个字：<strong>失败</strong>、<strong>火大</strong>！于是搜各种教程，经过各种折腾，终于找到解决方案，归根结底还是因为<strong>代理设置的不正确</strong>！！！本文记录一下解决的方案。</p>
+<h3 id="问题描述">问题描述
+</h3><p>简单来说，就是所使用的vpn正常，但是上传或下载Github文件时就很慢很卡，甚至连接不上出现报错情况。如果遇到这种情况，可以使用下面的方法解决。</p>
+<blockquote>
+<p>如果检查自己的vpn是否正常呢？有两种简单办法</p>
+<ul>
+<li>最简单的当然就是打开一个国外网站，比如<a class="link" href="https://www.youtube.com/"  target="_blank" rel="noopener"
+    >YouTube</a>等，如果能打开，证明梯子没问题；</li>
+<li>另一种，就是<code>win+r</code>打开命令行，输入<code>ping github.com</code>看看能不能连上要使用的Github；</li>
+</ul></blockquote>
+<h3 id="解决方法">解决方法
+</h3><p>遇到上述问题，就是代理设置不正确。可以通过以下命令查看和设置理。</p>
+<p>1、代理查询</p>
+<p>查看自己是否以前设置过代理，在CMD中输入以下命令进行查询</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">git config --global http.proxy
+</span></span><span class="line"><span class="cl">git config --global https.proxy
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果没有记录显示，则说明本电脑还没有配置过代理，否则需要先将代理进行删除，再进行后续的重新添加。</p>
+<p>2、代理取消</p>
+<p>如果执行上述代码之后，发现有代理存在，则执行下述命令，先将代理取移除</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">git config --global --unset http.proxy
+</span></span><span class="line"><span class="cl">git config --global --unset https.proxy
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p><code>git config</code> 是 Git 用于配置和管理各种参数的命令，可以设置和修改与 Git 相关的配置选项。</p>
+<p><code>http.proxy</code> 是用于设置 Git 在进行 HTTP 或 HTTPS 连接时使用的代理服务器。</p></blockquote>
+<p>3、代理设置</p>
+<p>首先需要获取当前所使用vpn的代理服务器地址，格式为：<code>127.0.0.1:xxxx</code>（我的是7879）。<strong>这里一定要注意，不要照抄网上的端口号，需要根据自己的服务器进行修改，否则报错</strong>。得到代理服务器地址之后，使用如下命令配置代理</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">git config --global https.proxy 127.0.0.1:7897
+</span></span><span class="line"><span class="cl">git config --global http.proxy 127.0.0.1:7897
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>如何知道自己的代理服务器地址呢？两种办法：</p>
+<ul>
+<li>一是通过自己的vpn查看，打开自己的<code>vpn-设置-端口设置/端口号</code>的选项，这个就是代理服务器的端口</li>
+<li>打开电脑的<code>控制面板-网络和Internet-Internet选项-连接-局域网设置</code>，然后就可以看到代理服务器的地址了，见图</li>
+</ul>
+<p>通过这两种方式得到的应该是一样的。</p></blockquote>
+<p><img src="/p/%E4%BB%A3%E7%90%86-%E8%81%94%E7%BD%91%E9%97%AE%E9%A2%98/1.png"
+	width="558"
+	height="260"
+	srcset="/p/%E4%BB%A3%E7%90%86-%E8%81%94%E7%BD%91%E9%97%AE%E9%A2%98/1_hu_6837c66dfff22f41.png 480w, /p/%E4%BB%A3%E7%90%86-%E8%81%94%E7%BD%91%E9%97%AE%E9%A2%98/1_hu_de59a87c140ac773.png 1024w"
+	loading="lazy"
+	
+		alt="代理服务器地址"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="214"
+		data-flex-basis="515px"
+	
+></p>
+<p>然后就配置成功了！就可以成功上传和下载文件了。需要注意的是，有少数人刚配置后，效果显著，但用一段时间之后，发现<code>git push</code>上传文件时仍然失败，这时候按照第二个步骤将代理重新取消掉就好了，如果有过一段时间又不行了，在重新配置就行，这样反复操作可以解决，但为什么这样不得而知。</p>
+<h3 id="原理介绍">原理介绍
+</h3><p>代理服务器就是你的电脑和互联网的中介。当您访问外网时 , 你的请求首先转发到代理服务器，然后代理服务器替你访问外网，并将结果原封不动的给你的电脑，这样你的电脑就可以看到外网的内容啦。</p>
+<h2 id="使用vpn后无法正常上网">使用vpn后无法正常上网
+</h2><h3 id="解决方法-1">解决方法
+</h3><p>很多同学使用vpn访问外网，但当关闭VPN后，却发现没有办法正常连接到互联网了。解决方法如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">控制面板--&gt;网络和Internet--&gt;Internet选项--&gt;弹出的Internet属性窗口--&gt;连接--&gt;局域网设置
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>将<code>为LAN使用代理服务器（这些设置不用于拨号或VPN连接）</code>前面的<code>√</code>取消掉可以了（开vpn的时候勾上是正常的，如果关掉vpn后能正常上网就不用取消）。到此为止不出意外就可以正常上网啦！</p>
+<h3 id="原因分析">原因分析
+</h3><p>一句话：可能是由于<strong>VPN代理软件修改了电脑IP地址的获取方式</strong>。</p>
+<p>通常情况下，计算机的IP地址是通过动态主机配置协议（DHCP）从您的路由器或网络提供商的服务器上获取的。使用VPN代理软件时，它会在您的计算机和互联网之间创建一个安全的连接。在这种连接中，VPN软件会通过在您的计算机和VPN服务器之间建立虚拟通道来代理您的网络流量。当您的网络流量通过VPN服务器时，服务器会为您的流量分配一个新的IP地址。</p>
+<p>通过这些步骤，VPN代理软件成功修改了您计算机的IP地址获取方式。现在，计算机使用的是VPN服务器分配的IP地址，而不是原本的IP地址。这样做可以帮助您隐藏真实的IP地址并实现匿名上网，同时提供加密保护，确保您的网络流量在传输过程中得到安全保护。同时，当我们关闭VPN后，由于电脑IP地址任然为VPN分配的IP地址（而此时我们已经关闭了代理服务器的连接），这就导致我们无法正常访问互联网了。</p>
+<blockquote>
+<p>参考：<a class="link" href="https://blog.csdn.net/Yaoyao2024/article/details/132245249"  target="_blank" rel="noopener"
+    >使用vpn/代理后无法正常上网</a></p></blockquote>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    
+    <section class="article-category">
+        
+            <a href="/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/" style="background-color: #2a9d8f; color: #fff;">
+                工具使用
+            </a>
+        
+    </section>
+    
+
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            最后更新于 2025-04-10 22:00
+        </span>
+    </section></footer>
+
+
+    
+</article>
+
+    
+
+    
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2024 - 
+        
+        2025 xxcjw&#39;s bolg！
+    </section>
+    
+    <section class="powerby">
+        
+            光终究会洒在你的身上，你也会灿烂一场！ <br/>
+        
+    </section>
+
+    
+    <section class="running-time">
+        本博客已稳定运行
+        <span id="runningdays" class="running-days"></span>
+    </section>
+
+
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+<script>
+    let s1 = '2025-4-1'; 
+    s1 = new Date(s1.replace(/-/g, "/"));
+    let s2 = new Date();
+    let timeDifference = s2.getTime() - s1.getTime();
+
+    let days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    let hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+
+    let result = days + "天" + hours + "小时" + minutes + "分钟";
+    document.getElementById('runningdays').innerHTML = result;
+</script>
+    </body>
+</html>
