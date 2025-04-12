@@ -10,7 +10,7 @@
 <meta property='og:description' content="文章插入图片 如果想要在文章插入图片，有两种方式：\n方式一： 1 ![name](pic.png) 缺点是这种方式插入的图片不可以调节大小，默认占满页面宽度，很不美观。\n方式二： 1 &lt;img src=&#34;1.png&#34; width=&#34;80%&#34; align=&#34;middle&#34; style=&#34;zoom:60%;&#34; /&gt; 如果是在markdown文件里，是居中且缩放到原图的60%大小，但在网页上居中不起作用。\n">
 <meta property='og:url' content='https://xxcjw.github.io/p/stack%E4%B8%BB%E9%A2%98%E4%BF%AE%E6%94%B9/'>
 <meta property='og:site_name' content='xxcjw&#39;s blog!'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-04-08T22:53:36&#43;08:00'/><meta property='article:modified_time' content='2025-04-10T22:00:43&#43;08:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-04-08T22:53:36&#43;08:00'/><meta property='article:modified_time' content='2025-04-12T19:12:56&#43;08:00'/>
 <meta name="twitter:title" content="Stack主题修改">
 <meta name="twitter:description" content="文章插入图片 如果想要在文章插入图片，有两种方式：\n方式一： 1 ![name](pic.png) 缺点是这种方式插入的图片不可以调节大小，默认占满页面宽度，很不美观。\n方式二： 1 &lt;img src=&#34;1.png&#34; width=&#34;80%&#34; align=&#34;middle&#34; style=&#34;zoom:60%;&#34; /&gt; 如果是在markdown文件里，是居中且缩放到原图的60%大小，但在网页上居中不起作用。\n">
     <link rel="shortcut icon" href="/favicon.ico" />
@@ -83,6 +83,7 @@
     <li><a href="#友链布局修改">友链布局修改</a></li>
     <li><a href="#文章内链跳转">文章内链跳转</a></li>
     <li><a href="#文章内容管理">文章内容管理</a></li>
+    <li><a href="#bug问题">Bug问题</a></li>
     <li><a href="#致谢">致谢</a></li>
   </ol>
 </nav>
@@ -133,7 +134,7 @@
             <div>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" stroke-width="2"> <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4"></path> <path d="M13.5 6.5l4 4"></path> <path d="M16 19h6"></path> </svg> 
                 <time class="article-words">
-                    2732 字
+                    2879 字
                 </time>
             </div>
         
@@ -464,6 +465,14 @@
 <li>有图片的多建一级目录, md文件命名为index.lang.md(使用其他命名文件，图片不能显示), 图片放在同一目录/子文件夹</li>
 <li>不同语言的md文件，放在一起，统一用不同的index.lang.md区分， 比如 index.zh-cn.md, index.zh-tw.md</li>
 </ul>
+<h2 id="bug问题">Bug问题
+</h2><ul>
+<li>输入公式时（<code>$$$$</code>），必须空一行才能正常显示（markdown换行<code>enter</code>是区分段落，源代码默认会有一个空行，粘贴复制过来的文字可能是<code>shift+enter</code>换行，导致不是<code>enter</code>换行）。行内插入公式时使用<code>$xxx$</code>表示</li>
+<li>加粗时，加粗的内容不能以符号结尾，否则在渲染时出错</li>
+</ul>
+<blockquote>
+<p><a class="link" href="https://osdoc.net/md/4/"  target="_blank" rel="noopener"
+    >Markdown 开源文档</a></p></blockquote>
 <h2 id="致谢">致谢
 </h2><p>1、博客搭建教程</p>
 <p>简单来说，分为几步：</p>
@@ -559,7 +568,7 @@
 
 
         <span>
-            最后更新于 2025-04-10 22:00
+            最后更新于 2025-04-12 19:12
         </span>
     </section></footer>
 

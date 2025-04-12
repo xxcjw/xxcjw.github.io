@@ -298,6 +298,14 @@
 &lt;li&gt;有图片的多建一级目录, md文件命名为index.lang.md(使用其他命名文件，图片不能显示), 图片放在同一目录/子文件夹&lt;/li&gt;
 &lt;li&gt;不同语言的md文件，放在一起，统一用不同的index.lang.md区分， 比如 index.zh-cn.md, index.zh-tw.md&lt;/li&gt;
 &lt;/ul&gt;
+&lt;h2 id=&#34;bug问题&#34;&gt;Bug问题
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;输入公式时（&lt;code&gt;$$$$&lt;/code&gt;），必须空一行才能正常显示（markdown换行&lt;code&gt;enter&lt;/code&gt;是区分段落，源代码默认会有一个空行，粘贴复制过来的文字可能是&lt;code&gt;shift+enter&lt;/code&gt;换行，导致不是&lt;code&gt;enter&lt;/code&gt;换行）。行内插入公式时使用&lt;code&gt;$xxx$&lt;/code&gt;表示&lt;/li&gt;
+&lt;li&gt;加粗时，加粗的内容不能以符号结尾，否则在渲染时出错&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://osdoc.net/md/4/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Markdown 开源文档&lt;/a&gt;&lt;/p&gt;&lt;/blockquote&gt;
 &lt;h2 id=&#34;致谢&#34;&gt;致谢
 &lt;/h2&gt;&lt;p&gt;1、博客搭建教程&lt;/p&gt;
 &lt;p&gt;简单来说，分为几步：&lt;/p&gt;
