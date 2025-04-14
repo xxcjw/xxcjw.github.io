@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Attention由来 \u200b NLP 神经网络模型的本质就是对输入文本进行编码，然后基于概率的思想完成 NLU 或 NLP 任务。常规的做法是首先对句子进行分词（token），然后将每个 token 都转化为对应的词向量 (token embeddings)，这样文本就转换为一个由词语向量组成的矩阵$\\boldsymbol{X} \\in \\mathbb{R}^{n \\times d}$ 。\n">
+<title>LLM系列-2：Attention详解</title>
+
+<link rel='canonical' href='https://xxcjw.github.io/p/llm%E7%B3%BB%E5%88%97-2attention%E8%AF%A6%E8%A7%A3/'>
+
+<link rel="stylesheet" href="/scss/style.min.ecadfb139628a394c81c08548f4d8f20e087bb8f183b587b1b4a7d2cdd03c920.css"><meta property='og:title' content="LLM系列-2：Attention详解">
+<meta property='og:description' content="Attention由来 \u200b NLP 神经网络模型的本质就是对输入文本进行编码，然后基于概率的思想完成 NLU 或 NLP 任务。常规的做法是首先对句子进行分词（token），然后将每个 token 都转化为对应的词向量 (token embeddings)，这样文本就转换为一个由词语向量组成的矩阵$\\boldsymbol{X} \\in \\mathbb{R}^{n \\times d}$ 。\n">
+<meta property='og:url' content='https://xxcjw.github.io/p/llm%E7%B3%BB%E5%88%97-2attention%E8%AF%A6%E8%A7%A3/'>
+<meta property='og:site_name' content='xxcjw&#39;s blog!'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-04-13T10:55:51&#43;08:00'/><meta property='article:modified_time' content='2025-04-14T11:49:59&#43;08:00'/>
+<meta name="twitter:title" content="LLM系列-2：Attention详解">
+<meta name="twitter:description" content="Attention由来 \u200b NLP 神经网络模型的本质就是对输入文本进行编码，然后基于概率的思想完成 NLU 或 NLP 任务。常规的做法是首先对句子进行分词（token），然后将每个 token 都转化为对应的词向量 (token embeddings)，这样文本就转换为一个由词语向量组成的矩阵$\\boldsymbol{X} \\in \\mathbb{R}^{n \\times d}$ 。\n">
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended">
+
+        <div id="article-toolbar" style="position: sticky;top: 5px;z-index: 1000;">
+            <a href="/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>返回</span>
+            </a>
+        </div>
+    
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#attention由来">Attention由来</a></li>
+    <li><a href="#点积注意力">点积注意力</a>
+      <ol>
+        <li><a href="#词嵌入得到">词嵌入得到</a></li>
+        <li><a href="#注意力计算">注意力计算</a></li>
+      </ol>
+    </li>
+    <li><a href="#多头注意力">多头注意力</a></li>
+    <li><a href="#transformer架构">Transformer架构</a>
+      <ol>
+        <li><a href="#transformer-encoder">Transformer Encoder</a></li>
+        <li><a href="#transformer-decoder">Transformer Decoder</a></li>
+      </ol>
+    </li>
+    <li><a href="#参考">参考</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/llm%E7%B3%BB%E5%88%97-2attention%E8%AF%A6%E8%A7%A3/">LLM系列-2：Attention详解</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2025-04-13</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" stroke-width="2"> <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4"></path> <path d="M13.5 6.5l4 4"></path> <path d="M16 19h6"></path> </svg> 
+                <time class="article-words">
+                    3319 字
+                </time>
+            </div>
+        
+
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 7 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+
+
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/" style="background-color: #2a9d8f; color: #fff;">
+                大模型
+            </a>
+        
+        </header>
+    
+
+</div>
+
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="attention由来">Attention由来
+</h2><p>​         NLP 神经网络模型的本质就是对输入文本进行编码，然后基于概率的思想完成 NLU 或 NLP 任务。常规的做法是首先对句子进行<strong>分词（token）</strong>，然后将每个 token 都转化为对应的词向量 (token embeddings)，这样文本就转换为一个由词语向量组成的矩阵$\boldsymbol{X} \in \mathbb{R}^{n \times d}$ 。</p>
+<p>在 Transformer 模型提出之前，对 token 序列 X 的常规编码方式是通过循环网络 (RNNs) 和卷积网络 (CNNs)。
+</p>
+$$
+RNN：\boldsymbol{y}_t = f(\boldsymbol{y}_{t - 1}, \boldsymbol{x}_t)\\
+CNN：\boldsymbol{y}_t = f(\boldsymbol{x}_{t - 1}, \boldsymbol{x}_t, \boldsymbol{x}_{t + 1})
+$$<ul>
+<li>
+<p>RNN（例如 LSTM）的方案很简单，每一个 token 对应的编码结果通过<strong>递归</strong>地计算得到，如公式1；</p>
+<p>但是递归的结构导致其无法并行计算，因此速度较慢。而且 RNN 本质是一个马尔科夫决策过程，难以学习到全局的结构信息；</p>
+</li>
+<li>
+<p>CNN 则通过<strong>滑动窗口</strong>基于局部上下文来编码文本，例如核尺寸为 3 的卷积操作就是使用每一个词自身以及前一个和后一个词来生成嵌入式表示，如公式2；</p>
+<p>CNN 能够并行地计算，因此速度很快，但是由于是通过窗口来进行编码，所以更侧重于捕获局部信息，难以建模长距离的语义依赖；</p>
+</li>
+</ul>
+<p>于是 Google 提出的<a class="link" href="https://arxiv.org/abs/1706.03762"  target="_blank" rel="noopener"
+    >Attention Is All You Need</a>论文给出了第三种解决方案：<strong>直接使用 Attention 机制编码整个文本</strong>。相比 RNN 要逐步递归才能获得全局信息，而 CNN 实际只能获取局部信息，需要通过层叠来增大感受野，Attention 机制一步到位获取了全局信息。</p>
+<h2 id="点积注意力">点积注意力
+</h2><p>虽然 Attention 有许多种实现方式，但是最常见的还是 Scaled Dot-product Attention。包含 2 个主要步骤：</p>
+<ol>
+<li>
+<p><strong>计算注意力权重</strong>：使用某种相似度函数度量每一个 query 向量和所有 key 向量之间的关联程度。</p>
+<p>特别地，Scaled Dot-product Attention 使用点积作为相似度函数，这样相似的 queries 和 keys 会具有较大的点积。这会破坏训练过程的稳定性。因此注意力分数还需要乘以一个缩放因子来标准化它们的方差，然后用一个 softmax 标准化。这样就得到了最终的注意力权重.</p>
+</li>
+<li>
+<p><strong>更新 token embeddings</strong>：将权重 与对应的 value 向量相乘以获得向量更新后的语义表示。</p>
+</li>
+</ol>
+$$
+\mathrm{Attention}(\boldsymbol{Q}, \boldsymbol{K}, \boldsymbol{V}) = \mathrm{softmax}\left(\frac{\boldsymbol{Q}\boldsymbol{K}^\top}{\sqrt{d_k}}\right)\boldsymbol{V}
+$$<p>下面通过 Pytorch 来实现：</p>
+<h3 id="词嵌入得到">词嵌入得到
+</h3><p>首先需要将文本分词为词语 (token) 序列，然后将每一个词语转换为对应的词向量 (embedding)。Pytorch 提供了 <code>torch.nn.Embedding</code> 层来完成该操作，即构建一个从 token ID 到 token embedding 的映射表。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">from torch import nn
+</span></span><span class="line"><span class="cl">from transformers import AutoConfig
+</span></span><span class="line"><span class="cl">from transformers import AutoTokenizer
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 加载预训练分词器
+</span></span><span class="line"><span class="cl">model_ckpt = &#34;bert-base-uncased&#34;
+</span></span><span class="line"><span class="cl">tokenizer = AutoTokenizer.from_pretrained(model_ckpt)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 输入文本并进行分词
+</span></span><span class="line"><span class="cl">text = &#34;time flies like an arrow&#34;
+</span></span><span class="line"><span class="cl">inputs = tokenizer(text, return_tensors=&#34;pt&#34;, add_special_tokens=False)
+</span></span><span class="line"><span class="cl">print(inputs.input_ids)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 加载模型参数配置并创建嵌入层
+</span></span><span class="line"><span class="cl">config = AutoConfig.from_pretrained(model_ckpt)
+</span></span><span class="line"><span class="cl">token_emb = nn.Embedding(config.vocab_size, config.hidden_size)
+</span></span><span class="line"><span class="cl">print(token_emb)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 输出文本对应的嵌入向量
+</span></span><span class="line"><span class="cl">inputs_embeds = token_emb(inputs.input_ids)
+</span></span><span class="line"><span class="cl">print(inputs_embeds.size())
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>输出为：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">tensor([[ 2051, 10029,  2066,  2019,  8612]])
+</span></span><span class="line"><span class="cl">Embedding(30522, 768)
+</span></span><span class="line"><span class="cl">torch.Size([1, 5, 768])
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以看到，BERT-base-uncased 模型对应的词表大小为 30522，每个词语的词向量维度为 768。Embedding 层把输入的词语序列映射到了尺寸为 <code>[batch_size, seq_len, hidden_dim]</code> 的张量。</p>
+<blockquote>
+<p>这里我们通过设置 <code>add_special_tokens=False</code> 去除了分词结果中的 <code>[CLS]</code> 和 <code>[SEP]</code>。</p></blockquote>
+<blockquote>
+<p>input_ids 是如何得到的：</p>
+<p>分词器已经针对<code>bert-base-uncased</code>模型进行了预训练，了解该模型词汇表中的所有词元（token）。分词器会将输入文本拆分成一个个词元。把每个词元映射到词汇表中的对应索引。<code>bert-base-uncased</code>模型有一个预先定义好的词汇表，每个词元都有唯一的整数索引。</p></blockquote>
+<blockquote>
+<p>input_ids是如何转换为向量的：</p>
+<ul>
+<li>加载模型的配置信息后，这些配置信息包含了模型的各种参数，例如词汇表大小（<code>vocab_size</code>）和隐藏层大小（<code>hidden_size</code>）等。</li>
+<li>接下来，使用<code>nn.Embedding</code>创建一个嵌入层。它的作用是将每个词的索引（即<code>input_ids</code>中的整数）映射到一个固定长度的向量。这里的<code>config.vocab_size</code>表示词汇表的大小，也就是模型所能处理的不同词元的数量；<code>config.hidden_size</code>表示每个词元对应的嵌入向量的维度。在<code>bert-base-uncased</code>模型中，<code>vocab_size</code>通常为 30522，<code>hidden_size</code>为 768。</li>
+<li><code>nn.Embedding</code>在创建时会随机初始化一个形状为<code>(vocab_size, hidden_size)</code>的权重矩阵。这个矩阵中的每一行对应词汇表中一个词元的嵌入向量。例如，矩阵的第<code>i</code>行就是词汇表中索引为<code>i</code>的词元的嵌入向量。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">根据大模型config.json配置文件中的hidden_size和vocab_size配置项可以得到
+</span></span></code></pre></td></tr></table>
+</div>
+</div></blockquote>
+<blockquote>
+<p>预训练模型不是已经训练好了词汇表的嵌入了吗，为什么<code>nn.Embedding</code>是随机初始化：</p>
+<p>使用<code>nn.Embedding</code>创建的嵌入层的确是随机初始化的，但加载的预训练模型也有一个预训练的词汇表嵌入矩阵的。</p>
+<p>当你直接使用<code>nn.Embedding</code>创建嵌入层时，这通常意味着你打算从头开始训练模型，或者在已有模型基础上针对特定任务进行微调。随机初始化可以让模型在训练过程中根据具体任务的数据和目标来学习合适的词嵌入表示。通用的预训练词嵌入可能无法很好地适应特定领域的任务，这时随机初始化并重新训练嵌入层可能会得到更好的效果。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">from transformers import AutoModel
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">model_ckpt = &#34;bert-base-uncased&#34;
+</span></span><span class="line"><span class="cl">model = AutoModel.from_pretrained(model_ckpt)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 获取预训练的嵌入层
+</span></span><span class="line"><span class="cl">token_emb = model.embeddings.word_embeddings
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">text = &#34;time flies like an arrow&#34;
+</span></span><span class="line"><span class="cl">inputs = tokenizer(text, return_tensors=&#34;pt&#34;, add_special_tokens=False)
+</span></span><span class="line"><span class="cl">inputs_embeds = token_emb(inputs.input_ids)
+</span></span><span class="line"><span class="cl">print(inputs_embeds.size())    
+</span></span></code></pre></td></tr></table>
+</div>
+</div></blockquote>
+<h3 id="注意力计算">注意力计算
+</h3><p><a class="link" href="https://transformers.run/c1/attention/"  target="_blank" rel="noopener"
+    >注意力机制-第三章</a></p>
+<h2 id="多头注意力">多头注意力
+</h2><p>Multi-head Attention 首先通过线性映射将 Q,K,V 序列映射到特征空间，每一组线性投影后的向量表示称为一个头 (head)，然后在每组映射后的序列上再应用 Scaled Dot-product Attention。</p>
+<center><img src="image-20250413120519815.png" alt="image-20250413120519815" style="zoom:80%;" /></center>
+<p>每个注意力头负责关注某一方面的语义相似性，多个头就可以让模型同时关注多个方面。因此Multi-head Attention 可以捕获到更加复杂的特征信息。
+</p>
+$$
+{head}_i= \mathrm{Attention}(\boldsymbol{Q}\boldsymbol{W}_i^Q, \boldsymbol{K}\boldsymbol{W}_i^K, \boldsymbol{V}\boldsymbol{W}_i^V) \\
+{MultiHead}(\boldsymbol{Q}, \boldsymbol{K}, \boldsymbol{V})= \mathrm{Concat}(\mathrm{head}_1, \dots, \mathrm{head}_h)
+$$<p>
+以下是单个注意力头实现：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">from torch import nn
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">class AttentionHead(nn.Module):
+</span></span><span class="line"><span class="cl">    def __init__(self, embed_dim, head_dim):
+</span></span><span class="line"><span class="cl">        super().__init__()
+</span></span><span class="line"><span class="cl">        self.q = nn.Linear(embed_dim, head_dim)
+</span></span><span class="line"><span class="cl">        self.k = nn.Linear(embed_dim, head_dim)
+</span></span><span class="line"><span class="cl">        self.v = nn.Linear(embed_dim, head_dim)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    def forward(self, query, key, value, query_mask=None, key_mask=None, mask=None):
+</span></span><span class="line"><span class="cl">        attn_outputs = scaled_dot_product_attention(
+</span></span><span class="line"><span class="cl">            self.q(query), self.k(key), self.v(value), query_mask, key_mask, mask)
+</span></span><span class="line"><span class="cl">        return attn_outputs
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>每个头都会初始化三个独立的线性层，负责将 Q,K,V 序列映射到尺寸为 <code>[batch_size, seq_len, head_dim]</code> 的张量，其中 <code>head_dim</code> 是映射到的向量维度。（将得到的输入文本对应的词嵌入通过线性层转换得到 Q,K,V ，因为是多头，所以嵌入大小由原来的<code>embed_dim</code>变为<code>head_dim</code>）</p>
+<blockquote>
+<p>实践中一般将 <code>head_dim</code> 设置为 <code>embed_dim</code> 的因数，这样 token 嵌入式表示的维度就可以保持不变，例如 BERT 有 12 个注意力头，因此每个头的维度被设置为 768/12=64 。</p></blockquote>
+<p>最后只需要拼接多个注意力头的输出就可以构建出 Multi-head Attention 层了（这里在拼接后还通过一个线性变换来生成最终的输出张量）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">class MultiHeadAttention(nn.Module):
+</span></span><span class="line"><span class="cl">    def __init__(self, config):
+</span></span><span class="line"><span class="cl">        super().__init__()
+</span></span><span class="line"><span class="cl">        embed_dim = config.hidden_size
+</span></span><span class="line"><span class="cl">        num_heads = config.num_attention_heads
+</span></span><span class="line"><span class="cl">        head_dim = embed_dim // num_heads
+</span></span><span class="line"><span class="cl">        self.heads = nn.ModuleList(
+</span></span><span class="line"><span class="cl">            [AttentionHead(embed_dim, head_dim) for _ in range(num_heads)]
+</span></span><span class="line"><span class="cl">        )
+</span></span><span class="line"><span class="cl">        self.output_linear = nn.Linear(embed_dim, embed_dim)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    def forward(self, query, key, value, query_mask=None, key_mask=None, mask=None):
+</span></span><span class="line"><span class="cl">        x = torch.cat([
+</span></span><span class="line"><span class="cl">            h(query, key, value, query_mask, key_mask, mask) for h in self.heads
+</span></span><span class="line"><span class="cl">        ], dim=-1)
+</span></span><span class="line"><span class="cl">        x = self.output_linear(x)
+</span></span><span class="line"><span class="cl">        return x
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>从输入文本到经过 Attention 后得到的词嵌入实现过程如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">from transformers import AutoConfig
+</span></span><span class="line"><span class="cl">from transformers import AutoTokenizer
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 加载预训练分词器
+</span></span><span class="line"><span class="cl">model_ckpt = &#34;bert-base-uncased&#34;
+</span></span><span class="line"><span class="cl">tokenizer = AutoTokenizer.from_pretrained(model_ckpt)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 分词、加载模型参数、初始化嵌入
+</span></span><span class="line"><span class="cl">text = &#34;time flies like an arrow&#34;
+</span></span><span class="line"><span class="cl">inputs = tokenizer(text, return_tensors=&#34;pt&#34;, add_special_tokens=False)
+</span></span><span class="line"><span class="cl">config = AutoConfig.from_pretrained(model_ckpt)
+</span></span><span class="line"><span class="cl">token_emb = nn.Embedding(config.vocab_size, config.hidden_size)
+</span></span><span class="line"><span class="cl">inputs_embeds = token_emb(inputs.input_ids)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># Attention更新嵌入
+</span></span><span class="line"><span class="cl">multihead_attn = MultiHeadAttention(config)
+</span></span><span class="line"><span class="cl">query = key = value = inputs_embeds
+</span></span><span class="line"><span class="cl">attn_output = multihead_attn(query, key, value)
+</span></span><span class="line"><span class="cl">print(attn_output.size())
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>其输出为：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">torch.Size([1, 5, 768])
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="transformer架构">Transformer架构
+</h2><p>标准 Transformer 结构，Encoder 负责将输入的词语序列转换为词向量序列，Decoder 则基于 Encoder 的隐状态来迭代地生成词语序列作为输出，每次生成一个词语。</p>
+<h3 id="transformer-encoder">Transformer Encoder
+</h3><p>除了多个 Attention 之外，还包括<code>The Feed-Forward Layer、Layer Normalization、Positional Embeddings</code>等结构。</p>
+<p>1、The Feed-Forward Layer</p>
+<p>实际上就是两层全连接神经网络，它单独地处理序列中的每一个词向量，也被称为 position-wise feed-forward layer。常见做法是让第一层的维度是词向量大小的 4 倍，然后以 GELU 作为激活函数。</p>
+<p>2、Layer Normalization</p>
+<p>负责将一批 (batch) 输入中的每一个都标准化为均值为零且具有单位方差；Skip Connections 则是将张量直接传递给模型的下一层而不进行处理，并将其添加到处理后的张量中。</p>
+<p>3、Positional Embeddings</p>
+<p>由于注意力机制无法捕获词语之间的位置信息，因此 Transformer 模型还使用 Positional Embeddings 添加了词语的位置信息。如果预训练数据集足够大，那么最简单的方法就是让模型自动学习位置嵌入。</p>
+<h3 id="transformer-decoder">Transformer Decoder
+</h3><p>Transformer Decoder 与 Encoder 最大的不同在于 Decoder 有两个注意力子层：</p>
+<ul>
+<li><strong>Masked multi-head self-attention layer</strong>：确保在每个时间步生成的词语仅基于过去的输出和当前预测的词，否则 Decoder 相当于作弊了；</li>
+<li><strong>Encoder-decoder attention layer</strong>：以解码器的中间表示作为 queries，对 encoder stack 的输出 key 和 value 向量执行 Multi-head Attention。通过这种方式，Encoder-Decoder Attention Layer 就可以学习到如何关联来自两个不同序列的词语。</li>
+</ul>
+<h2 id="参考">参考
+</h2><blockquote>
+<p><a class="link" href="https://transformers.run/c1/attention/"  target="_blank" rel="noopener"
+    >注意力机制-第三章</a></p></blockquote>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    
+    <section class="article-category">
+        
+            <a href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/" style="background-color: #2a9d8f; color: #fff;">
+                大模型
+            </a>
+        
+    </section>
+    
+
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            最后更新于 2025-04-14 11:49
+        </span>
+    </section></footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+	const mainArticleElement = document.querySelector(".main-article");
+        renderMathInElement(mainArticleElement, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+
+    
+</article>
+
+    
+
+    
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2024 - 
+        
+        2025 xxcjw&#39;s bolg！
+    </section>
+    
+    <section class="powerby">
+        
+            光终究会洒在你的身上，你也会灿烂一场！ <br/>
+        
+    </section>
+
+    
+    <section class="running-time">
+        本博客已稳定运行
+        <span id="runningdays" class="running-days"></span>
+    </section>
+
+
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+<script>
+    let s1 = '2025-4-1'; 
+    s1 = new Date(s1.replace(/-/g, "/"));
+    let s2 = new Date();
+    let timeDifference = s2.getTime() - s1.getTime();
+
+    let days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    let hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+
+    let result = days + "天" + hours + "小时" + minutes + "分钟";
+    document.getElementById('runningdays').innerHTML = result;
+</script>
+    </body>
+</html>
