@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="总体内容 BERT是用了Transformer的encoder侧的网络。\nBert网络结构 如图所示, 最左边的就是BERT的架构图, 可以看到BERT采用了Transformer Encoder block进行连接, 因为是一个典型的双向编码模型,多头自注意力中的每个头的输入都同时蕴含了前后文的语言信息。从上面的架构图中可以看到, 宏观上BERT分三个主要模块：\n">
+<title>LLM系列-5：Bert模型详解</title>
+
+<link rel='canonical' href='https://xxcjw.github.io/p/llm%E7%B3%BB%E5%88%97-5bert%E6%A8%A1%E5%9E%8B%E8%AF%A6%E8%A7%A3/'>
+
+<link rel="stylesheet" href="/scss/style.min.ecadfb139628a394c81c08548f4d8f20e087bb8f183b587b1b4a7d2cdd03c920.css"><meta property='og:title' content="LLM系列-5：Bert模型详解">
+<meta property='og:description' content="总体内容 BERT是用了Transformer的encoder侧的网络。\nBert网络结构 如图所示, 最左边的就是BERT的架构图, 可以看到BERT采用了Transformer Encoder block进行连接, 因为是一个典型的双向编码模型,多头自注意力中的每个头的输入都同时蕴含了前后文的语言信息。从上面的架构图中可以看到, 宏观上BERT分三个主要模块：\n">
+<meta property='og:url' content='https://xxcjw.github.io/p/llm%E7%B3%BB%E5%88%97-5bert%E6%A8%A1%E5%9E%8B%E8%AF%A6%E8%A7%A3/'>
+<meta property='og:site_name' content='xxcjw&#39;s blog!'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-04-17T15:42:07&#43;08:00'/><meta property='article:modified_time' content='2025-04-19T10:05:15&#43;08:00'/>
+<meta name="twitter:title" content="LLM系列-5：Bert模型详解">
+<meta name="twitter:description" content="总体内容 BERT是用了Transformer的encoder侧的网络。\nBert网络结构 如图所示, 最左边的就是BERT的架构图, 可以看到BERT采用了Transformer Encoder block进行连接, 因为是一个典型的双向编码模型,多头自注意力中的每个头的输入都同时蕴含了前后文的语言信息。从上面的架构图中可以看到, 宏观上BERT分三个主要模块：\n">
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended">
+
+        <div id="article-toolbar" style="position: sticky;top: 5px;z-index: 1000;">
+            <a href="/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>返回</span>
+            </a>
+        </div>
+    
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#总体内容">总体内容</a></li>
+    <li><a href="#bert网络结构">Bert网络结构</a></li>
+    <li><a href="#embedding层">Embedding层</a></li>
+    <li><a href="#encoder层">Encoder层</a></li>
+    <li><a href="#参考">参考</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/llm%E7%B3%BB%E5%88%97-5bert%E6%A8%A1%E5%9E%8B%E8%AF%A6%E8%A7%A3/">LLM系列-5：Bert模型详解</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2025-04-17</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" stroke-width="2"> <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4"></path> <path d="M13.5 6.5l4 4"></path> <path d="M16 19h6"></path> </svg> 
+                <time class="article-words">
+                    1191 字
+                </time>
+            </div>
+        
+
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 3 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+
+
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/" style="background-color: #2a9d8f; color: #fff;">
+                大模型
+            </a>
+        
+        </header>
+    
+
+</div>
+
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="总体内容">总体内容
+</h2><img src="image-20250417162849458.png" alt="image-20250417162849458" style="zoom:20%;" />
+<p>BERT是用了Transformer的encoder侧的网络。</p>
+<h2 id="bert网络结构">Bert网络结构
+</h2><img src="BERT.png" alt="img" style="zoom:80%;" />
+<p>如图所示, 最左边的就是BERT的架构图, 可以看到BERT采用了Transformer Encoder block进行连接, 因为是一个典型的双向编码模型,多头自注意力中的每个头的输入都同时蕴含了前后文的语言信息。从上面的架构图中可以看到, 宏观上BERT分三个主要模块：</p>
+<ul>
+<li>最底层黄色标记的Embedding模块</li>
+<li>中间层蓝色标记的Transformer模块</li>
+<li>最上层绿色标记的预微调模块</li>
+</ul>
+<h2 id="embedding层">Embedding层
+</h2><img src="embedding.png" alt="img" style="zoom:50%;" />
+<center><img src="image-20250417172153609.png" alt="image-20250417172153609" style="zoom:67%;" /></center>
+<p>BERT中的 Embedding 模块是由三种 Embedding 共同组成而成。将文本输入到LLM后，首先进行的是 tokenization 处理，且两个特殊的 Token 会插入在文本开头 [CLS] 和结尾 [SEP]。[CLS]表示该特征用于分类模型，对非分类模型，该符号可以省去。[SEP]表示分句符号，用于断开输入语料中的两个句子。</p>
+<ul>
+<li><code>Token Embeddings</code>：将词表中的每个 token 转化为高维向量作为输入，首个单词 CLS 用于分类任务
+<ul>
+<li>通过建立词表将每个token转换成一个高维向量，作为模型输入。特别的，英文词汇会做更细粒度的切分。将词切割成更细粒度的 Word Piece 是为了解决未登录词的常见方法。</li>
+</ul>
+</li>
+<li><code>Segment Embeddings</code>：用于区分句子界限，分别以 0 和 1 标记不同句子</li>
+<li><code>Position Embeddings</code>：用于记录文本中各 token 的相对顺序
+<ul>
+<li>BERT 中处理的最长序列是 512 个 Token，长度超过 512 会被截取，BERT 在各个位置上学习一个向量来表示序列顺序的信息编码进来，这意味着 Position Embeddings 实际上是一个 (512, 768) 的 lookup 表。</li>
+</ul>
+</li>
+</ul>
+<p>最后，BERT 模型将 Token Embeddings (1, n, 768) + Segment Embeddings(1, n, 768) + Position Embeddings(1, n, 768) 求和的方式得到一个 Embedding(1, n, 768) 作为模型的输入。</p>
+<blockquote>
+<p>Transformer中position Embedding是用的三角函数，BERT中也有一个Postion Embedding是随机初始化，然后从数据中学出来的。</p></blockquote>
+<blockquote>
+<p><strong>[CLS]的作用</strong></p>
+<p>BERT在第一句前会加一个[CLS]标志，最后一层该位对应向量可以作为整句话的语义表示，从而用于下游的分类任务等。因为与文本中已有的其它词相比，这个无明显语义信息的符号会更“公平”地融合文本中各个词的语义信息，从而更好的表示整句话的语义。</p></blockquote>
+<h2 id="encoder层">Encoder层
+</h2><center><img src="BERT4.png" alt="img" style="zoom:33%;" /></center>
+<p>BERT是用了Transformer的encoder侧的网络，BERT的维度是768维度，然后分成12个head，每个head的维度是64维。BERT模型分为24层和12层两种，其差别就是使用transformer encoder的层数的差异。</p>
+<ul>
+<li>BERT-base : L=12，H=768，A=12，参数总量110M；</li>
+<li>BERT-large: L=24，H=1024，A=16，参数总量340M；</li>
+</ul>
+<h2 id="参考">参考
+</h2><blockquote>
+<p><a class="link" href="https://jalammar.github.io/illustrated-transformer/"  target="_blank" rel="noopener"
+    >The Illustrated Transformer – 图解transformer</a>  （超详细）</p>
+<p><a class="link" href="https://zhuanlan.zhihu.com/p/403495863"  target="_blank" rel="noopener"
+    >读懂BERT，看这一篇就够了 </a> （结构详解）</p>
+<p><a class="link" href="https://x-hao.github.io/2021/07/21/bert/"  target="_blank" rel="noopener"
+    >BERT模型架构与详解 </a>（清晰）</p>
+<p><a class="link" href="https://blog.csdn.net/ty154542607/article/details/144026744"  target="_blank" rel="noopener"
+    >BERT 详解_bert模型</a></p>
+<p><a class="link" href="https://zhuanlan.zhihu.com/p/381279611"  target="_blank" rel="noopener"
+    >BERT系列（二）BERT模型的核心架构 </a> （链接多）</p></blockquote>
+<p>博主推荐：</p>
+<blockquote>
+<p><a class="link" href="https://www.zhihu.com/people/vc3-58"  target="_blank" rel="noopener"
+    >后厂NLPer-博客 </a></p>
+<p><a class="link" href="https://newsletter.languagemodels.co/"  target="_blank" rel="noopener"
+    >语言模型 &amp; Co. |杰伊·阿拉马尔 </a>  （图解系列，优质博主）</p>
+<p><a class="link" href="https://jalammar.github.io/"  target="_blank" rel="noopener"
+    >Jay Alammar </a>（同上，旧博客）</p></blockquote>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    
+    <section class="article-category">
+        
+            <a href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/" style="background-color: #2a9d8f; color: #fff;">
+                大模型
+            </a>
+        
+    </section>
+    
+
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            最后更新于 2025-04-19 10:05
+        </span>
+    </section></footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+	const mainArticleElement = document.querySelector(".main-article");
+        renderMathInElement(mainArticleElement, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+
+    
+</article>
+
+    
+
+    
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2024 - 
+        
+        2025 xxcjw&#39;s bolg！
+    </section>
+    
+    <section class="powerby">
+        
+            光终究会洒在你的身上，你也会灿烂一场！ <br/>
+        
+    </section>
+
+    
+    <section class="running-time">
+        本博客已稳定运行
+        <span id="runningdays" class="running-days"></span>
+    </section>
+
+
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+<script>
+    let s1 = '2025-4-1'; 
+    s1 = new Date(s1.replace(/-/g, "/"));
+    let s2 = new Date();
+    let timeDifference = s2.getTime() - s1.getTime();
+
+    let days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    let hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+
+    let result = days + "天" + hours + "小时" + minutes + "分钟";
+    document.getElementById('runningdays').innerHTML = result;
+</script>
+    </body>
+</html>

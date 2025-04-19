@@ -7,7 +7,76 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
         <copyright>xxcjw&#39;s bolg！</copyright>
-        <lastBuildDate>Wed, 16 Apr 2025 16:11:19 +0800</lastBuildDate><atom:link href="https://xxcjw.github.io/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 19 Apr 2025 10:05:15 +0800</lastBuildDate><atom:link href="https://xxcjw.github.io/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>LLM系列-5：Bert模型详解</title>
+        <link>https://xxcjw.github.io/p/llm%E7%B3%BB%E5%88%97-5bert%E6%A8%A1%E5%9E%8B%E8%AF%A6%E8%A7%A3/</link>
+        <pubDate>Thu, 17 Apr 2025 15:42:07 +0800</pubDate>
+        
+        <guid>https://xxcjw.github.io/p/llm%E7%B3%BB%E5%88%97-5bert%E6%A8%A1%E5%9E%8B%E8%AF%A6%E8%A7%A3/</guid>
+        <description>&lt;h2 id=&#34;总体内容&#34;&gt;总体内容
+&lt;/h2&gt;&lt;img src=&#34;image-20250417162849458.png&#34; alt=&#34;image-20250417162849458&#34; style=&#34;zoom:20%;&#34; /&gt;
+&lt;p&gt;BERT是用了Transformer的encoder侧的网络。&lt;/p&gt;
+&lt;h2 id=&#34;bert网络结构&#34;&gt;Bert网络结构
+&lt;/h2&gt;&lt;img src=&#34;BERT.png&#34; alt=&#34;img&#34; style=&#34;zoom:80%;&#34; /&gt;
+&lt;p&gt;如图所示, 最左边的就是BERT的架构图, 可以看到BERT采用了Transformer Encoder block进行连接, 因为是一个典型的双向编码模型,多头自注意力中的每个头的输入都同时蕴含了前后文的语言信息。从上面的架构图中可以看到, 宏观上BERT分三个主要模块：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;最底层黄色标记的Embedding模块&lt;/li&gt;
+&lt;li&gt;中间层蓝色标记的Transformer模块&lt;/li&gt;
+&lt;li&gt;最上层绿色标记的预微调模块&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;embedding层&#34;&gt;Embedding层
+&lt;/h2&gt;&lt;img src=&#34;embedding.png&#34; alt=&#34;img&#34; style=&#34;zoom:50%;&#34; /&gt;
+&lt;center&gt;&lt;img src=&#34;image-20250417172153609.png&#34; alt=&#34;image-20250417172153609&#34; style=&#34;zoom:67%;&#34; /&gt;&lt;/center&gt;
+&lt;p&gt;BERT中的 Embedding 模块是由三种 Embedding 共同组成而成。将文本输入到LLM后，首先进行的是 tokenization 处理，且两个特殊的 Token 会插入在文本开头 [CLS] 和结尾 [SEP]。[CLS]表示该特征用于分类模型，对非分类模型，该符号可以省去。[SEP]表示分句符号，用于断开输入语料中的两个句子。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Token Embeddings&lt;/code&gt;：将词表中的每个 token 转化为高维向量作为输入，首个单词 CLS 用于分类任务
+&lt;ul&gt;
+&lt;li&gt;通过建立词表将每个token转换成一个高维向量，作为模型输入。特别的，英文词汇会做更细粒度的切分。将词切割成更细粒度的 Word Piece 是为了解决未登录词的常见方法。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Segment Embeddings&lt;/code&gt;：用于区分句子界限，分别以 0 和 1 标记不同句子&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Position Embeddings&lt;/code&gt;：用于记录文本中各 token 的相对顺序
+&lt;ul&gt;
+&lt;li&gt;BERT 中处理的最长序列是 512 个 Token，长度超过 512 会被截取，BERT 在各个位置上学习一个向量来表示序列顺序的信息编码进来，这意味着 Position Embeddings 实际上是一个 (512, 768) 的 lookup 表。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;最后，BERT 模型将 Token Embeddings (1, n, 768) + Segment Embeddings(1, n, 768) + Position Embeddings(1, n, 768) 求和的方式得到一个 Embedding(1, n, 768) 作为模型的输入。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Transformer中position Embedding是用的三角函数，BERT中也有一个Postion Embedding是随机初始化，然后从数据中学出来的。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;[CLS]的作用&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;BERT在第一句前会加一个[CLS]标志，最后一层该位对应向量可以作为整句话的语义表示，从而用于下游的分类任务等。因为与文本中已有的其它词相比，这个无明显语义信息的符号会更“公平”地融合文本中各个词的语义信息，从而更好的表示整句话的语义。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;h2 id=&#34;encoder层&#34;&gt;Encoder层
+&lt;/h2&gt;&lt;center&gt;&lt;img src=&#34;BERT4.png&#34; alt=&#34;img&#34; style=&#34;zoom:33%;&#34; /&gt;&lt;/center&gt;
+&lt;p&gt;BERT是用了Transformer的encoder侧的网络，BERT的维度是768维度，然后分成12个head，每个head的维度是64维。BERT模型分为24层和12层两种，其差别就是使用transformer encoder的层数的差异。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;BERT-base : L=12，H=768，A=12，参数总量110M；&lt;/li&gt;
+&lt;li&gt;BERT-large: L=24，H=1024，A=16，参数总量340M；&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;参考&#34;&gt;参考
+&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://jalammar.github.io/illustrated-transformer/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;The Illustrated Transformer – 图解transformer&lt;/a&gt;  （超详细）&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://zhuanlan.zhihu.com/p/403495863&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;读懂BERT，看这一篇就够了 &lt;/a&gt; （结构详解）&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://x-hao.github.io/2021/07/21/bert/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;BERT模型架构与详解 &lt;/a&gt;（清晰）&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://blog.csdn.net/ty154542607/article/details/144026744&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;BERT 详解_bert模型&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://zhuanlan.zhihu.com/p/381279611&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;BERT系列（二）BERT模型的核心架构 &lt;/a&gt; （链接多）&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;博主推荐：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.zhihu.com/people/vc3-58&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;后厂NLPer-博客 &lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://newsletter.languagemodels.co/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;语言模型 &amp;amp; Co. |杰伊·阿拉马尔 &lt;/a&gt;  （图解系列，优质博主）&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://jalammar.github.io/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Jay Alammar &lt;/a&gt;（同上，旧博客）&lt;/p&gt;&lt;/blockquote&gt;
+</description>
+        </item>
+        <item>
         <title>Vscode远程连接</title>
         <link>https://xxcjw.github.io/p/vscode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/</link>
         <pubDate>Tue, 15 Apr 2025 20:07:17 +0800</pubDate>
@@ -559,12 +628,46 @@
           &lt;td style=&#34;text-align: center&#34;&gt;17亿&lt;/td&gt;
       &lt;/tr&gt;
       &lt;tr&gt;
-          &lt;td style=&#34;text-align: center&#34;&gt;Bloom-&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;Bloom-560M&lt;/td&gt;
           &lt;td style=&#34;text-align: center&#34;&gt;1,024维&lt;/td&gt;
           &lt;td style=&#34;text-align: center&#34;&gt;5.6亿&lt;/td&gt;
       &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
+&lt;p&gt;BERT模型分为24层和12层两种，BERT-base使用的是12层的Transformer Encoder结构，BERT-Large使用的是24层的Transformer Encoder结构。&lt;/p&gt;
+&lt;p&gt;对于不同的大型语言模型，它们能处理的最大token长度（也称为上下文窗口大小）是由模型本身决定的。&lt;/p&gt;
+&lt;p&gt;大模型内部都存在一个词表，存储了一系列token的集合。它决定了模型所 “认识” 的词汇和符号的范围。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;在LLM的&lt;code&gt;config.json&lt;/code&gt; 文件中，一般可以找到相关参数。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;如在 deepseek-r1-14b 的配置文件中，&lt;code&gt;max_position_embeddings&lt;/code&gt;参数定义了模型能够处理的最大位置嵌入数，也就是模型能够接受的最大token长度&lt;/li&gt;
+&lt;li&gt;而&lt;code&gt;vocab_size&lt;/code&gt;参数就是词表的大小（即多少行）；&lt;code&gt;hidden_size&lt;/code&gt;参数就是每一个token所对应的嵌入向量大小（即多少列）&lt;/li&gt;
+&lt;/ul&gt;&lt;/blockquote&gt;
+&lt;h3 id=&#34;llm流程&#34;&gt;LLM流程
+&lt;/h3&gt;&lt;p&gt;Token是LLM处理文本的基本单位。当我们将文本输入 LLM 时，模型首先会将文本切分成 Token 序列，然后再对这些 Token 通过词表转换成高维嵌入，最终经过大模型处理生成我们期望的输出结果。&lt;/p&gt;
+&lt;img src=&#34;fb3c64ab5417435.gif&#34; alt=&#34;fb3c64ab5417435&#34; style=&#34;zoom:80%;&#34; /&gt;
+&lt;p&gt;此外，还有一些相关概念：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;最大输出长度（输出限制）：模型单次生成文本的最大长度&lt;/li&gt;
+&lt;li&gt;上下文长度：指的是模型在处理输入时能够 “看到” 或考虑的文本范围，即模型在生成输出时，会参考的前文的 token 数量。&lt;/li&gt;
+&lt;li&gt;上下文截断：应对超长对话的策略。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;上下文截断&lt;/strong&gt;是一种在工程层面实施的策略，而非模型本身固有的能力。其具体指的是：如果用户在多轮对话中累积的输入和输出 Token 数量超出最大上下文长度的限制，服务端通常会保留最近的内容，而丢弃早期输入，即只能 “记住最近的，遗忘久远的”。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;模型的最大输入 token 长度有多种不同叫法：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;最大位置嵌入（Max Position Embeddings）&lt;/strong&gt;：位置嵌入用于标记每个 token 在输入序列中的位置，规定了模型能处理的输入序列最大长度&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;上下文窗口大小（Context Window Size）&lt;/strong&gt;：指的是模型在处理输入时能够考虑的上下文范围，也就是输入序列的最大长度。这个概念在自回归模型中常用，模型生成每个 token 时会参考之前的上下文，上下文窗口大小决定了能参考的最大 token 数量。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;&lt;/blockquote&gt;
+&lt;h3 id=&#34;参考链接&#34;&gt;参考链接
+&lt;/h3&gt;&lt;blockquote&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.aisharenet.com/damoxingguanjiancanai/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;大模型关键参数解读&lt;/a&gt;&lt;/p&gt;&lt;/blockquote&gt;
 </description>
         </item>
         <item>
