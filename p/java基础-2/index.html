@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-cn" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="">
-<title>Java基础 2</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="java基础-1\n方法（即函数） what is 方法 1、理解：方法是程序中最小的执行单元，如main方法【其实就是函数】\n2、什么时候用，有什么用：重复的代码、或具有普遍特性和功能的代码可以抽取到方法中，如发射功能\n">
+<title>Java基础-2</title>
 
 <link rel='canonical' href='https://xxcjw.github.io/p/java%E5%9F%BA%E7%A1%80-2/'>
 
-<link rel="stylesheet" href="/scss/style.min.ecadfb139628a394c81c08548f4d8f20e087bb8f183b587b1b4a7d2cdd03c920.css"><meta property='og:title' content="Java基础 2">
-<meta property='og:description' content="">
+<link rel="stylesheet" href="/scss/style.min.ecadfb139628a394c81c08548f4d8f20e087bb8f183b587b1b4a7d2cdd03c920.css"><meta property='og:title' content="Java基础-2">
+<meta property='og:description' content="java基础-1\n方法（即函数） what is 方法 1、理解：方法是程序中最小的执行单元，如main方法【其实就是函数】\n2、什么时候用，有什么用：重复的代码、或具有普遍特性和功能的代码可以抽取到方法中，如发射功能\n">
 <meta property='og:url' content='https://xxcjw.github.io/p/java%E5%9F%BA%E7%A1%80-2/'>
 <meta property='og:site_name' content='xxcjw&#39;s blog!'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-04-20T18:16:24&#43;08:00'/><meta property='article:modified_time' content='2025-04-20T18:47:20&#43;08:00'/>
-<meta name="twitter:title" content="Java基础 2">
-<meta name="twitter:description" content="">
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-04-20T18:16:24&#43;08:00'/><meta property='article:modified_time' content='2025-04-21T14:11:18&#43;08:00'/>
+<meta name="twitter:title" content="Java基础-2">
+<meta name="twitter:description" content="java基础-1\n方法（即函数） what is 方法 1、理解：方法是程序中最小的执行单元，如main方法【其实就是函数】\n2、什么时候用，有什么用：重复的代码、或具有普遍特性和功能的代码可以抽取到方法中，如发射功能\n">
     <link rel="shortcut icon" href="/favicon.ico" />
 
     </head>
@@ -43,223 +43,65 @@
 </script>
 <div class="container main-container flex on-phone--column extended">
 
-        <aside class="sidebar left-sidebar sticky ">
-    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
-        <span class="hamburger-box">
-            <span class="hamburger-inner"></span>
-        </span>
-    </button>
+        <div id="article-toolbar" style="position: sticky;top: 5px;z-index: 1000;">
+            <a href="/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
 
-    <header>
-        
-            
-            <figure class="site-avatar">
-                <a href="/">
-                
-                    <img src="/img/avatar.gif" width="300" height="300" class="site-logo" loading="lazy" alt="Avatar">
-                
-                </a>
-                
-                    <span class="emoji">🫠</span>
-                
-            </figure>
-            
-        
-        
-        <div class="site-meta">
-            <h1 class="site-name"><a href="/">xxcjw&#39;s blog!</a></h1>
-            <h2 class="site-description">热爱可抵岁月漫长</h2>
+
+
+                <span>返回</span>
+            </a>
         </div>
-    </header><ol class="menu-social">
-            
-                <li>
-                    <a 
-                        href='https://www.bilibili.com/'
-                        target="_blank"
-                        title="Bilibili"
-                        rel="me"
-                    >
-                        
-                        
-                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-brand-bilibili"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 10a4 4 0 0 1 4 -4h10a4 4 0 0 1 4 4v6a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4v-6z" /><path d="M8 3l2 3" /><path d="M16 3l-2 3" /><path d="M9 13v-2" /><path d="M15 11v2" /></svg>
-                        
-                    </a>
-                </li>
-            
-                <li>
-                    <a 
-                        href='https://mail.163.com/'
-                        target="_blank"
-                        title="email"
-                        rel="me"
-                    >
-                        
-                        
-                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-mail"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" /><path d="M3 7l9 6l9 -6" /></svg>
-                        
-                    </a>
-                </li>
-            
-                <li>
-                    <a 
-                        href='https://github.com/xxcjw'
-                        target="_blank"
-                        title="GitHub"
-                        rel="me"
-                    >
-                        
-                        
-                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-brand-github"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" /></svg>
-                        
-                    </a>
-                </li>
-            
-                <li>
-                    <a 
-                        href='https://www.xiaohongshu.com/'
-                        target="_blank"
-                        title="xhs"
-                        rel="me"
-                    >
-                        
-                        
-                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-book"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0" /><path d="M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0" /><path d="M3 6l0 13" /><path d="M12 6l0 13" /><path d="M21 6l0 13" /></svg>
-                        
-                    </a>
-                </li>
-            
-        </ol><ol class="menu" id="main-menu">
-        
-        
-        
-        <li >
-            <a href='/' >
-                
-                
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <polyline points="5 12 3 12 12 3 21 12 19 12" />
-  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
-  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
-</svg>
-
-
-
-                
-                <span>主页</span>
-            </a>
-        </li>
-        
-        
-        <li >
-            <a href='/archives/' >
-                
-                
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <rect x="3" y="4" width="18" height="4" rx="2" />
-  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
-  <line x1="10" y1="12" x2="14" y2="12" />
-</svg>
-
-
-
-                
-                <span>归档</span>
-            </a>
-        </li>
-        
-        
-        <li >
-            <a href='/search/' >
-                
-                
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="10" cy="10" r="7" />
-  <line x1="21" y1="21" x2="15" y2="15" />
-</svg>
-
-
-
-                
-                <span>搜索</span>
-            </a>
-        </li>
-        
-        
-        <li >
-            <a href='/%E5%85%B3%E4%BA%8E/' >
-                
-                
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="7" r="4" />
-  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
-</svg>
-
-
-
-                
-                <span>关于</span>
-            </a>
-        </li>
-        
-        
-        <li >
-            <a href='/links/' >
-                
-                
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
-  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
-</svg>
-
-
-
-                
-                <span>友链</span>
-            </a>
-        </li>
-        
-        <li class="menu-bottom-section">
-            <ol class="menu">
-
-                
-                    <li id="dark-mode-toggle">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="8" cy="12" r="2" />
-  <rect x="2" y="6" width="20" height="12" rx="6" />
-</svg>
-
-
-
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="16" cy="12" r="2" />
-  <rect x="2" y="6" width="20" height="12" rx="6" />
-</svg>
-
-
-
-                        <span>暗色模式</span>
-                    </li>
-                
-            </ol>
-        </li>
-    </ol>
-</aside>
-
     
 
-    
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#方法即函数">方法（即函数）</a>
+      <ol>
+        <li><a href="#what-is-方法">what is 方法</a></li>
+        <li><a href="#方法的格式">方法的格式</a></li>
+        <li><a href="#方法重载">方法重载</a></li>
+        <li><a href="#方法内存图">方法内存图★</a></li>
+        <li><a href="#基本和引用数据类型">基本和引用数据类型🤔</a></li>
+      </ol>
+    </li>
+    <li><a href="#面向对象">面向对象</a>
+      <ol>
+        <li><a href="#类和对象">类和对象</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
 
             <main class="main full-width">
     <article class="main-article">
@@ -269,7 +111,7 @@
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/p/java%E5%9F%BA%E7%A1%80-2/">Java基础 2</a>
+            <a href="/p/java%E5%9F%BA%E7%A1%80-2/">Java基础-2</a>
         </h2>
     
         
@@ -300,7 +142,7 @@
             <div>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" stroke-width="2"> <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4"></path> <path d="M13.5 6.5l4 4"></path> <path d="M16 19h6"></path> </svg> 
                 <time class="article-words">
-                    0 字
+                    1048 字
                 </time>
             </div>
         
@@ -317,7 +159,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 0 分钟
+                    阅读时长: 3 分钟
                 </time>
             </div>
         
@@ -328,6 +170,14 @@
 
 
     
+    <header class="article-category">
+        
+            <a href="/categories/java/" style="background-color: #2a9d8f; color: #fff;">
+                Java
+            </a>
+        
+        </header>
+    
 
 </div>
 
@@ -337,12 +187,188 @@
     <section class="article-content">
     
     
-    
+    <p><a class="link" href="../java%e5%9f%ba%e7%a1%80-1/index.md" >java基础-1</a></p>
+<h2 id="方法即函数">方法（即函数）
+</h2><h3 id="what-is-方法">what is 方法
+</h3><blockquote>
+<p>1、理解：方法是程序中最小的执行单元，如main方法【<strong>其实就是函数</strong>】</p>
+<p>2、什么时候用，有什么用：<strong>重复的代码</strong>、或具有普遍特性和功能的代码<strong>可以抽取到方法中</strong>，如发射功能</p>
+<p>3、好处</p>
+<ul>
+<li>将一些代码打包在一起，提高代码的复用性</li>
+<li>提高代码的可维护性</li>
+</ul>
+<p>4、写方法时注意思维，三连问：<em><code>我要干嘛？我需要用到什么？是否需要返回值？</code></em></p></blockquote>
+<h3 id="方法的格式">方法的格式
+</h3><blockquote>
+<p>1、分为两步：（1）方法定义（2）方法调用</p>
+<p>2、形参和实参</p>
+<ul>
+<li>形参：方法定义中的参数</li>
+<li>实参：方法调用中的参数</li>
+</ul>
+<p>3、注意事项</p>
+<ul>
+<li>方法不调用就不执行</li>
+<li>方法与方法平级，且不能互相嵌套（可以嵌套）</li>
+<li>return关键字
+<ul>
+<li>方法没有返回值：可以省略不写；如果一定要写，只写<code>return</code>，后面不能跟具体数据，表示结束方法</li>
+<li>方法有返回值：必须要写，且和返回值类型要一致</li>
+<li>return与方法有关，与循环无关，执行return后整个方法全部结束（包括方法里的循环）（与break有点像）</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">//不带返回值的方法定义和调用</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">//缺点：大部分情况我们希望能够拿到返回值并用该值进行后续一系列操作，而不是把值打印在控制台上</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">方法名</span><span class="p">(</span><span class="n">参数1</span><span class="p">,</span><span class="n">参数2</span><span class="p">,...)</span><span class="w"> </span><span class="p">{...}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">getSum</span><span class="p">(</span><span class="n">10</span><span class="p">,</span><span class="n">20</span><span class="p">);</span><span class="w">   </span><span class="c1">//实参</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">getSum</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">num1</span><span class="p">,</span><span class="kt">int</span><span class="w"> </span><span class="n">num2</span><span class="p">){</span><span class="w">     </span><span class="c1">//形参</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">num1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">num2</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">result</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">//-----------------------------------------------------------------</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">//带返回值的方法定义和调用</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">返回值类型</span><span class="w"> </span><span class="nf">方法名</span><span class="p">(</span><span class="n">参数</span><span class="p">){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">方法体</span><span class="err">；</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">返回值</span><span class="err">；</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                                 </span><span class="c1">//直接调用，上述示例就是</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">sum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getSum</span><span class="p">(</span><span class="n">10</span><span class="p">,</span><span class="n">20</span><span class="p">);</span><span class="w">    </span><span class="c1">//赋值调用</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">getSum</span><span class="p">(</span><span class="n">10</span><span class="p">,</span><span class="n">20</span><span class="p">));</span><span class="w">    </span><span class="c1">//输出调用</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">getSum</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="kt">int</span><span class="w"> </span><span class="n">b</span><span class="p">){</span><span class="w">    
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">result</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div></blockquote>
+<h3 id="方法重载">方法重载
+</h3><blockquote>
+<center><img src="markdown 图片/image-20250421115829334.png" alt="image-20250421115829334" style="zoom:50%;" /></center>
+<p>这样定义方法和调用方法就不需要那么麻烦了，只需要一个名称就可以了</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">Demo1</span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">Sum</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">num1</span><span class="p">,</span><span class="kt">int</span><span class="w"> </span><span class="n">num2</span><span class="p">){</span><span class="w">     
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">num1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">num2</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">Sum</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">num1</span><span class="p">,</span><span class="kt">int</span><span class="w"> </span><span class="n">num2</span><span class="p">,</span><span class="kt">int</span><span class="w"> </span><span class="n">num3</span><span class="p">){</span><span class="w">     
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">num1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">num2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">num3</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div></blockquote>
+<h3 id="方法内存图">方法内存图★
+</h3><blockquote>
+<ul>
+<li>方法被调用之后就会进<strong>栈</strong>运行（因为可以嵌套，符合后进先出）</li>
+<li>方法执行完毕之后，出栈，<strong>方法里定义的变量随之消失</strong></li>
+</ul>
+<center><img src="markdown 图片/image-20250421120133090.png" alt="image-20250421120133090" style="zoom:33%;" /></center>
+<center><img src="markdown 图片/image-20250421120217742.png" alt="image-20250421120217742" style="zoom:50%;" /><center>
+<center><img src="markdown 图片/image-20250421120348118.png" alt="image-20250421120348118" style="zoom:50%;" /></center>
+<center><img src="markdown 图片/image-20250421120814582.png" alt="image-20250421120814582" style="zoom:50%;" /></center></blockquote>
+<h3 id="基本和引用数据类型">基本和引用数据类型🤔
+</h3><blockquote>
+<ul>
+<li>简单记忆：除了基本数据类型其他都是引用数据类型</li>
+<li>理解记忆：（内存角度理解）只要是new出来的都是引用数据类型，用的不是真实的数据</li>
+</ul>
+<p>基本数据类型变量中存储的是真实的值；而引用数据类型中变量存储的是<strong>地址值</strong>而不是真实的值，即引用了其他空间中的数据</p>
+<center><img src="markdown 图片/image-20250421121128909.png" alt="image-20250421121128909" style="zoom:50%;" /></center>
+<ul>
+<li>基本数据类型：存储的真实数据
+<ul>
+<li>赋值给其他变量的，也是赋的真实值</li>
+</ul>
+</li>
+<li>引用数据类型：存储的是地址值，真实的数据存储在其他空间中
+<ul>
+<li>赋值给其他变量，赋的是地址值</li>
+</ul>
+</li>
+</ul></blockquote>
+<h2 id="面向对象">面向对象
+</h2><h3 id="类和对象">类和对象
+</h3><blockquote>
+<p>（1）理解</p>
+<p>必须先设计类，才能获得对象【把它和数组一样理解就行了，没有多高大上】</p>
+<ul>
+<li>类：是对象共同特征的描述</li>
+<li>对象：是真实存在的具体东西/实例（new一个东西就是创建了一个对象）</li>
+</ul>
+<center><img src="markdown 图片/image-20250421125503041.png" alt="image-20250421125503041" style="zoom:50%;" /></center></blockquote>
+
 </section>
 
 
     <footer class="article-footer">
     
+    
+    <section class="article-category">
+        
+            <a href="/categories/java/" style="background-color: #2a9d8f; color: #fff;">
+                Java
+            </a>
+        
+    </section>
     
 
     <section class="article-lastmod">
@@ -355,7 +381,7 @@
 
 
         <span>
-            最后更新于 2025-04-20 18:47
+            最后更新于 2025-04-21 14:11
         </span>
     </section></footer>
 
