@@ -7,7 +7,7 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
         <copyright>xxcjw&#39;s bolg！</copyright>
-        <lastBuildDate>Tue, 22 Apr 2025 19:48:30 +0800</lastBuildDate><atom:link href="https://xxcjw.github.io/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Tue, 22 Apr 2025 21:20:43 +0800</lastBuildDate><atom:link href="https://xxcjw.github.io/post/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>LLM系列-6</title>
         <link>https://xxcjw.github.io/p/llm%E7%B3%BB%E5%88%97-6/</link>
         <pubDate>Tue, 22 Apr 2025 19:22:06 +0800</pubDate>
@@ -905,6 +905,50 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;/blockquote&gt;
+&lt;h3 id=&#34;对象内存图&#34;&gt;对象内存图
+&lt;/h3&gt;&lt;blockquote&gt;
+&lt;p&gt;前面学过 java 的内存空间，先学习其中三个：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;栈：方法以及方法内的变量运行时使用的内存&lt;/li&gt;
+&lt;li&gt;堆：new创建出来的存储在堆中，会为其分配一段地址空间，返回的值一个地址起始值&lt;/li&gt;
+&lt;li&gt;方法区：类的字节码文件加载时进入此内存&lt;/li&gt;
+&lt;/ul&gt;&lt;/blockquote&gt;
+&lt;h4 id=&#34;多个对象内存图&#34;&gt;多个对象内存图
+&lt;/h4&gt;&lt;blockquote&gt;
+&lt;center&gt;&lt;img src=&#34;markdown 图片/image-20250422202238217.png&#34; alt=&#34;image-20250422202238217&#34; style=&#34;zoom:50%;&#34; /&gt;&lt;/center&gt;
+&lt;ul&gt;
+&lt;li&gt;多个对象在堆内存中，都有不同的内存划分，成员变量存储在各自的内存区域中，成员方法多个对象共用的一份&lt;/li&gt;
+&lt;li&gt;创建对象时，对象存储的是一个地址值（new出来的存在堆中，堆给出的是地址值）&lt;/li&gt;
+&lt;li&gt;对象中的成员变量是存储在堆中的&lt;/li&gt;
+&lt;/ul&gt;&lt;/blockquote&gt;
+&lt;h4 id=&#34;多个引用指向同一对象&#34;&gt;多个引用指向同一对象
+&lt;/h4&gt;&lt;blockquote&gt;
+&lt;center&gt;&lt;img src=&#34;markdown 图片/image-20250422202518218.png&#34; alt=&#34;image-20250422202518218&#34; style=&#34;zoom:50%;&#34; /&gt;&lt;/center&gt;&lt;/blockquote&gt;
+&lt;h4 id=&#34;基本引用数据类型&#34;&gt;基本&amp;amp;引用数据类型
+&lt;/h4&gt;&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;基本数据类型：存的是真实值，存在自己空间中
+&lt;ul&gt;
+&lt;li&gt;赋值给其他变量，也是赋的真实的值&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;引用数据类型：自己空间存的是地址值，即引用的是别的地址空间存的值（数据存在其他空间）
+&lt;ul&gt;
+&lt;li&gt;赋值给其他变量，赋的是地址值&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;&lt;/blockquote&gt;
+&lt;h4 id=&#34;this的内存原理&#34;&gt;this的内存原理
+&lt;/h4&gt;&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;this的作用：区分局部变量和成员变量&lt;/li&gt;
+&lt;li&gt;this的本质：所在&lt;strong&gt;方法调用者&lt;/strong&gt;的地址值&lt;/li&gt;
+&lt;/ul&gt;
+&lt;center&gt;&lt;img src=&#34;markdown 图片/image-20250422204802386.png&#34; alt=&#34;image-20250422204802386&#34; style=&#34;zoom:50%;&#34; /&gt;&lt;/center&gt;&lt;/blockquote&gt;
+&lt;h4 id=&#34;成员变量和局部变量&#34;&gt;成员变量和局部变量
+&lt;/h4&gt;&lt;blockquote&gt;
+&lt;p&gt;了解即可&lt;/p&gt;
+&lt;center&gt;&lt;img src=&#34;markdown 图片/image-20250422205437981.png&#34; alt=&#34;image-20250422205437981&#34; style=&#34;zoom:50%;&#34; /&gt;&lt;/center&gt;&lt;/blockquote&gt;
 </description>
         </item>
         <item>
@@ -2047,6 +2091,7 @@
 &lt;p&gt;（1）java（虚拟机）内存分配&lt;/p&gt;
 &lt;center&gt;&lt;img src=&#34;markdown 图片/image-20250421112632125.png&#34; alt=&#34;image-20250421112632125&#34; style=&#34;zoom:50%;&#34; /&gt;&lt;/center&gt;
 &lt;p&gt;一看见new就知道是存储在&lt;strong&gt;堆&lt;/strong&gt;中的，堆中的每一个对象/数组都对应一个&lt;strong&gt;地址值&lt;/strong&gt;（即只要是new出来的一定在堆里面开辟了一个小空间）&lt;/p&gt;
+&lt;p&gt;方法以及方法内的变量都存储在栈中&lt;/p&gt;
 &lt;p&gt;（2）例子：数组内存图&lt;/p&gt;
 &lt;center&gt;&lt;img src=&#34;markdown 图片/image-20250421112907608.png&#34; alt=&#34;image-20250421112907608&#34; style=&#34;zoom:50%;&#34; /&gt;&lt;/center&gt;
 &lt;center&gt;&lt;img src=&#34;markdown 图片/image-20250421112947714.png&#34; alt=&#34;image-20250421112947714&#34; style=&#34;zoom:50%;&#34; /&gt;&lt;/center&gt;&lt;/blockquote&gt;

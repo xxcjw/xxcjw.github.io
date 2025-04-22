@@ -10,7 +10,7 @@
 <meta property='og:description' content="java基础-1\n方法（即函数） what is 方法 1、理解：方法是程序中最小的执行单元，如main方法【其实就是函数】\n2、什么时候用，有什么用：重复的代码、或具有普遍特性和功能的代码可以抽取到方法中，如发射功能\n">
 <meta property='og:url' content='https://xxcjw.github.io/p/java%E5%9F%BA%E7%A1%80-2/'>
 <meta property='og:site_name' content='xxcjw&#39;s blog!'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-04-20T18:16:24&#43;08:00'/><meta property='article:modified_time' content='2025-04-22T19:48:30&#43;08:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-04-20T18:16:24&#43;08:00'/><meta property='article:modified_time' content='2025-04-22T21:20:43&#43;08:00'/>
 <meta name="twitter:title" content="Java基础-2">
 <meta name="twitter:description" content="java基础-1\n方法（即函数） what is 方法 1、理解：方法是程序中最小的执行单元，如main方法【其实就是函数】\n2、什么时候用，有什么用：重复的代码、或具有普遍特性和功能的代码可以抽取到方法中，如发射功能\n">
     <link rel="shortcut icon" href="/favicon.ico" />
@@ -100,6 +100,15 @@
         </li>
         <li><a href="#构造方法">构造方法</a></li>
         <li><a href="#标准javabean类">标准JavaBean类</a></li>
+        <li><a href="#对象内存图">对象内存图</a>
+          <ol>
+            <li><a href="#多个对象内存图">多个对象内存图</a></li>
+            <li><a href="#多个引用指向同一对象">多个引用指向同一对象</a></li>
+            <li><a href="#基本引用数据类型">基本&amp;引用数据类型</a></li>
+            <li><a href="#this的内存原理">this的内存原理</a></li>
+            <li><a href="#成员变量和局部变量">成员变量和局部变量</a></li>
+          </ol>
+        </li>
       </ol>
     </li>
   </ol>
@@ -151,7 +160,7 @@
             <div>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" stroke-width="2"> <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4"></path> <path d="M13.5 6.5l4 4"></path> <path d="M16 19h6"></path> </svg> 
                 <time class="article-words">
-                    4209 字
+                    4596 字
                 </time>
             </div>
         
@@ -168,7 +177,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 9 分钟
+                    阅读时长: 10 分钟
                 </time>
             </div>
         
@@ -994,6 +1003,50 @@
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div></blockquote>
+<h3 id="对象内存图">对象内存图
+</h3><blockquote>
+<p>前面学过 java 的内存空间，先学习其中三个：</p>
+<ul>
+<li>栈：方法以及方法内的变量运行时使用的内存</li>
+<li>堆：new创建出来的存储在堆中，会为其分配一段地址空间，返回的值一个地址起始值</li>
+<li>方法区：类的字节码文件加载时进入此内存</li>
+</ul></blockquote>
+<h4 id="多个对象内存图">多个对象内存图
+</h4><blockquote>
+<center><img src="markdown 图片/image-20250422202238217.png" alt="image-20250422202238217" style="zoom:50%;" /></center>
+<ul>
+<li>多个对象在堆内存中，都有不同的内存划分，成员变量存储在各自的内存区域中，成员方法多个对象共用的一份</li>
+<li>创建对象时，对象存储的是一个地址值（new出来的存在堆中，堆给出的是地址值）</li>
+<li>对象中的成员变量是存储在堆中的</li>
+</ul></blockquote>
+<h4 id="多个引用指向同一对象">多个引用指向同一对象
+</h4><blockquote>
+<center><img src="markdown 图片/image-20250422202518218.png" alt="image-20250422202518218" style="zoom:50%;" /></center></blockquote>
+<h4 id="基本引用数据类型">基本&amp;引用数据类型
+</h4><blockquote>
+<ul>
+<li>基本数据类型：存的是真实值，存在自己空间中
+<ul>
+<li>赋值给其他变量，也是赋的真实的值</li>
+</ul>
+</li>
+<li>引用数据类型：自己空间存的是地址值，即引用的是别的地址空间存的值（数据存在其他空间）
+<ul>
+<li>赋值给其他变量，赋的是地址值</li>
+</ul>
+</li>
+</ul></blockquote>
+<h4 id="this的内存原理">this的内存原理
+</h4><blockquote>
+<ul>
+<li>this的作用：区分局部变量和成员变量</li>
+<li>this的本质：所在<strong>方法调用者</strong>的地址值</li>
+</ul>
+<center><img src="markdown 图片/image-20250422204802386.png" alt="image-20250422204802386" style="zoom:50%;" /></center></blockquote>
+<h4 id="成员变量和局部变量">成员变量和局部变量
+</h4><blockquote>
+<p>了解即可</p>
+<center><img src="markdown 图片/image-20250422205437981.png" alt="image-20250422205437981" style="zoom:50%;" /></center></blockquote>
 
 </section>
 
@@ -1020,7 +1073,7 @@
 
 
         <span>
-            最后更新于 2025-04-22 19:48
+            最后更新于 2025-04-22 21:20
         </span>
     </section></footer>
 
