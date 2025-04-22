@@ -50,7 +50,7 @@
         <pubDate>Sun, 20 Apr 2025 18:16:24 +0800</pubDate>
         
         <guid>https://xxcjw.github.io/p/java%E5%9F%BA%E7%A1%80-2/</guid>
-        <description>&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;../Java%e5%9f%ba%e7%a1%80-1/index.md&#34; &gt;java基础-1&lt;/a&gt;&lt;/p&gt;
+        <description>&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;../java%e5%9f%ba%e7%a1%80-1/index.md&#34; &gt;java基础-1&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id=&#34;方法即函数&#34;&gt;方法（即函数）
 &lt;/h2&gt;&lt;h3 id=&#34;what-is-方法&#34;&gt;what is 方法
 &lt;/h3&gt;&lt;blockquote&gt;
@@ -223,7 +223,21 @@
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;center&gt;&lt;img src=&#34;markdown 图片/image-20250421125503041.png&#34; alt=&#34;image-20250421125503041&#34; style=&#34;zoom:50%;&#34; /&gt;&lt;/center&gt;&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;类是一个模板，描述对象的状态和行为
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;对象是类的一个实例，有状态和行为
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;方法就是行为，一个类可以有很多行为
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;实例变量就是对象的实例，对象状态由zhe&amp;#39;x
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;center&gt;&lt;img src=&#34;markdown 图片/image-20250421125503041.png&#34; alt=&#34;image-20250421125503041&#34; style=&#34;zoom:50%;&#34; /&gt;&lt;/center&gt;&lt;/blockquote&gt;
 &lt;blockquote&gt;
 &lt;p&gt;（2）类的定义&lt;/p&gt;
 &lt;p&gt;类的组成是由属性和行为两部分组成，图如上&lt;/p&gt;
@@ -1029,6 +1043,9 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.runoob.com/java/java-basic-syntax.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Java 基础语法 | 菜鸟教程&lt;/a&gt;&lt;/p&gt;&lt;/blockquote&gt;
 &lt;h2 id=&#34;java语法基础&#34;&gt;java语法基础
 &lt;/h2&gt;&lt;h3 id=&#34;常量变量数据类型&#34;&gt;常量、变量、数据类型
 &lt;/h3&gt;&lt;blockquote&gt;
