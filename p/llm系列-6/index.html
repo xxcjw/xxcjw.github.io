@@ -10,7 +10,7 @@
 <meta property='og:description' content="MOE架构详解 概述 MOE 架构的基本思想是在传统 Transformer 模型中，将每个前馈网络（FFN）层替换为一个 MOE 层。一个 MOE 层通常由两个关键部分组成：\n专家网络（Experts） 每个专家是一个独立的子网络（通常是 FFN），在实际计算中只有部分专家会被激活参与处理。通过让多个专家分担不同数据子集的计算，模型在预训练时可以以较低的计算开销获得大参数量带来的表示能力。 门控网络（Gating/Router） 该模块负责根据输入 token 的特征动态选择激活哪些专家。门控网络一般采用一个带 softmax 的简单前馈网络来计算每个专家的权重。经过训练后，门控网络会逐步学会将相似的输入路由到表现更好的专家。 专家是如何学习的 MOE模型中的专家方向是事先规划好的还是自发生成的。答案是：专家都是”自学成才“的。\n">
 <meta property='og:url' content='https://xxcjw.github.io/p/llm%E7%B3%BB%E5%88%97-6/'>
 <meta property='og:site_name' content='xxcjw&#39;s blog!'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-04-22T19:22:06&#43;08:00'/><meta property='article:modified_time' content='2025-04-22T19:48:30&#43;08:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-04-22T19:22:06&#43;08:00'/><meta property='article:modified_time' content='2025-04-24T19:28:36&#43;08:00'/>
 <meta name="twitter:title" content="LLM系列-6">
 <meta name="twitter:description" content="MOE架构详解 概述 MOE 架构的基本思想是在传统 Transformer 模型中，将每个前馈网络（FFN）层替换为一个 MOE 层。一个 MOE 层通常由两个关键部分组成：\n专家网络（Experts） 每个专家是一个独立的子网络（通常是 FFN），在实际计算中只有部分专家会被激活参与处理。通过让多个专家分担不同数据子集的计算，模型在预训练时可以以较低的计算开销获得大参数量带来的表示能力。 门控网络（Gating/Router） 该模块负责根据输入 token 的特征动态选择激活哪些专家。门控网络一般采用一个带 softmax 的简单前馈网络来计算每个专家的权重。经过训练后，门控网络会逐步学会将相似的输入路由到表现更好的专家。 专家是如何学习的 MOE模型中的专家方向是事先规划好的还是自发生成的。答案是：专家都是”自学成才“的。\n">
     <link rel="shortcut icon" href="/favicon.ico" />
@@ -171,8 +171,8 @@
     
     <header class="article-category">
         
-            <a href="/categories/llm/" >
-                LLM
+            <a href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/" style="background-color: #2a9d8f; color: #fff;">
+                大模型
             </a>
         
         </header>
@@ -227,8 +227,8 @@
     
     <section class="article-category">
         
-            <a href="/categories/llm/" >
-                LLM
+            <a href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/" style="background-color: #2a9d8f; color: #fff;">
+                大模型
             </a>
         
     </section>
@@ -244,7 +244,7 @@
 
 
         <span>
-            最后更新于 2025-04-22 19:48
+            最后更新于 2025-04-24 19:28
         </span>
     </section></footer>
 
