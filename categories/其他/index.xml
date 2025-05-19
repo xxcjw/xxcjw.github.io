@@ -6,6 +6,36 @@
         <description>Recent content in 其他 on xxcjw&#39;s blog!</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
-        <copyright>xxcjw&#39;s bolg！</copyright><atom:link href="https://xxcjw.github.io/categories/%E5%85%B6%E4%BB%96/index.xml" rel="self" type="application/rss+xml" />
+        <copyright>xxcjw&#39;s bolg！</copyright><atom:link href="https://xxcjw.github.io/categories/%E5%85%B6%E4%BB%96/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Screen查看历史记录</title>
+        <link>https://xxcjw.github.io/p/screen%E6%9F%A5%E7%9C%8B%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95/</link>
+        <pubDate>Wed, 30 Apr 2025 16:05:00 +0800</pubDate>
+        
+        <guid>https://xxcjw.github.io/p/screen%E6%9F%A5%E7%9C%8B%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95/</guid>
+        <description>&lt;h2 id=&#34;问题描述&#34;&gt;问题描述
+&lt;/h2&gt;&lt;p&gt;screen是Linux环境下的多窗口管理器，可以管理可后台运行的窗口。问题是，每次进入screen时，窗口就无法滚动查看先前输出的内容了（即往上翻翻不动）。可以通过copy mode解决。&lt;/p&gt;
+&lt;h2 id=&#34;解决&#34;&gt;解决
+&lt;/h2&gt;&lt;p&gt;首先，进入后台运行的screen窗口&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;screen -R screen_name
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;进入后，键盘输入组合键 &lt;code&gt;Ctrl&lt;/code&gt; + &lt;code&gt;A&lt;/code&gt; + &lt;code&gt;[&lt;/code&gt; 即可进入copy mode，就可以通过例如方向键向上查看先前输出的内容了。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Ctrl + A + [
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;按 esc 退出此模式。&lt;/p&gt;
+</description>
+        </item>
+        
     </channel>
 </rss>

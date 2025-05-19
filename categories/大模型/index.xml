@@ -547,6 +547,46 @@
 &lt;/div&gt;&lt;blockquote&gt;
 &lt;p&gt;在问答任务中，模型通过 &lt;code&gt;start_logits&lt;/code&gt; 和 &lt;code&gt;end_logits&lt;/code&gt; 来输出答案的位置。需要从模型输出的 tokens 中提取出 &lt;strong&gt;起始位置&lt;/strong&gt; 和 &lt;strong&gt;结束位置&lt;/strong&gt; 的答案，然后将其通过 &lt;code&gt;convert_ids_to_tokens&lt;/code&gt; 转换为字符串。&lt;code&gt;decode&lt;/code&gt; 方法主要用于生成文本，而不是处理直接的预测位置（例如起始和结束位置）。&lt;/p&gt;
 &lt;p&gt;在问答任务中，我们不是生成每个 token，而是从模型输出的 &lt;code&gt;start_logits&lt;/code&gt; 和 &lt;code&gt;end_logits&lt;/code&gt; 中直接找到答案的位置。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;h2 id=&#34;huggingface-transformers&#34;&gt;HuggingFace Transformers
+&lt;/h2&gt;&lt;h3 id=&#34;automodel&#34;&gt;AutoModel
+&lt;/h3&gt;&lt;p&gt;&lt;code&gt;AutoModel&lt;/code&gt; 是 &lt;code&gt;HuggingFace Transformers&lt;/code&gt; 的基础类，这是底层模型加载器，适用于各种预训练 Transformer 模型（如 BERT、MPNet、RoBERTa&amp;hellip;）&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;它输出的是 &lt;strong&gt;每个 token 的向量&lt;/strong&gt;（&lt;code&gt;[batch_size, seq_len, hidden_size]&lt;/code&gt;）&lt;/li&gt;
+&lt;li&gt;不做 pooling，也不做语义对比学习&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;sentencetransformer&#34;&gt;SentenceTransformer
+&lt;/h3&gt;&lt;p&gt;&lt;code&gt;SentenceTransformer&lt;/code&gt; 是 sentence-transformers 库提供的高级类。是对 HuggingFace 中 &lt;code&gt;AutoModel&lt;/code&gt; 的高级封装，专门用于生成句子级别嵌入（sentence embeddings）的工具。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;它是专门为 语义嵌入（sentence embedding）任务设计的封装器&lt;/li&gt;
+&lt;li&gt;内部仍然是基于 &lt;code&gt;AutoModel&lt;/code&gt;，但额外做了：
+&lt;ul&gt;
+&lt;li&gt;Pooling（Mean/CLS/Max）&lt;/li&gt;
+&lt;li&gt;对比学习微调（例如：SimCSE、Triplet loss 等）&lt;/li&gt;
+&lt;li&gt;更易用的 &lt;code&gt;.encode()&lt;/code&gt; 接口，输出句子级别嵌入向量&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kn&#34;&gt;from&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;sentence_transformers&lt;/span&gt; &lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;SentenceTransformer&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;model&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;SentenceTransformer&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;all-mpnet-base-v2&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;embedding&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;model&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;encode&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;This is a test&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;embedding&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;shape&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;  &lt;span class=&#34;c1&#34;&gt;# e.g. [768]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;一些句子级嵌入大模型，可以在 HuggingFace - Models - Libraries - sentence-transformers 找到：&lt;/p&gt;
+&lt;center&gt;&lt;img src=&#34;image-20250430171349871.png&#34; alt=&#34;image-20250430171349871&#34; style=&#34;zoom:50%;&#34; /&gt;&lt;/center&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.sbert.net/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Sentence-Transformers 文档&lt;/a&gt;&lt;/p&gt;&lt;/blockquote&gt;
 &lt;h2 id=&#34;大模型词表嵌入&#34;&gt;大模型词表嵌入
 &lt;/h2&gt;&lt;table&gt;
   &lt;thead&gt;
