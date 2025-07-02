@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="mysql安装 MySQL 采用客户端 - 服务器（C/S）架构，包含两个核心组件：\n服务端 MySQL Server：管理数据库文件、处理连接请求、返回结果和数据存储 客户端 MySQL Client：发送请求、通过客户端程序（如命令行工具）连接到服务器 安装的 MySQL 软件本质上是服务器端（即 mysql-server），负责管理数据库、处理请求和存储数据。而客户端（常见的是命令行客户端）是用于连接并与 MySQL 服务器交互的工具或程序。\n">
+<title>Mysql使用</title>
+
+<link rel='canonical' href='https://xxcjw.github.io/p/mysql%E4%BD%BF%E7%94%A8/'>
+
+<link rel="stylesheet" href="/scss/style.min.57fb1d9ded28f968745a879e9015fe74f774718f509da7194f49f738d0118235.css"><meta property='og:title' content="Mysql使用">
+<meta property='og:description' content="mysql安装 MySQL 采用客户端 - 服务器（C/S）架构，包含两个核心组件：\n服务端 MySQL Server：管理数据库文件、处理连接请求、返回结果和数据存储 客户端 MySQL Client：发送请求、通过客户端程序（如命令行工具）连接到服务器 安装的 MySQL 软件本质上是服务器端（即 mysql-server），负责管理数据库、处理请求和存储数据。而客户端（常见的是命令行客户端）是用于连接并与 MySQL 服务器交互的工具或程序。\n">
+<meta property='og:url' content='https://xxcjw.github.io/p/mysql%E4%BD%BF%E7%94%A8/'>
+<meta property='og:site_name' content='xxcjw&#39;s blog!'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-07-01T20:15:27&#43;08:00'/><meta property='article:modified_time' content='2025-07-02T10:43:05&#43;08:00'/>
+<meta name="twitter:title" content="Mysql使用">
+<meta name="twitter:description" content="mysql安装 MySQL 采用客户端 - 服务器（C/S）架构，包含两个核心组件：\n服务端 MySQL Server：管理数据库文件、处理连接请求、返回结果和数据存储 客户端 MySQL Client：发送请求、通过客户端程序（如命令行工具）连接到服务器 安装的 MySQL 软件本质上是服务器端（即 mysql-server），负责管理数据库、处理请求和存储数据。而客户端（常见的是命令行客户端）是用于连接并与 MySQL 服务器交互的工具或程序。\n">
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended">
+
+        <div id="article-toolbar" style="position: sticky;top: 5px;z-index: 1000;">
+            <a href="/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>返回</span>
+            </a>
+        </div>
+    
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#mysql安装">mysql安装</a></li>
+    <li><a href="#mysql启动">mysql启动</a></li>
+    <li><a href="#mysql登录">mysql登录</a>
+      <ol>
+        <li><a href="#账户管理">账户管理</a></li>
+        <li><a href="#我的账户">我的账户</a></li>
+        <li><a href="#登录使用">登录使用</a></li>
+        <li><a href="#删除mysql">删除mysql</a></li>
+      </ol>
+    </li>
+    <li><a href="#注意">注意</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/mysql%E4%BD%BF%E7%94%A8/">Mysql使用</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2025-07-01</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" stroke-width="2"> <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4"></path> <path d="M13.5 6.5l4 4"></path> <path d="M16 19h6"></path> </svg> 
+                <time class="article-words">
+                    1446 字
+                </time>
+            </div>
+        
+
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 3 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+
+
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/" style="background-color: #2a9d8f; color: #fff;">
+                工具使用
+            </a>
+        
+        </header>
+    
+
+</div>
+
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="mysql安装">mysql安装
+</h2><p>MySQL 采用客户端 - 服务器（C/S）架构，包含两个核心组件：</p>
+<ul>
+<li>服务端 MySQL Server：管理数据库文件、处理连接请求、返回结果和数据存储</li>
+<li>客户端 MySQL Client：发送请求、通过客户端程序（如命令行工具）连接到服务器</li>
+</ul>
+<p>安装的 MySQL 软件本质上是服务器端（即 <code>mysql-server</code>），负责管理数据库、处理请求和存储数据。而客户端（常见的是命令行客户端）是用于连接并与 MySQL 服务器交互的工具或程序。</p>
+<img src="image-20250702104035725.png" alt="image-20250702104035725" style="zoom:70%;" />
+<h2 id="mysql启动">mysql启动
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo systemctl status mysql      查看mysql运行状态，应该是active (running) 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">sudo apt install mysql-server     安装mysql
+</span></span><span class="line"><span class="cl">sudo apt-get install mysql-server
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">sudo systemctl enable mysql        启用 MySQL 开机自启
+</span></span><span class="line"><span class="cl">sudo systemctl is-enabled mysql    验证是否已成功设置
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">sudo systemctl start mysql         手动启动mysql（安装后会自动启用）
+</span></span><span class="line"><span class="cl">sudo systemctl stop mysql          停止mysql
+</span></span><span class="line"><span class="cl">sudo systemctl restart mysql       重启mysql
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>在Windows系统上启用mysql：（方法一）</p>
+<ul>
+<li>windows+r快捷键，打开运行窗口</li>
+<li>输入services.msc，查看本地服务（不是输入cmd）</li>
+<li>找到MySQL服务，右键选择启动</li>
+<li>停止服务，选择停止</li>
+</ul>
+<p>在Windows系统上启用mysql：（方法二）</p>
+<ul>
+<li>按下 Win + R，输入 cmd</li>
+<li>net start mysql    启动mysql</li>
+<li>net stop mysql     停止mysql</li>
+<li>sc query mysql     验证是否停止</li>
+</ul></blockquote>
+<h2 id="mysql登录">mysql登录
+</h2><h3 id="账户管理">账户管理
+</h3><p>在Ubuntu中下载好mysql后，会默认创建两个账户：</p>
+<p>1、超级用户 root
+这是MySQL的超级用户，拥有所有数据库的完全控制权限（安装过程中会提示设置<code>root</code>用户的密码）</p>
+<p>2、debian-sys-maint用户
+这是一个由Debian/Ubuntu系统包管理维护的专用账户，用户名为<code>debian-sys-maint</code>。其密码存储在 <code>/etc/mysql/debian.cnf</code> 配置文件中（明文保存，需注意权限为<code>root</code>可读）。这样做是为了避免直接使用<code>root</code>账户
+注：查看此账户明文密码：<code>sudo vim /etc/mysql/debian.cnf</code>或<code>sudo cat /etc/mysql/debian.cnf</code></p>
+<p>3、其他创建的新用户
+如果不想使用root超级账户，debian-sys-maint账户又太复杂记不住，可以进入root账户创建新用户并设置密码。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">#</span><span class="w"> </span><span class="err">创建新用户：</span><span class="n">xxcjw</span><span class="w">   </span><span class="mi">123456</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">CREATE</span><span class="w"> </span><span class="k">USER</span><span class="w"> </span><span class="s1">&#39;xxcjw&#39;</span><span class="o">@</span><span class="s1">&#39;localhost&#39;</span><span class="w"> </span><span class="n">IDENTIFIED</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="s1">&#39;123456&#39;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="err">使用</span><span class="n">root账户赋予xxcjw任意权限</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="k">GRANT</span><span class="w"> </span><span class="k">OPTION</span><span class="err">：允许用户将自己拥有的权限转授给其他用户（需谨慎，一般不赋予）</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">GRANT</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="k">PRIVILEGES</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="o">*</span><span class="p">.</span><span class="o">*</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="s1">&#39;xxcjw&#39;</span><span class="o">@</span><span class="s1">&#39;localhost&#39;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">GRANT</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="k">PRIVILEGES</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="o">*</span><span class="p">.</span><span class="o">*</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="s1">&#39;xxcjw&#39;</span><span class="o">@</span><span class="s1">&#39;localhost&#39;</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="k">GRANT</span><span class="w"> </span><span class="k">OPTION</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">FLUSH</span><span class="w"> </span><span class="k">PRIVILEGES</span><span class="p">;</span><span class="w">    </span><span class="o">#</span><span class="w"> </span><span class="err">重新加载权限表的</span><span class="n">sql命令</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="我的账户">我的账户
+</h3><p>需要说明的是：我把<code>mysql/debian.cnf</code>文件中的<code>debian-sys-maint</code>账户改为了我自己的账户和密码。</p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th>账户</th>
+          <th>密码</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>root</td>
+          <td>123456</td>
+      </tr>
+      <tr>
+          <td>debian-sys-maint</td>
+          <td>hlpsoKws3nanLOgf</td>
+      </tr>
+      <tr>
+          <td>xxcjw</td>
+          <td>123456</td>
+      </tr>
+  </tbody>
+</table></div>
+<h3 id="登录使用">登录使用
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cmd" data-lang="cmd"><span class="line"><span class="cl"># 登录数据库，-p表示需输入密码
+</span></span><span class="line"><span class="cl">sudo mysql -u root -p
+</span></span><span class="line"><span class="cl">sudo mysql -u xxcjw -p
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 创建空数据库
+</span></span><span class="line"><span class="cl">create database database_name;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 切换为这个数据库
+</span></span><span class="line"><span class="cl">use database_name;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 导入数据、查看数据库表
+</span></span><span class="line"><span class="cl">source xxx.sql;   # 导入sql语句到当前数据库database_name
+</span></span><span class="line"><span class="cl">show tables;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="删除mysql">删除mysql
+</h3><p>在Mysql中，对Linux（Ubuntu 等常见发行版）而言，创建的各种数据库默认存储路径一般是 <code>/var/lib/mysql/</code> 目录下，通常需要 <code>root</code> 权限才能访问该目录。而数据库的各种配置文件则一般在 <code>/etc/mysql/</code> 目录，可以在这里找存储位置。</p>
+<p>如果在安装过程中遇到各种问题，安装了很多其他东西还没解决，想卸载重新安装：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cmd" data-lang="cmd"><span class="line"><span class="cl"># 卸载mysql软件包和配置、删除残留文件、清理依赖项
+</span></span><span class="line"><span class="cl">sudo apt purge mysql-*
+</span></span><span class="line"><span class="cl">sudo rm -rf /etc/mysql/ /var/lib/mysql /var/log/mysql
+</span></span><span class="line"><span class="cl">sudo apt autoremove
+</span></span><span class="line"><span class="cl">sudo apt autoclean
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 然后再重新安装
+</span></span><span class="line"><span class="cl">sudo apt-get update
+</span></span><span class="line"><span class="cl">sudo apt-get install mysql-server
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="注意">注意
+</h2><blockquote>
+<ul>
+<li>我在Ubuntu上安装好mysql后，查看mysql状态一直是start而不是runing，询问gpt可能是端口被占用，最终找到原因是本地Windows系统mysql设置的开机自启，导致端口被占用。（通过查看mysql日志找到端口被占用这个错误）</li>
+</ul></blockquote>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    
+    <section class="article-category">
+        
+            <a href="/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/" style="background-color: #2a9d8f; color: #fff;">
+                工具使用
+            </a>
+        
+    </section>
+    
+
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            最后更新于 2025-07-02 10:43
+        </span>
+    </section></footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+	const mainArticleElement = document.querySelector(".main-article");
+        renderMathInElement(mainArticleElement, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+
+    
+</article>
+
+    
+
+    
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2024 - 
+        
+        2025 xxcjw&#39;s bolg！
+    </section>
+    
+    <section class="powerby">
+        
+            光终究会洒在你的身上，你也会灿烂一场！ <br/>
+        
+    </section>
+
+    
+    <section class="running-time">
+        本博客已稳定运行
+        <span id="runningdays" class="running-days"></span>
+    </section>
+
+
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+<script>
+    let s1 = '2025-4-1'; 
+    s1 = new Date(s1.replace(/-/g, "/"));
+    let s2 = new Date();
+    let timeDifference = s2.getTime() - s1.getTime();
+
+    let days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    let hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+
+    let result = days + "天" + hours + "小时" + minutes + "分钟";
+    document.getElementById('runningdays').innerHTML = result;
+</script>
+    </body>
+</html>
