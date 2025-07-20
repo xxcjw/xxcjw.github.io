@@ -7,7 +7,7 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
         <copyright>xxcjw&#39;s bolg！</copyright>
-        <lastBuildDate>Sun, 20 Jul 2025 10:52:10 +0800</lastBuildDate><atom:link href="https://xxcjw.github.io/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 20 Jul 2025 11:02:26 +0800</lastBuildDate><atom:link href="https://xxcjw.github.io/post/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>手动安装dl库</title>
         <link>https://xxcjw.github.io/p/%E6%89%8B%E5%8A%A8%E5%AE%89%E8%A3%85dl%E5%BA%93/</link>
         <pubDate>Sun, 20 Jul 2025 10:35:55 +0800</pubDate>
@@ -39,14 +39,18 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;这个过程中，可能仍然会失败，因为&lt;code&gt;nvitop&lt;/code&gt;库可能还依赖其他深度学习库，比如&lt;code&gt;nvidia-ml-py&lt;/code&gt;，这时候和上述步骤一样，下载相应的wheel文件，然后安装好&lt;code&gt;nvidia-ml-py&lt;/code&gt;在安装&lt;code&gt;nvitop&lt;/code&gt;就可以了。手动安装其他库也是同理。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://xxcjw.github.io/image-20250720105117189.png&#34;
-	
-	
-	
+&lt;p&gt;&lt;img src=&#34;https://xxcjw.github.io/p/%E6%89%8B%E5%8A%A8%E5%AE%89%E8%A3%85dl%E5%BA%93/image-20250720105117189.png&#34;
+	width=&#34;1522&#34;
+	height=&#34;573&#34;
+	srcset=&#34;https://xxcjw.github.io/p/%E6%89%8B%E5%8A%A8%E5%AE%89%E8%A3%85dl%E5%BA%93/image-20250720105117189_hu_2ac31d98a917717c.png 480w, https://xxcjw.github.io/p/%E6%89%8B%E5%8A%A8%E5%AE%89%E8%A3%85dl%E5%BA%93/image-20250720105117189_hu_47396be6fbd513d7.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;image-20250720105117189&#34;
 	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;265&#34;
+		data-flex-basis=&#34;637px&#34;
 	
 &gt;&lt;/p&gt;
 </description>
