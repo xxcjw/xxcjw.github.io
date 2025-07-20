@@ -7,7 +7,51 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
         <copyright>xxcjw&#39;s bolg！</copyright>
-        <lastBuildDate>Sun, 20 Jul 2025 10:16:01 +0800</lastBuildDate><atom:link href="https://xxcjw.github.io/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 20 Jul 2025 10:52:10 +0800</lastBuildDate><atom:link href="https://xxcjw.github.io/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>手动安装dl库</title>
+        <link>https://xxcjw.github.io/p/%E6%89%8B%E5%8A%A8%E5%AE%89%E8%A3%85dl%E5%BA%93/</link>
+        <pubDate>Sun, 20 Jul 2025 10:35:55 +0800</pubDate>
+        
+        <guid>https://xxcjw.github.io/p/%E6%89%8B%E5%8A%A8%E5%AE%89%E8%A3%85dl%E5%BA%93/</guid>
+        <description>&lt;h2 id=&#34;背景&#34;&gt;背景
+&lt;/h2&gt;&lt;p&gt;在使用远程服务器或者本地运行深度学习代码的时候，经常需要在虚拟环境中安装所需要的深度学习（DL）库，但由于各种各样的原因，在安装库的时候总是不成功，比如经常遇到的：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-txt&#34; data-lang=&#34;txt&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;WARNING: Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by &amp;#39;ConnectTimeoutError(&amp;lt;pip._vendor.urllib3.connection.HTTPSConnection object at 0x7f333e2d2070&amp;gt;, &amp;#39;Connection to 10.88.67.58 timed out. (connect timeout=15)&amp;#39;)&amp;#39;: /pypi/simple/nvitop/
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;但是有很着急需要使用这些库，可以通过手动安装所需要的库。下面以GPU可视化库&lt;code&gt;nvitop&lt;/code&gt;库为例。&lt;/p&gt;
+&lt;h2 id=&#34;步骤&#34;&gt;步骤
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;手动下载&lt;code&gt;nvitop&lt;/code&gt;的 wheel 包，如&lt;code&gt;nvitop-1.3.2-py3-none-any.whl&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;将包上传到服务器&lt;/li&gt;
+&lt;li&gt;执行命令（替换路径）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;pip&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;install&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;path&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;to&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;nvitop&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;mf&#34;&gt;1.3.2&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;py3&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;none&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;any&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;whl&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;这个过程中，可能仍然会失败，因为&lt;code&gt;nvitop&lt;/code&gt;库可能还依赖其他深度学习库，比如&lt;code&gt;nvidia-ml-py&lt;/code&gt;，这时候和上述步骤一样，下载相应的wheel文件，然后安装好&lt;code&gt;nvidia-ml-py&lt;/code&gt;在安装&lt;code&gt;nvitop&lt;/code&gt;就可以了。手动安装其他库也是同理。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://xxcjw.github.io/image-20250720105117189.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250720105117189&#34;
+	
+	
+&gt;&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>Git使用</title>
         <link>https://xxcjw.github.io/p/git%E4%BD%BF%E7%94%A8/</link>
         <pubDate>Sat, 19 Jul 2025 21:50:27 +0800</pubDate>
