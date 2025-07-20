@@ -10,7 +10,7 @@
 <meta property='og:description' content="WSL介绍 WSL2（Windows Subsystem for Linux 2）是 Windows 提供的一种轻量级 Linux 运行环境，具备完整的 Linux 内核，它允许用户在 Windows 系统中运行 Linux 命令行工具和应用程序，而无需安装虚拟机或双系统。\n">
 <meta property='og:url' content='https://xxcjw.github.io/p/wsl%E5%AE%89%E8%A3%85/'>
 <meta property='og:site_name' content='xxcjw&#39;s blog!'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-06-30T23:10:01&#43;08:00'/><meta property='article:modified_time' content='2025-07-02T10:43:05&#43;08:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-06-30T23:10:01&#43;08:00'/><meta property='article:modified_time' content='2025-07-20T10:16:01&#43;08:00'/>
 <meta name="twitter:title" content="WSL安装">
 <meta name="twitter:description" content="WSL介绍 WSL2（Windows Subsystem for Linux 2）是 Windows 提供的一种轻量级 Linux 运行环境，具备完整的 Linux 内核，它允许用户在 Windows 系统中运行 Linux 命令行工具和应用程序，而无需安装虚拟机或双系统。\n">
     <link rel="shortcut icon" href="/favicon.ico" />
@@ -80,6 +80,7 @@
             <nav id="TableOfContents">
   <ol>
     <li><a href="#wsl介绍">WSL介绍</a></li>
+    <li><a href="#hyper-v和wsl">Hyper-V和wsl</a></li>
     <li><a href="#创建新用户">创建新用户</a></li>
     <li><a href="#ubuntu卸载">Ubuntu卸载</a></li>
     <li><a href="#sudo命令">sudo命令</a></li>
@@ -134,7 +135,7 @@
             <div>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" stroke-width="2"> <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4"></path> <path d="M13.5 6.5l4 4"></path> <path d="M16 19h6"></path> </svg> 
                 <time class="article-words">
-                    1732 字
+                    2314 字
                 </time>
             </div>
         
@@ -151,7 +152,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 4 分钟
+                    阅读时长: 5 分钟
                 </time>
             </div>
         
@@ -199,7 +200,36 @@
 <p><strong>资源管理器不显示Linux子系统问题</strong>：下载完Linux子系统之后，理论上在资源管理器的左侧栏应该会显示Linux（企鹅）的，但我的没有显示。查找原因发现是<strong>旧版wsl不匹配新版windows系统</strong>。（安装的时候我的是wsl2,可能不是最新版导致的）。因此只需要在powershell中，输入<code>wsl --update</code>即可，等待完成后<strong>重启explorer</strong>就可以了。</p>
 <blockquote>
 <p><a class="link" href="https://www.zhihu.com/question/603836907"  target="_blank" rel="noopener"
-    >(Windows文件资源管理器左侧导航窗格没有Linux图标</a></p></blockquote>
+    >Windows文件资源管理器左侧导航窗格没有Linux图标</a></p></blockquote>
+<h2 id="hyper-v和wsl">Hyper-V和wsl
+</h2><blockquote>
+<p>1、相同点：Hyper-V 和 WSL都是微软提供的在 Windows 系统上与其他操作系统交互的技术。<strong>最新版本的 WSL 使用 Hyper-V 架构来实现其虚拟化。</strong></p>
+<p>2、不同点：在 Hyper-V 虚拟机中运行 Ubuntu Linux 与在 WSL2 中运行作系统之间的最大区别在于能够访问 Hyper-V 中的 Ubuntu 用户界面。</p>
+<ul>
+<li>WSL2 实例相当轻量级，可以安装几个不同的发行版，可以在必要时同时运行几个实例，速度快；资源分配在 Windows 系统的统一调度框架内进行，根据需要动态分配和释放内存等资源。</li>
+<li><code>Hyper-V</code>：如果你需要Linux，其他的虚拟机或想访问Docker的高级选项卡来分配资源；而独立但受限于 Windows 物理资源，手动为每个虚拟机指定固定的资源配额，在虚拟机运行期间，这些资源会被该虚拟机 “占用”。</li>
+</ul></blockquote>
+<img src="image-20250702205214555.png" alt="image-20250702205214555" style="zoom:80%;" />
+<img src="image-20250702205352753.png" alt="image-20250702205352753" style="zoom:80%;" />
+<img src="image-20250702205745564.png" alt="image-20250702205745564" style="zoom:67%;" />
+<blockquote>
+<p>链接：</p>
+<p><a class="link" href="https://segmentfault.com/a/1190000041078669"  target="_blank" rel="noopener"
+    >Win10 安装 Docker Desktop ( 基于WSL2，WSL vs Hyper-V) </a>    （讲的也很好）</p>
+<p><a class="link" href="https://blog.logrocket.com/working-with-node-js-on-hyper-v-and-wsl2/"  target="_blank" rel="noopener"
+    >在 Hyper-V 和 WSL2 上使用 Node.js </a>    （讲的很好）</p>
+<p><a class="link" href="https://blog.csdn.net/qq_35368296/article/details/144106180"  target="_blank" rel="noopener"
+    >windows上WSL 2和Hyper-V 的区别_wsl2和hyper-v区别-CSDN博客</a></p>
+<p>附两个Hyper-V安装虚拟机的链接：（可以看看）</p>
+<p><a class="link" href="https://www.cnblogs.com/Jack-artical/p/15999800.html"  target="_blank" rel="noopener"
+    >win11开启hyper-v安装windows虚拟机</a></p>
+<p><a class="link" href="https://zhuanlan.zhihu.com/p/609626254"  target="_blank" rel="noopener"
+    >(65 封用电脑自带Hyper-V安装虚拟机</a></p></blockquote>
+<blockquote>
+<p>另外，我的电脑在“启用或关闭windows功能”中不显示<code>hyper-v</code>选项（没安装wsl之前是有显示的），猜想这是因为安装wsl导致的。</p>
+<p><a class="link" href="https://blog.csdn.net/u011807844/article/details/133308920"  target="_blank" rel="noopener"
+    >为什么我的电脑没有Hyper-V选项？</a><br>
+【而我的显示：Hyper-V 要求: 已检测到虚拟机监控程序。将不显示 Hyper-V 所需的功能。】</p></blockquote>
 <h2 id="创建新用户">创建新用户
 </h2><p>安装好wsl和Ubuntu后，会发现默认以 <code>root</code> 用户登录。可以WSL 终端（默认 <code>root</code>）下运行</p>
 <ul>
@@ -285,7 +315,7 @@
 
 
         <span>
-            最后更新于 2025-07-02 10:43
+            最后更新于 2025-07-20 10:16
         </span>
     </section></footer>
 
