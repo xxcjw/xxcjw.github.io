@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://xxcjw.github.io/p/llm%E7%B3%BB%E5%88%97-5bert%E6%A8%A1%E5%9E%8B%E8%AF%A6%E8%A7%A3/'>
 
-<link rel="stylesheet" href="/scss/style.min.57fb1d9ded28f968745a879e9015fe74f774718f509da7194f49f738d0118235.css"><meta property='og:title' content="LLM系列-5：Bert模型详解">
+<link rel="stylesheet" href="/scss/style.min.45dce5fb235c30241f867f21cd9d2e431edf7d30120e6b3bb2384fdce2d36024.css"><meta property='og:title' content="LLM系列-5：Bert模型详解">
 <meta property='og:description' content="总体内容 BERT是用了Transformer的encoder侧的网络。\nBert网络结构 如图所示, 最左边的就是BERT的架构图, 可以看到BERT采用了Transformer Encoder block进行连接, 因为是一个典型的双向编码模型,多头自注意力中的每个头的输入都同时蕴含了前后文的语言信息。从上面的架构图中可以看到, 宏观上BERT分三个主要模块：\n">
 <meta property='og:url' content='https://xxcjw.github.io/p/llm%E7%B3%BB%E5%88%97-5bert%E6%A8%A1%E5%9E%8B%E8%AF%A6%E8%A7%A3/'>
 <meta property='og:site_name' content='xxcjw&#39;s blog!'>
@@ -208,10 +208,12 @@
 </ul>
 <p>最后，BERT 模型将 Token Embeddings (1, n, 768) + Segment Embeddings(1, n, 768) + Position Embeddings(1, n, 768) 求和的方式得到一个 Embedding(1, n, 768) 作为模型的输入。</p>
 <blockquote>
-<p>Transformer中position Embedding是用的三角函数，BERT中也有一个Postion Embedding是随机初始化，然后从数据中学出来的。</p></blockquote>
+<p>Transformer中position Embedding是用的三角函数，BERT中也有一个Postion Embedding是随机初始化，然后从数据中学出来的。</p>
+</blockquote>
 <blockquote>
 <p><strong>[CLS]的作用</strong></p>
-<p>BERT在第一句前会加一个[CLS]标志，最后一层该位对应向量可以作为整句话的语义表示，从而用于下游的分类任务等。因为与文本中已有的其它词相比，这个无明显语义信息的符号会更“公平”地融合文本中各个词的语义信息，从而更好的表示整句话的语义。</p></blockquote>
+<p>BERT在第一句前会加一个[CLS]标志，最后一层该位对应向量可以作为整句话的语义表示，从而用于下游的分类任务等。因为与文本中已有的其它词相比，这个无明显语义信息的符号会更“公平”地融合文本中各个词的语义信息，从而更好的表示整句话的语义。</p>
+</blockquote>
 <h2 id="encoder层">Encoder层
 </h2><center><img src="BERT4.png" alt="img" style="zoom:33%;" /></center>
 <p>BERT是用了Transformer的encoder侧的网络，BERT的维度是768维度，然后分成12个head，每个head的维度是64维。BERT模型分为24层和12层两种，其差别就是使用transformer encoder的层数的差异。</p>
@@ -230,7 +232,8 @@
 <p><a class="link" href="https://blog.csdn.net/ty154542607/article/details/144026744"  target="_blank" rel="noopener"
     >BERT 详解_bert模型</a></p>
 <p><a class="link" href="https://zhuanlan.zhihu.com/p/381279611"  target="_blank" rel="noopener"
-    >BERT系列（二）BERT模型的核心架构 </a> （链接多）</p></blockquote>
+    >BERT系列（二）BERT模型的核心架构 </a> （链接多）</p>
+</blockquote>
 <p>博主推荐：</p>
 <blockquote>
 <p><a class="link" href="https://www.zhihu.com/people/vc3-58"  target="_blank" rel="noopener"
@@ -238,7 +241,8 @@
 <p><a class="link" href="https://newsletter.languagemodels.co/"  target="_blank" rel="noopener"
     >语言模型 &amp; Co. |杰伊·阿拉马尔 </a>  （图解系列，优质博主）</p>
 <p><a class="link" href="https://jalammar.github.io/"  target="_blank" rel="noopener"
-    >Jay Alammar </a>（同上，旧博客）</p></blockquote>
+    >Jay Alammar </a>（同上，旧博客）</p>
+</blockquote>
 
 </section>
 
@@ -313,7 +317,7 @@
         
             2024 - 
         
-        2025 xxcjw&#39;s bolg！
+        2026 xxcjw&#39;s bolg！
     </section>
     
     <section class="powerby">

@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://xxcjw.github.io/p/llm%E7%B3%BB%E5%88%97-4llm%E7%9A%84%E4%BD%BF%E7%94%A8/'>
 
-<link rel="stylesheet" href="/scss/style.min.57fb1d9ded28f968745a879e9015fe74f774718f509da7194f49f738d0118235.css"><meta property='og:title' content="LLM系列-4：LLM的使用">
+<link rel="stylesheet" href="/scss/style.min.45dce5fb235c30241f867f21cd9d2e431edf7d30120e6b3bb2384fdce2d36024.css"><meta property='og:title' content="LLM系列-4：LLM的使用">
 <meta property='og:description' content="LLM输出向量池化方式 LLM 输出池化（Output Pooling）是一种对大模型输出进行处理的操作，旨在将模型生成的一系列特征向量（多个token）或表征转换为一个固定长度的向量。\n">
 <meta property='og:url' content='https://xxcjw.github.io/p/llm%E7%B3%BB%E5%88%97-4llm%E7%9A%84%E4%BD%BF%E7%94%A8/'>
 <meta property='og:site_name' content='xxcjw&#39;s blog!'>
@@ -477,7 +477,8 @@
 </div><blockquote>
 <p><code>top_k</code>：从生成词汇中选择前 k 个最有可能的词进行采样。较小的值意味着选择更有限的词汇。</p>
 <p><code>top_p</code>：从概率累积值中选择前 <code>p</code>% 的词汇，控制采样的多样性。与 <code>top_k</code> 类似，也是用于限制候选词的范围。</p>
-<p><code>do_sample</code>：是否启用采样。如果为 <code>True</code>，模型将从预测的概率分布中随机采样生成下一个 token；如果为 <code>False</code>，它将选择概率最大的 token（即确定性生成）。启用采样机制可以增加生成文本的多样性，避免每次生成的文本都相同。</p></blockquote>
+<p><code>do_sample</code>：是否启用采样。如果为 <code>True</code>，模型将从预测的概率分布中随机采样生成下一个 token；如果为 <code>False</code>，它将选择概率最大的 token（即确定性生成）。启用采样机制可以增加生成文本的多样性，避免每次生成的文本都相同。</p>
+</blockquote>
 <h3 id="序列分类任务">序列分类任务
 </h3><p>如果在做分类任务（例如情感分析），可以使用这个类。</p>
 <div class="highlight"><div class="chroma">
@@ -629,7 +630,8 @@
 </div>
 </div><blockquote>
 <p>在问答任务中，模型通过 <code>start_logits</code> 和 <code>end_logits</code> 来输出答案的位置。需要从模型输出的 tokens 中提取出 <strong>起始位置</strong> 和 <strong>结束位置</strong> 的答案，然后将其通过 <code>convert_ids_to_tokens</code> 转换为字符串。<code>decode</code> 方法主要用于生成文本，而不是处理直接的预测位置（例如起始和结束位置）。</p>
-<p>在问答任务中，我们不是生成每个 token，而是从模型输出的 <code>start_logits</code> 和 <code>end_logits</code> 中直接找到答案的位置。</p></blockquote>
+<p>在问答任务中，我们不是生成每个 token，而是从模型输出的 <code>start_logits</code> 和 <code>end_logits</code> 中直接找到答案的位置。</p>
+</blockquote>
 <h2 id="huggingface-transformers">HuggingFace Transformers
 </h2><h3 id="automodel">AutoModel
 </h3><p><code>AutoModel</code> 是 <code>HuggingFace Transformers</code> 的基础类，这是底层模型加载器，适用于各种预训练 Transformer 模型（如 BERT、MPNet、RoBERTa&hellip;）</p>
@@ -669,7 +671,8 @@
 <center><img src="image-20250430171349871.png" alt="image-20250430171349871" style="zoom:50%;" /></center>
 <blockquote>
 <p><a class="link" href="https://www.sbert.net/"  target="_blank" rel="noopener"
-    >Sentence-Transformers 文档</a></p></blockquote>
+    >Sentence-Transformers 文档</a></p>
+</blockquote>
 <h2 id="大模型词表嵌入">大模型词表嵌入
 </h2><div class="table-wrapper"><table>
   <thead>
@@ -750,7 +753,8 @@
 <ul>
 <li>如在 deepseek-r1-14b 的配置文件中，<code>max_position_embeddings</code>参数定义了模型能够处理的最大位置嵌入数，也就是模型能够接受的最大token长度</li>
 <li>而<code>vocab_size</code>参数就是词表的大小（即多少行）；<code>hidden_size</code>参数就是每一个token所对应的嵌入向量大小（即多少列）</li>
-</ul></blockquote>
+</ul>
+</blockquote>
 <h3 id="llm流程">LLM流程
 </h3><p>Token是LLM处理文本的基本单位。当我们将文本输入 LLM 时，模型首先会将文本切分成 Token 序列，然后再对这些 Token 通过词表转换成高维嵌入，最终经过大模型处理生成我们期望的输出结果。</p>
 <img src="fb3c64ab5417435.gif" alt="fb3c64ab5417435" style="zoom:80%;" />
@@ -761,7 +765,8 @@
 <li>上下文截断：应对超长对话的策略。</li>
 </ul>
 <blockquote>
-<p><strong>上下文截断</strong>是一种在工程层面实施的策略，而非模型本身固有的能力。其具体指的是：如果用户在多轮对话中累积的输入和输出 Token 数量超出最大上下文长度的限制，服务端通常会保留最近的内容，而丢弃早期输入，即只能 “记住最近的，遗忘久远的”。</p></blockquote>
+<p><strong>上下文截断</strong>是一种在工程层面实施的策略，而非模型本身固有的能力。其具体指的是：如果用户在多轮对话中累积的输入和输出 Token 数量超出最大上下文长度的限制，服务端通常会保留最近的内容，而丢弃早期输入，即只能 “记住最近的，遗忘久远的”。</p>
+</blockquote>
 <blockquote>
 <p>模型的最大输入 token 长度有多种不同叫法：</p>
 <ul>
@@ -771,11 +776,13 @@
 <li>
 <p><strong>上下文窗口大小（Context Window Size）</strong>：指的是模型在处理输入时能够考虑的上下文范围，也就是输入序列的最大长度。这个概念在自回归模型中常用，模型生成每个 token 时会参考之前的上下文，上下文窗口大小决定了能参考的最大 token 数量。</p>
 </li>
-</ul></blockquote>
+</ul>
+</blockquote>
 <h3 id="参考链接">参考链接
 </h3><blockquote>
 <p><a class="link" href="https://www.aisharenet.com/damoxingguanjiancanai/"  target="_blank" rel="noopener"
-    >大模型关键参数解读</a></p></blockquote>
+    >大模型关键参数解读</a></p>
+</blockquote>
 
 </section>
 
@@ -850,7 +857,7 @@
         
             2024 - 
         
-        2025 xxcjw&#39;s bolg！
+        2026 xxcjw&#39;s bolg！
     </section>
     
     <section class="powerby">

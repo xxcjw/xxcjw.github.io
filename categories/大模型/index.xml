@@ -43,7 +43,8 @@
 &lt;h2 id=&#34;参考&#34;&gt;参考
 &lt;/h2&gt;&lt;blockquote&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://zhuanlan.zhihu.com/p/22570639120&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;MOE 大模型架构与机制详解 —— 以 D&lt;/a&gt;&lt;/p&gt;&lt;/blockquote&gt;
+    &gt;MOE 大模型架构与机制详解 —— 以 D&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
 </description>
         </item>
         <item>
@@ -82,10 +83,12 @@
 &lt;/ul&gt;
 &lt;p&gt;最后，BERT 模型将 Token Embeddings (1, n, 768) + Segment Embeddings(1, n, 768) + Position Embeddings(1, n, 768) 求和的方式得到一个 Embedding(1, n, 768) 作为模型的输入。&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;Transformer中position Embedding是用的三角函数，BERT中也有一个Postion Embedding是随机初始化，然后从数据中学出来的。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;Transformer中position Embedding是用的三角函数，BERT中也有一个Postion Embedding是随机初始化，然后从数据中学出来的。&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;[CLS]的作用&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;BERT在第一句前会加一个[CLS]标志，最后一层该位对应向量可以作为整句话的语义表示，从而用于下游的分类任务等。因为与文本中已有的其它词相比，这个无明显语义信息的符号会更“公平”地融合文本中各个词的语义信息，从而更好的表示整句话的语义。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;BERT在第一句前会加一个[CLS]标志，最后一层该位对应向量可以作为整句话的语义表示，从而用于下游的分类任务等。因为与文本中已有的其它词相比，这个无明显语义信息的符号会更“公平”地融合文本中各个词的语义信息，从而更好的表示整句话的语义。&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;h2 id=&#34;encoder层&#34;&gt;Encoder层
 &lt;/h2&gt;&lt;center&gt;&lt;img src=&#34;BERT4.png&#34; alt=&#34;img&#34; style=&#34;zoom:33%;&#34; /&gt;&lt;/center&gt;
 &lt;p&gt;BERT是用了Transformer的encoder侧的网络，BERT的维度是768维度，然后分成12个head，每个head的维度是64维。BERT模型分为24层和12层两种，其差别就是使用transformer encoder的层数的差异。&lt;/p&gt;
@@ -104,7 +107,8 @@
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://blog.csdn.net/ty154542607/article/details/144026744&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;BERT 详解_bert模型&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://zhuanlan.zhihu.com/p/381279611&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;BERT系列（二）BERT模型的核心架构 &lt;/a&gt; （链接多）&lt;/p&gt;&lt;/blockquote&gt;
+    &gt;BERT系列（二）BERT模型的核心架构 &lt;/a&gt; （链接多）&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;博主推荐：&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.zhihu.com/people/vc3-58&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
@@ -112,7 +116,8 @@
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://newsletter.languagemodels.co/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;语言模型 &amp;amp; Co. |杰伊·阿拉马尔 &lt;/a&gt;  （图解系列，优质博主）&lt;/p&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://jalammar.github.io/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Jay Alammar &lt;/a&gt;（同上，旧博客）&lt;/p&gt;&lt;/blockquote&gt;
+    &gt;Jay Alammar &lt;/a&gt;（同上，旧博客）&lt;/p&gt;
+&lt;/blockquote&gt;
 </description>
         </item>
         <item>
@@ -394,7 +399,8 @@
 &lt;/div&gt;&lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;top_k&lt;/code&gt;：从生成词汇中选择前 k 个最有可能的词进行采样。较小的值意味着选择更有限的词汇。&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;top_p&lt;/code&gt;：从概率累积值中选择前 &lt;code&gt;p&lt;/code&gt;% 的词汇，控制采样的多样性。与 &lt;code&gt;top_k&lt;/code&gt; 类似，也是用于限制候选词的范围。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;do_sample&lt;/code&gt;：是否启用采样。如果为 &lt;code&gt;True&lt;/code&gt;，模型将从预测的概率分布中随机采样生成下一个 token；如果为 &lt;code&gt;False&lt;/code&gt;，它将选择概率最大的 token（即确定性生成）。启用采样机制可以增加生成文本的多样性，避免每次生成的文本都相同。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;&lt;code&gt;do_sample&lt;/code&gt;：是否启用采样。如果为 &lt;code&gt;True&lt;/code&gt;，模型将从预测的概率分布中随机采样生成下一个 token；如果为 &lt;code&gt;False&lt;/code&gt;，它将选择概率最大的 token（即确定性生成）。启用采样机制可以增加生成文本的多样性，避免每次生成的文本都相同。&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;h3 id=&#34;序列分类任务&#34;&gt;序列分类任务
 &lt;/h3&gt;&lt;p&gt;如果在做分类任务（例如情感分析），可以使用这个类。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -546,7 +552,8 @@
 &lt;/div&gt;
 &lt;/div&gt;&lt;blockquote&gt;
 &lt;p&gt;在问答任务中，模型通过 &lt;code&gt;start_logits&lt;/code&gt; 和 &lt;code&gt;end_logits&lt;/code&gt; 来输出答案的位置。需要从模型输出的 tokens 中提取出 &lt;strong&gt;起始位置&lt;/strong&gt; 和 &lt;strong&gt;结束位置&lt;/strong&gt; 的答案，然后将其通过 &lt;code&gt;convert_ids_to_tokens&lt;/code&gt; 转换为字符串。&lt;code&gt;decode&lt;/code&gt; 方法主要用于生成文本，而不是处理直接的预测位置（例如起始和结束位置）。&lt;/p&gt;
-&lt;p&gt;在问答任务中，我们不是生成每个 token，而是从模型输出的 &lt;code&gt;start_logits&lt;/code&gt; 和 &lt;code&gt;end_logits&lt;/code&gt; 中直接找到答案的位置。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;在问答任务中，我们不是生成每个 token，而是从模型输出的 &lt;code&gt;start_logits&lt;/code&gt; 和 &lt;code&gt;end_logits&lt;/code&gt; 中直接找到答案的位置。&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;h2 id=&#34;huggingface-transformers&#34;&gt;HuggingFace Transformers
 &lt;/h2&gt;&lt;h3 id=&#34;automodel&#34;&gt;AutoModel
 &lt;/h3&gt;&lt;p&gt;&lt;code&gt;AutoModel&lt;/code&gt; 是 &lt;code&gt;HuggingFace Transformers&lt;/code&gt; 的基础类，这是底层模型加载器，适用于各种预训练 Transformer 模型（如 BERT、MPNet、RoBERTa&amp;hellip;）&lt;/p&gt;
@@ -586,7 +593,8 @@
 &lt;center&gt;&lt;img src=&#34;image-20250430171349871.png&#34; alt=&#34;image-20250430171349871&#34; style=&#34;zoom:50%;&#34; /&gt;&lt;/center&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.sbert.net/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Sentence-Transformers 文档&lt;/a&gt;&lt;/p&gt;&lt;/blockquote&gt;
+    &gt;Sentence-Transformers 文档&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;h2 id=&#34;大模型词表嵌入&#34;&gt;大模型词表嵌入
 &lt;/h2&gt;&lt;table&gt;
   &lt;thead&gt;
@@ -667,7 +675,8 @@
 &lt;ul&gt;
 &lt;li&gt;如在 deepseek-r1-14b 的配置文件中，&lt;code&gt;max_position_embeddings&lt;/code&gt;参数定义了模型能够处理的最大位置嵌入数，也就是模型能够接受的最大token长度&lt;/li&gt;
 &lt;li&gt;而&lt;code&gt;vocab_size&lt;/code&gt;参数就是词表的大小（即多少行）；&lt;code&gt;hidden_size&lt;/code&gt;参数就是每一个token所对应的嵌入向量大小（即多少列）&lt;/li&gt;
-&lt;/ul&gt;&lt;/blockquote&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
 &lt;h3 id=&#34;llm流程&#34;&gt;LLM流程
 &lt;/h3&gt;&lt;p&gt;Token是LLM处理文本的基本单位。当我们将文本输入 LLM 时，模型首先会将文本切分成 Token 序列，然后再对这些 Token 通过词表转换成高维嵌入，最终经过大模型处理生成我们期望的输出结果。&lt;/p&gt;
 &lt;img src=&#34;fb3c64ab5417435.gif&#34; alt=&#34;fb3c64ab5417435&#34; style=&#34;zoom:80%;&#34; /&gt;
@@ -678,7 +687,8 @@
 &lt;li&gt;上下文截断：应对超长对话的策略。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;上下文截断&lt;/strong&gt;是一种在工程层面实施的策略，而非模型本身固有的能力。其具体指的是：如果用户在多轮对话中累积的输入和输出 Token 数量超出最大上下文长度的限制，服务端通常会保留最近的内容，而丢弃早期输入，即只能 “记住最近的，遗忘久远的”。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;上下文截断&lt;/strong&gt;是一种在工程层面实施的策略，而非模型本身固有的能力。其具体指的是：如果用户在多轮对话中累积的输入和输出 Token 数量超出最大上下文长度的限制，服务端通常会保留最近的内容，而丢弃早期输入，即只能 “记住最近的，遗忘久远的”。&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;blockquote&gt;
 &lt;p&gt;模型的最大输入 token 长度有多种不同叫法：&lt;/p&gt;
 &lt;ul&gt;
@@ -688,11 +698,13 @@
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;上下文窗口大小（Context Window Size）&lt;/strong&gt;：指的是模型在处理输入时能够考虑的上下文范围，也就是输入序列的最大长度。这个概念在自回归模型中常用，模型生成每个 token 时会参考之前的上下文，上下文窗口大小决定了能参考的最大 token 数量。&lt;/p&gt;
 &lt;/li&gt;
-&lt;/ul&gt;&lt;/blockquote&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
 &lt;h3 id=&#34;参考链接&#34;&gt;参考链接
 &lt;/h3&gt;&lt;blockquote&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.aisharenet.com/damoxingguanjiancanai/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;大模型关键参数解读&lt;/a&gt;&lt;/p&gt;&lt;/blockquote&gt;
+    &gt;大模型关键参数解读&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
 </description>
         </item>
         <item>
@@ -792,7 +804,8 @@
 &lt;/div&gt;&lt;p&gt;可以看到，输出中包含两个键 &lt;code&gt;input_ids&lt;/code&gt; 和 &lt;code&gt;attention_mask&lt;/code&gt;，其中 &lt;code&gt;input_ids&lt;/code&gt; 对应分词之后的 tokens 映射到的数字编号列表，而 &lt;code&gt;attention_mask&lt;/code&gt; 则是用来标记哪些 tokens 是被填充的（这里“1”表示是原文，“0”表示是填充字符）。&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;checkpoint&lt;/code&gt;（检查点）是指在模型训练过程中，为了避免可能出现的意外情况，定期保存模型的状态，这个状态包含了所使用的模型名称、模型的参数、优化器的状态、训练步数等信息。&lt;/p&gt;
-&lt;p&gt;注意，此时的到的只是分词后token对应的ID，并没有得到经过LLM编码的高维向量。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;注意，此时的到的只是分词后token对应的ID，并没有得到经过LLM编码的高维向量。&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;h3 id=&#34;将预处理好的输入送入模型&#34;&gt;将预处理好的输入送入模型
 &lt;/h3&gt;&lt;p&gt;预训练模型的下载/加载方式和分词器 (tokenizer) 类似，Transformers 包提供了一个 &lt;code&gt;AutoModel&lt;/code&gt; 类和对应的 &lt;code&gt;from_pretrained()&lt;/code&gt; 函数。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -848,7 +861,8 @@
 &lt;ul&gt;
 &lt;li&gt;这个方法加载的是专门用于因果语言模型（Causal Language Model，CLM）任务的预训练模型。因果语言模型的目标是根据前面的上下文预测下一个词，常用于文本生成任务等。该模型已经包含了一个语言建模头部（language modeling head），可以直接用于生成文本，无需额外添加特定任务的头部。&lt;/li&gt;
 &lt;li&gt;使用于文本生成任务类。&lt;/li&gt;
-&lt;/ul&gt;&lt;/blockquote&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
 &lt;blockquote&gt;
 &lt;p&gt;完整代码示例：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -898,7 +912,8 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;blockquote&gt;
-&lt;p&gt;&lt;code&gt;outputs.logits&lt;/code&gt; 是模型最终的未经过归一化处理的预测分数，如[-1.5607,  1.6123]，它们并不是概率值。只是&lt;code&gt;outputs&lt;/code&gt;中的一部分信息。如果直接&lt;code&gt;print(outputs)&lt;/code&gt;输出的更全。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;&lt;code&gt;outputs.logits&lt;/code&gt; 是模型最终的未经过归一化处理的预测分数，如[-1.5607,  1.6123]，它们并不是概率值。只是&lt;code&gt;outputs&lt;/code&gt;中的一部分信息。如果直接&lt;code&gt;print(outputs)&lt;/code&gt;输出的更全。&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;其输出分别为：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -971,7 +986,8 @@
 &lt;p&gt;&lt;code&gt;outputs = model(**inputs)&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;这种调用方式主要用于获取模型在输入数据上的中间结果，比如隐藏状态（hidden states）、未归一化的预测分数（logits）等。这些结果通常用于进一步的任务处理。&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;output = model.generate(**inputs)&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;此调用方式专门用于文本生成任务。它会基于输入的上下文，使用特定的生成策略（如贪心搜索、束搜索等）来生成后续的文本序列。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;此调用方式专门用于文本生成任务。它会基于输入的上下文，使用特定的生成策略（如贪心搜索、束搜索等）来生成后续的文本序列。&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;h2 id=&#34;底层模型&#34;&gt;底层&amp;ndash;模型
 &lt;/h2&gt;&lt;p&gt;在大部分情况下，我们都应该使用 &lt;code&gt;AutoModel&lt;/code&gt; 来加载模型。这样如果我们想要使用另一个模型（比如把 BERT 换成 RoBERTa），只需修改 checkpoint，其他代码可以保持不变。&lt;/p&gt;
 &lt;p&gt;所有存储在&lt;code&gt;HuggingFace&lt;/code&gt;上的模型都可以通过 &lt;code&gt;Model.from_pretrained()&lt;/code&gt; 来加载权重，参数可以像上面一样是 checkpoint 的名称，也可以是本地路径（预先下载的模型目录）。&lt;/p&gt;
@@ -1082,7 +1098,8 @@
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;tokenizer.encode&lt;/code&gt; 方法：返回的是编码后的 ID 列表&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;tokenizer&lt;/code&gt; 方法：更通用，返回一个包含更多信息的字典,如 attention_mask 、token_type_ids等&lt;/li&gt;
-&lt;/ul&gt;&lt;/blockquote&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
 &lt;h3 id=&#34;分词器解码&#34;&gt;分词器解码
 &lt;/h3&gt;&lt;p&gt;文本解码 (Decoding) 与编码相反，负责将 token IDs 转换回原来的字符串。注意，解码过程不是简单地将 token IDs 映射回 tokens，还需要合并那些被分为多个 token 的单词。通过 &lt;code&gt;decode()&lt;/code&gt; 函数解码前面生成的 token IDs：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -1411,7 +1428,8 @@
 &lt;/div&gt;
 &lt;/div&gt;&lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;device_map=&amp;quot;auto&amp;quot;&lt;/code&gt;：&lt;/p&gt;
-&lt;p&gt;该参数用于指定模型在设备（如 CPU、GPU）上的分布方式。&lt;code&gt;&amp;quot;auto&amp;quot;&lt;/code&gt; 表示让 &lt;code&gt;transformers&lt;/code&gt; 库自动分配显卡，将模型拆分到多个 GPU 上，避免内存不足的问题。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;该参数用于指定模型在设备（如 CPU、GPU）上的分布方式。&lt;code&gt;&amp;quot;auto&amp;quot;&lt;/code&gt; 表示让 &lt;code&gt;transformers&lt;/code&gt; 库自动分配显卡，将模型拆分到多个 GPU 上，避免内存不足的问题。&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;blockquote&gt;
 &lt;p&gt;注意，如果设置了&lt;code&gt;device_map=&amp;quot;auto&amp;quot;&lt;/code&gt;，就不要在输入以下代码，这可能会覆盖之前的设备映射，导致模型被加载到单一设备上&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -1554,10 +1572,12 @@ $$&lt;p&gt;下面通过 Pytorch 来实现：&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;可以看到，BERT-base-uncased 模型对应的词表大小为 30522，每个词语的词向量维度为 768。Embedding 层把输入的词语序列映射到了尺寸为 &lt;code&gt;[batch_size, seq_len, hidden_dim]&lt;/code&gt; 的张量。&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;这里我们通过设置 &lt;code&gt;add_special_tokens=False&lt;/code&gt; 去除了分词结果中的 &lt;code&gt;[CLS]&lt;/code&gt; 和 &lt;code&gt;[SEP]&lt;/code&gt;。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;这里我们通过设置 &lt;code&gt;add_special_tokens=False&lt;/code&gt; 去除了分词结果中的 &lt;code&gt;[CLS]&lt;/code&gt; 和 &lt;code&gt;[SEP]&lt;/code&gt;。&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;blockquote&gt;
 &lt;p&gt;input_ids 是如何得到的：&lt;/p&gt;
-&lt;p&gt;分词器已经针对&lt;code&gt;bert-base-uncased&lt;/code&gt;模型进行了预训练，了解该模型词汇表中的所有词元（token）。分词器会将输入文本拆分成一个个词元。把每个词元映射到词汇表中的对应索引。&lt;code&gt;bert-base-uncased&lt;/code&gt;模型有一个预先定义好的词汇表，每个词元都有唯一的整数索引。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;分词器已经针对&lt;code&gt;bert-base-uncased&lt;/code&gt;模型进行了预训练，了解该模型词汇表中的所有词元（token）。分词器会将输入文本拆分成一个个词元。把每个词元映射到词汇表中的对应索引。&lt;code&gt;bert-base-uncased&lt;/code&gt;模型有一个预先定义好的词汇表，每个词元都有唯一的整数索引。&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;blockquote&gt;
 &lt;p&gt;input_ids是如何转换为向量的：&lt;/p&gt;
 &lt;ul&gt;
@@ -1656,7 +1676,8 @@ $$&lt;p&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;每个头都会初始化三个独立的线性层，负责将 Q,K,V 序列映射到尺寸为 &lt;code&gt;[batch_size, seq_len, head_dim]&lt;/code&gt; 的张量，其中 &lt;code&gt;head_dim&lt;/code&gt; 是映射到的向量维度。（将得到的输入文本对应的词嵌入通过线性层转换得到 Q,K,V ，因为是多头，所以嵌入大小由原来的&lt;code&gt;embed_dim&lt;/code&gt;变为&lt;code&gt;head_dim&lt;/code&gt;）&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;实践中一般将 &lt;code&gt;head_dim&lt;/code&gt; 设置为 &lt;code&gt;embed_dim&lt;/code&gt; 的因数，这样 token 嵌入式表示的维度就可以保持不变，例如 BERT 有 12 个注意力头，因此每个头的维度被设置为 768/12=64 。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;实践中一般将 &lt;code&gt;head_dim&lt;/code&gt; 设置为 &lt;code&gt;embed_dim&lt;/code&gt; 的因数，这样 token 嵌入式表示的维度就可以保持不变，例如 BERT 有 12 个注意力头，因此每个头的维度被设置为 768/12=64 。&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;最后只需要拼接多个注意力头的输出就可以构建出 Multi-head Attention 层了（这里在拼接后还通过一个线性变换来生成最终的输出张量）&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -1771,7 +1792,8 @@ $$&lt;p&gt;
 &lt;h2 id=&#34;参考&#34;&gt;参考
 &lt;/h2&gt;&lt;blockquote&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://transformers.run/c1/attention/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;注意力机制-第三章&lt;/a&gt;&lt;/p&gt;&lt;/blockquote&gt;
+    &gt;注意力机制-第三章&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
 </description>
         </item>
         <item>
@@ -1792,7 +1814,8 @@ P(w_i | w_1, w_2, \ldots, w_{i - 1}) = P(w_i | w_{i - N + 1}, w_{i - N + 2}, \ld
 $$&lt;p&gt;
 这种假设被称为马尔可夫（Markov）假设，对应的语言模型被称为 N 元（&lt;strong&gt;N-gram&lt;/strong&gt;）模型。比如N=2时基于前一个单词预测当前单词；N=3时考虑前两个单词来预测当前单词；而N=1时，模型实际上就是一个上下文无关模型。&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;通过统计语料库中 n - gram 序列的频率，估计给定前 n - 1 个元素后下一个元素出现的概率 ，从而选择概率最高的词作为预测结果。例如，在语料库中统计 “我喜欢” 后面接不同词的频率，若 “苹果” 出现次数最多，当输入 “我喜欢” 时，就可能预测下一个词是 “苹果” 。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;通过统计语料库中 n - gram 序列的频率，估计给定前 n - 1 个元素后下一个元素出现的概率 ，从而选择概率最高的词作为预测结果。例如，在语料库中统计 “我喜欢” 后面接不同词的频率，若 “苹果” 出现次数最多，当输入 “我喜欢” 时，就可能预测下一个词是 “苹果” 。&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;h2 id=&#34;nnlm-模型&#34;&gt;NNLM 模型
 &lt;/h2&gt;&lt;p&gt;NNLM 模型的思路与统计语言模型保持一致，它通过输入词语前面的&lt;code&gt;N−1&lt;/code&gt;个词语来预测当前词。其结构如图所示：&lt;/p&gt;
 &lt;center&gt;&lt;img src=&#34;image-20250412151005551.png&#34; alt=&#34;image-20250412151005551&#34; style=&#34;zoom:80%;&#34; /&gt;&lt;/center&gt;
@@ -1808,7 +1831,8 @@ $$&lt;p&gt;
 &lt;li&gt;初始化：为每个单词初始化一个随机词向量&lt;/li&gt;
 &lt;li&gt;计算预测：CBOW 将上下文词向量相加输入隐藏层再到输出层，Skip - gram 则是将目标词向量输入隐藏层再到输出层，输出层都用 &lt;code&gt;softmax&lt;/code&gt;函数计算词汇表中每个词作为预测结果的概率&lt;/li&gt;
 &lt;li&gt;更新权重：根据预测结果和真实标签计算损失，通过反向传播算法使损失最小化，不断迭代优化词向量&lt;/li&gt;
-&lt;/ul&gt;&lt;/blockquote&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
 &lt;h2 id=&#34;elmo-模型&#34;&gt;ELMo 模型
 &lt;/h2&gt;&lt;p&gt;为了更好地解决多义词问题，提出了 ELMo 模型（Embeddings from Language Models）。与 Word2Vec 模型只能提供静态词向量不同，ELMo 模型会根据上下文动态地调整词语的词向量。&lt;/p&gt;
 &lt;center&gt;&lt;img src=&#34;image-20250412153156781.png&#34; alt=&#34;image-20250412153156781&#34; style=&#34;zoom:80%;&#34; /&gt;&lt;/center&gt;
@@ -1816,7 +1840,8 @@ $$&lt;p&gt;
 &lt;p&gt;训练完成后 ELMo 模型不仅学习到了词向量，还训练好了一个双层双向的 LSTM 编码器。对于输入文本中的词语，可以从第一层 LSTM 中得到包含句法信息的词向量，从第二层 LSTM 中得到包含语义信息的词向量，最终通过加权求和得到每一个词语最终的词向量。&lt;/p&gt;
 &lt;p&gt;但是 ELMo 模型存在两个缺陷：首先它使用 LSTM 模型作为编码器，而不是当时已经提出的编码能力更强的 Transformer 模型；其次 ELMo 模型直接通过拼接来融合双向抽取特征的做法也略显粗糙。&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;不久之后，将 ELMo 模型中的 LSTM 更换为 Transformer 的GPT、Bert模型就出现了。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;不久之后，将 ELMo 模型中的 LSTM 更换为 Transformer 的GPT、Bert模型就出现了。&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;h2 id=&#34;bert-模型&#34;&gt;BERT 模型
 &lt;/h2&gt;&lt;p&gt;2018 年底随着 BERT 模型（Bidirectional Encoder Representations from Transformers）的出现，这一阶段神经网络语言模型的发展终于出现了一位集大成者。&lt;/p&gt;
 &lt;p&gt;BERT 模型采用和 GPT 模型类似的两阶段框架，首先对语言模型进行预训练，然后通过微调来完成下游任务。但是，BERT 不仅像 GPT 模型一样采用 Transformer 作为编码器，而且采用了类似 ELMo 模型的双向语言模型结构。因此 BERT 模型不仅编码能力强大，而且对各种下游任务，BERT 模型都可以通过简单地改造输出部分来完成。&lt;/p&gt;
@@ -1833,7 +1858,8 @@ $$&lt;p&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;Encoder-only模型&lt;/strong&gt;：BERT 架构只采用了 Transformer 的编码器部分，没有使用Transformer 解码器那样具备处理生成任务的结构设计。生成任务通常需要解码器逐步生成输出，按照顺序逐步生成下一个词，而 BERT 编码器缺乏这种从左到右、顺序生成的机制 。&lt;/p&gt;
 &lt;/li&gt;
-&lt;/ul&gt;&lt;/blockquote&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
 &lt;h2 id=&#34;补充知识&#34;&gt;补充知识
 &lt;/h2&gt;&lt;h3 id=&#34;llm分类&#34;&gt;LLM分类
 &lt;/h3&gt;&lt;p&gt;一般分为三种：自回归模型、自编码模型和序列到序列模型。&lt;/p&gt;
@@ -1843,7 +1869,8 @@ $$&lt;p&gt;
 &lt;li&gt;&lt;strong&gt;序列到序列（Sequence to Sequence Model）模型&lt;/strong&gt;：则是同时使用了原始的编码器与解码器。这种模型最自然的应用便是文本摘要、机器翻译等任务，事实上基本所有的NLP任务都可以通过序列到序列解决。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;blockquote&gt;
-&lt;p&gt;NLG - 自然语言生成；NLU - 自然语言理解&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;NLG - 自然语言生成；NLU - 自然语言理解&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;h3 id=&#34;transformer结构&#34;&gt;Transformer结构
 &lt;/h3&gt;&lt;p&gt;标准的 Transformer 模型主要由两个模块构成：&lt;/p&gt;
 &lt;ul&gt;
@@ -1859,20 +1886,24 @@ $$&lt;p&gt;
 &lt;p&gt;Transformer 模型本来是为了翻译任务而设计的。在训练过程中，Encoder 接受源语言的句子作为输入，而 Decoder 则接受目标语言的翻译作为输入。在 Encoder 中，由于翻译一个词语需要依赖于上下文，因此注意力层可以访问句子中的所有词语；而 Decoder 是顺序地进行解码，在生成每个词语时，注意力层只能访问前面已经生成的单词。&lt;/p&gt;
 &lt;p&gt;例如，假设翻译模型当前已经预测出了三个词语，我们会把这三个词语作为输入送入 Decoder，然后 Decoder 结合 Encoder 所有的源语言输入来预测第四个词语。&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;实际训练中为了加快速度，会将整个目标序列（真实值）都送入 Decoder，然后在注意力层中通过 Mask 遮盖掉未来的词语来防止信息泄露。因为若按顺序一个词一个词输入，效率很低。一次性输入整个目标序列，模型可以并行处理计算，大大加快训练速度 。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;实际训练中为了加快速度，会将整个目标序列（真实值）都送入 Decoder，然后在注意力层中通过 Mask 遮盖掉未来的词语来防止信息泄露。因为若按顺序一个词一个词输入，效率很低。一次性输入整个目标序列，模型可以并行处理计算，大大加快训练速度 。&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;center&gt;&lt;img src=&#34;image-20250412170759018.png&#34; alt=&#34;image-20250412170759018&#34; style=&#34;zoom:80%;&#34; /&gt;&lt;/center&gt;
 &lt;p&gt;其中，Decoder 中的第一个注意力层关注 Decoder 过去所有的输入，而第二个注意力层则是使用 Encoder 的输出，因此 Decoder 可以基于整个输入句子来预测当前词语。这对于翻译任务非常有用。&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;在 Encoder/Decoder 的注意力层中，我们还会使用 Attention Mask 遮盖掉某些词语来防止模型关注它们，例如为了将数据处理为相同长度而向序列中添加的填充 (padding) 字符。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;在 Encoder/Decoder 的注意力层中，我们还会使用 Attention Mask 遮盖掉某些词语来防止模型关注它们，例如为了将数据处理为相同长度而向序列中添加的填充 (padding) 字符。&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;h2 id=&#34;总结--参考&#34;&gt;总结 &amp;amp; 参考
 &lt;/h2&gt;&lt;blockquote&gt;
 &lt;p&gt;可以看出，预测下一个词模型的基本范式都是学习融合上下文信息的每个词的嵌入表征，然后通过输出层（通常接 softmax 函数 ，维度大小是词库大小）计算词汇表中每个词作为下一个词的概率，从中选择概率最高的词或通过一定采样策略（如多项分布采样 ）确定下一个词。&lt;/p&gt;
-&lt;p&gt;以 GPT 为例，它是自回归模型，从左到右依次根据已有的词预测下一个词 ；而 BERT 虽然主要用于完形填空任务（掩码语言模型），但也可以在微调后用于预测下一个词等生成任务 。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;以 GPT 为例，它是自回归模型，从左到右依次根据已有的词预测下一个词 ；而 BERT 虽然主要用于完形填空任务（掩码语言模型），但也可以在微调后用于预测下一个词等生成任务 。&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://transformers.run/c1/nlp/#%e5%a4%a7%e8%af%ad%e8%a8%80%e6%a8%a1%e5%9e%8b&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Transformers-第一章&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://transformers.run/c1/transformer/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Transformers-第二章&lt;/a&gt;&lt;/p&gt;&lt;/blockquote&gt;
+    &gt;Transformers-第二章&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
 </description>
         </item>
         

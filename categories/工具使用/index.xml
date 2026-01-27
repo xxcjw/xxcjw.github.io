@@ -7,6 +7,171 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
         <copyright>xxcjw&#39;s bolg！</copyright><atom:link href="https://xxcjw.github.io/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>上传项目到github</title>
+        <link>https://xxcjw.github.io/p/%E4%B8%8A%E4%BC%A0%E9%A1%B9%E7%9B%AE%E5%88%B0github/</link>
+        <pubDate>Tue, 27 Jan 2026 14:44:44 +0800</pubDate>
+        
+        <guid>https://xxcjw.github.io/p/%E4%B8%8A%E4%BC%A0%E9%A1%B9%E7%9B%AE%E5%88%B0github/</guid>
+        <description>&lt;h2 id=&#34;第一步在-github-上创建新的远程仓库&#34;&gt;第一步：在 GitHub 上创建新的远程仓库
+&lt;/h2&gt;&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;打开你的 GitHub 网站，创建新的仓库，填写仓库名称、描述等信息。&lt;/li&gt;
+&lt;li&gt;创建时不要勾选&lt;code&gt;Add a README file&lt;/code&gt;；开源协议随便选一个就行。&lt;/li&gt;
+&lt;li&gt;创建好的仓库页面，其中包含了远程仓库的 URL。复制这个 URL，我们稍后会用到。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;img src=&#34;image-20260127145712530.png&#34; alt=&#34;image-20260127145712530&#34; style=&#34;zoom:80%;&#34; /&gt;
+&lt;h2 id=&#34;第二步在本地项目中初始化-git&#34;&gt;第二步：在本地项目中初始化 Git
+&lt;/h2&gt;&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;打开 VS Code，导航到你的本地项目文件夹&lt;/li&gt;
+&lt;li&gt;创建并编辑 &lt;code&gt;.gitignore&lt;/code&gt; 文件，一个常见的 Python 项目 &lt;code&gt;.gitignore&lt;/code&gt; 示例如下&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;venv/
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;__pycache__/
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;*.pyc
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;*.log
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;*.DS_Store
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;运行 &lt;code&gt;git init&lt;/code&gt; 初始化本地 Git 仓库，这会在你的项目目录下创建一个 &lt;code&gt;.git&lt;/code&gt; 文件夹。&lt;strong&gt;本地仓库初始化后，默认的初始分支名称通常是 &lt;code&gt;master&lt;/code&gt;。&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;img src=&#34;image-20260127150243692.png&#34; alt=&#34;image-20260127150243692&#34; style=&#34;zoom:80%;&#34; /&gt;
+&lt;h2 id=&#34;第三步链接本地仓库和远程仓库&#34;&gt;第三步：链接本地仓库和远程仓库
+&lt;/h2&gt;&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;在 VS Code 的终端中，运行以下命令，将你的 GitHub 仓库 URL 添加为远程仓库 &lt;code&gt;origin&lt;/code&gt;（即上面复制的仓库URL）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git remote add origin https://github.com/peter-zx/IDfenxi.git
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/blockquote&gt;
+&lt;h2 id=&#34;第四步修改本地仓库名称-如果需要&#34;&gt;第四步：修改本地仓库名称 (如果需要)
+&lt;/h2&gt;&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;GitHub 新创建的仓库默认分支名称通常是 &lt;code&gt;main&lt;/code&gt;，而本地 &lt;code&gt;git init&lt;/code&gt; 后的默认分支可能是 &lt;code&gt;master&lt;/code&gt;（如上图所示）。为了保持一致，推荐修改本地分支名称。&lt;/li&gt;
+&lt;li&gt;在 VS Code 的终端中运行，这会将你的本地 &lt;code&gt;master&lt;/code&gt; 分支重命名为 &lt;code&gt;main&lt;/code&gt;。如果你本地仓库已经是 &lt;code&gt;main&lt;/code&gt;，则跳过此步骤&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git branch -M main
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/blockquote&gt;
+&lt;h2 id=&#34;第五步拉取远程仓库内容到本地可选&#34;&gt;第五步：拉取远程仓库内容到本地（可选）
+&lt;/h2&gt;&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;由于远程仓库可能包含 README、LICENSE 等文件，我们需要先将其拉取到本地，以避免推送时的冲突。&lt;/li&gt;
+&lt;li&gt;打开 VS Code 的终端，运行以下命令来拉取远程 &lt;code&gt;origin&lt;/code&gt; 的 &lt;code&gt;main&lt;/code&gt; 分支内容到你的本地 &lt;code&gt;main&lt;/code&gt; 分支&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git pull origin main
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;这个命令会将远程 &lt;code&gt;origin/main&lt;/code&gt; 分支的更改合并到你当前的本地 &lt;code&gt;main&lt;/code&gt; 分支。如果这是第一次拉取，它会下载远程仓库的文件。&lt;/p&gt;
+&lt;img src=&#34;r7hxefnwiipzg_442240a14cfe4392927cbe308a9e1266.webp&#34; alt=&#34;image.png&#34; style=&#34;zoom:67%;&#34; /&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;第六步暂存和提交你的本地代码&#34;&gt;第六步：暂存和提交你的本地代码
+&lt;/h2&gt;&lt;blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git init
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git add .
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git commit -m &amp;#34;xxx&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git pull origin main    #一般在这个时候执行（如果本地和github远程cang&amp;#39;ku）
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# 第一次推送
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git push -u origin main
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# 后续推送
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git push
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/blockquote&gt;
+&lt;h2 id=&#34;第七步补充文件&#34;&gt;第七步：补充文件
+&lt;/h2&gt;&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;补充项目的&lt;code&gt;requirement.text&lt;/code&gt;文件。
+&lt;ul&gt;
+&lt;li&gt;使用第三方库&lt;code&gt;pipreqs&lt;/code&gt;生成项目的 &lt;code&gt;requirements.txt&lt;/code&gt; 文件，&lt;code&gt;pipreqs&lt;/code&gt;会分析项目中的 Python 源代码文件，找出所有依赖的包，并将它们及其版本写入 &lt;code&gt;requirements.txt&lt;/code&gt; 文件。&lt;code&gt;pipreqs&lt;/code&gt;可以只将用到的库生成到&lt;code&gt;requirements.txt&lt;/code&gt;文件。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# 先安装pipreqs库
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;pip install pipreqs
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# 生成requirements.txt,在当前项目根目录使用pipreqs命令
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;pipreqs ./ --encoding=utf8  --force
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# 一键安装项目需要的库
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;pip install -r requirements.txt
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;补充&lt;code&gt;README.md&lt;/code&gt;文件
+&lt;ul&gt;
+&lt;li&gt;一般包含：项目介绍、项目结构树形图、操作步骤等&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;参考链接&#34;&gt;参考链接
+&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://developer.aliyun.com/article/1662278&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;使用VSCode推送本地项目到GitHub&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://zhuanlan.zhihu.com/p/687462277&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;生成requirements.txt文件&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+        </item>
+        <item>
         <title>手动安装dl库</title>
         <link>https://xxcjw.github.io/p/%E6%89%8B%E5%8A%A8%E5%AE%89%E8%A3%85dl%E5%BA%93/</link>
         <pubDate>Sun, 20 Jul 2025 10:35:55 +0800</pubDate>
@@ -41,7 +206,7 @@
 &lt;p&gt;&lt;img src=&#34;https://xxcjw.github.io/p/%E6%89%8B%E5%8A%A8%E5%AE%89%E8%A3%85dl%E5%BA%93/image-20250720105117189.png&#34;
 	width=&#34;1522&#34;
 	height=&#34;573&#34;
-	srcset=&#34;https://xxcjw.github.io/p/%E6%89%8B%E5%8A%A8%E5%AE%89%E8%A3%85dl%E5%BA%93/image-20250720105117189_hu_2ac31d98a917717c.png 480w, https://xxcjw.github.io/p/%E6%89%8B%E5%8A%A8%E5%AE%89%E8%A3%85dl%E5%BA%93/image-20250720105117189_hu_47396be6fbd513d7.png 1024w&#34;
+	srcset=&#34;https://xxcjw.github.io/p/%E6%89%8B%E5%8A%A8%E5%AE%89%E8%A3%85dl%E5%BA%93/image-20250720105117189_hu_865907968cc6b116.png 480w, https://xxcjw.github.io/p/%E6%89%8B%E5%8A%A8%E5%AE%89%E8%A3%85dl%E5%BA%93/image-20250720105117189_hu_a2c5db9b8ed420a8.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;image-20250720105117189&#34;
@@ -359,7 +524,8 @@
 &lt;li&gt;net start mysql    启动mysql&lt;/li&gt;
 &lt;li&gt;net stop mysql     停止mysql&lt;/li&gt;
 &lt;li&gt;sc query mysql     验证是否停止&lt;/li&gt;
-&lt;/ul&gt;&lt;/blockquote&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
 &lt;h2 id=&#34;mysql登录&#34;&gt;mysql登录
 &lt;/h2&gt;&lt;h3 id=&#34;账户管理&#34;&gt;账户管理
 &lt;/h3&gt;&lt;p&gt;在Ubuntu中下载好mysql后，会默认创建两个账户：&lt;/p&gt;
@@ -383,13 +549,13 @@
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;err&#34;&gt;创建新用户：&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;xxcjw&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;   &lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;123456&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;CREATE&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;USER&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;xxcjw&amp;#39;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;@&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;localhost&amp;#39;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;IDENTIFIED&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;BY&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;123456&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;CREATE&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;USER&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;xxcjw&amp;#39;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;@&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;localhost&amp;#39;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;IDENTIFIED&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;BY&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;123456&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;err&#34;&gt;使用&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;root账户赋予xxcjw任意权限&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;WITH&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;GRANT&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;OPTION&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;：允许用户将自己拥有的权限转授给其他用户（需谨慎，一般不赋予）&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;GRANT&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;ALL&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;PRIVILEGES&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;ON&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;TO&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;xxcjw&amp;#39;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;@&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;localhost&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;GRANT&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;ALL&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;PRIVILEGES&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;ON&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;TO&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;xxcjw&amp;#39;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;@&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;localhost&amp;#39;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;WITH&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;GRANT&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;OPTION&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;FLUSH&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;PRIVILEGES&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;err&#34;&gt;重新加载权限表的&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sql命令&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;err&#34;&gt;使用&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;root账户赋予xxcjw任意权限&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;WITH&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;GRANT&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;OPTION&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;：允许用户将自己拥有的权限转授给其他用户（需谨慎，一般不赋予）&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;GRANT&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;ALL&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;PRIVILEGES&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;ON&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;TO&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;xxcjw&amp;#39;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;@&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;localhost&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;GRANT&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;ALL&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;PRIVILEGES&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;ON&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;TO&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;xxcjw&amp;#39;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;@&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;localhost&amp;#39;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;WITH&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;GRANT&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;OPTION&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;FLUSH&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;PRIVILEGES&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;err&#34;&gt;重新加载权限表的&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sql命令&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;h3 id=&#34;我的账户&#34;&gt;我的账户
@@ -480,7 +646,8 @@
 &lt;/h2&gt;&lt;blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;我在Ubuntu上安装好mysql后，查看mysql状态一直是start而不是runing，询问gpt可能是端口被占用，最终找到原因是本地Windows系统mysql设置的开机自启，导致端口被占用。（通过查看mysql日志找到端口被占用这个错误）&lt;/li&gt;
-&lt;/ul&gt;&lt;/blockquote&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
 </description>
         </item>
         <item>
@@ -505,11 +672,13 @@
 &lt;p&gt;警告信息：wsl: 检测到 localhost 代理配置，但未镜像到 WSL。NAT 模式下的 WSL 不支持 localhost 代理&lt;/p&gt;
 &lt;p&gt;解决：&lt;a class=&#34;link&#34; href=&#34;https://blog.csdn.net/m0_62815143/article/details/141285660&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;解决wsl: 检测到 localhost 代理配置&lt;/a&gt;      &lt;a class=&#34;link&#34; href=&#34;https://www.cnblogs.com/hg479/p/17869109.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;wsl: 检测到 localhost 代理配置&lt;/a&gt;&lt;/p&gt;&lt;/blockquote&gt;
+    &gt;wsl: 检测到 localhost 代理配置&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;&lt;strong&gt;资源管理器不显示Linux子系统问题&lt;/strong&gt;：下载完Linux子系统之后，理论上在资源管理器的左侧栏应该会显示Linux（企鹅）的，但我的没有显示。查找原因发现是&lt;strong&gt;旧版wsl不匹配新版windows系统&lt;/strong&gt;。（安装的时候我的是wsl2,可能不是最新版导致的）。因此只需要在powershell中，输入&lt;code&gt;wsl --update&lt;/code&gt;即可，等待完成后&lt;strong&gt;重启explorer&lt;/strong&gt;就可以了。&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.zhihu.com/question/603836907&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Windows文件资源管理器左侧导航窗格没有Linux图标&lt;/a&gt;&lt;/p&gt;&lt;/blockquote&gt;
+    &gt;Windows文件资源管理器左侧导航窗格没有Linux图标&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;h2 id=&#34;hyper-v和wsl&#34;&gt;Hyper-V和wsl
 &lt;/h2&gt;&lt;blockquote&gt;
 &lt;p&gt;1、相同点：Hyper-V 和 WSL都是微软提供的在 Windows 系统上与其他操作系统交互的技术。&lt;strong&gt;最新版本的 WSL 使用 Hyper-V 架构来实现其虚拟化。&lt;/strong&gt;&lt;/p&gt;
@@ -517,7 +686,8 @@
 &lt;ul&gt;
 &lt;li&gt;WSL2 实例相当轻量级，可以安装几个不同的发行版，可以在必要时同时运行几个实例，速度快；资源分配在 Windows 系统的统一调度框架内进行，根据需要动态分配和释放内存等资源。&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;Hyper-V&lt;/code&gt;：如果你需要Linux，其他的虚拟机或想访问Docker的高级选项卡来分配资源；而独立但受限于 Windows 物理资源，手动为每个虚拟机指定固定的资源配额，在虚拟机运行期间，这些资源会被该虚拟机 “占用”。&lt;/li&gt;
-&lt;/ul&gt;&lt;/blockquote&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
 &lt;img src=&#34;image-20250702205214555.png&#34; alt=&#34;image-20250702205214555&#34; style=&#34;zoom:80%;&#34; /&gt;
 &lt;img src=&#34;image-20250702205352753.png&#34; alt=&#34;image-20250702205352753&#34; style=&#34;zoom:80%;&#34; /&gt;
 &lt;img src=&#34;image-20250702205745564.png&#34; alt=&#34;image-20250702205745564&#34; style=&#34;zoom:67%;&#34; /&gt;
@@ -533,12 +703,14 @@
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.cnblogs.com/Jack-artical/p/15999800.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;win11开启hyper-v安装windows虚拟机&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://zhuanlan.zhihu.com/p/609626254&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;(65 封用电脑自带Hyper-V安装虚拟机&lt;/a&gt;&lt;/p&gt;&lt;/blockquote&gt;
+    &gt;(65 封用电脑自带Hyper-V安装虚拟机&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;blockquote&gt;
 &lt;p&gt;另外，我的电脑在“启用或关闭windows功能”中不显示&lt;code&gt;hyper-v&lt;/code&gt;选项（没安装wsl之前是有显示的），猜想这是因为安装wsl导致的。&lt;/p&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://blog.csdn.net/u011807844/article/details/133308920&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;为什么我的电脑没有Hyper-V选项？&lt;/a&gt;&lt;br&gt;
-【而我的显示：Hyper-V 要求: 已检测到虚拟机监控程序。将不显示 Hyper-V 所需的功能。】&lt;/p&gt;&lt;/blockquote&gt;
+【而我的显示：Hyper-V 要求: 已检测到虚拟机监控程序。将不显示 Hyper-V 所需的功能。】&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;h2 id=&#34;创建新用户&#34;&gt;创建新用户
 &lt;/h2&gt;&lt;p&gt;安装好wsl和Ubuntu后，会发现默认以 &lt;code&gt;root&lt;/code&gt; 用户登录。可以WSL 终端（默认 &lt;code&gt;root&lt;/code&gt;）下运行&lt;/p&gt;
 &lt;ul&gt;
@@ -587,7 +759,8 @@
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.freesion.com/article/2087901298/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;WSL使用史上最详细教程&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://blog.csdn.net/qq_39741838/article/details/145916839?&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;WSL 使用史上最详细教程_wsl使用教程&lt;/a&gt;  （ Microsoft Store 需关闭梯子）&lt;/p&gt;&lt;/blockquote&gt;
+    &gt;WSL 使用史上最详细教程_wsl使用教程&lt;/a&gt;  （ Microsoft Store 需关闭梯子）&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;blockquote&gt;
 &lt;p&gt;从Microsoft Store安装linux发行版和wsl &amp;ndash;install -d Ubuntu-20.04没区别：&lt;/p&gt;
 &lt;ul&gt;
@@ -597,7 +770,8 @@
 &lt;li&gt;&lt;code&gt;wsl --install&lt;/code&gt; 命令默认安装的是当前推荐的、与 WSL 适配的 Ubuntu 版本。&lt;code&gt;-d&lt;/code&gt;表示安装指定的Linux发行版&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;/ul&gt;&lt;/blockquote&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
 </description>
         </item>
         <item>
@@ -642,7 +816,8 @@
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.cnblogs.com/programmer-tlh/p/15015783.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;vscode连接Linux服务器-博客园&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://blog.csdn.net/qq_41483419/article/details/131972522&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;VSCode SSH远程连接与删除&lt;/a&gt;&lt;/p&gt;&lt;/blockquote&gt;
+    &gt;VSCode SSH远程连接与删除&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;h2 id=&#34;免密登录&#34;&gt;免密登录
 &lt;/h2&gt;&lt;p&gt;本质上就是本地生成公钥复制到虚拟机或者服务器的authorized_keys文件上即可。&lt;/p&gt;
 &lt;ul&gt;
@@ -651,7 +826,8 @@
 &lt;/ul&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://blog.csdn.net/qq_44571245/article/details/123031276?spm=1001.2014.3001.5502&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;VsCode配置ssh免密远程登录&lt;/a&gt;&lt;/p&gt;&lt;/blockquote&gt;
+    &gt;VsCode配置ssh免密远程登录&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
 </description>
         </item>
         <item>
@@ -675,7 +851,8 @@
 &lt;li&gt;最简单的当然就是打开一个国外网站，比如&lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;YouTube&lt;/a&gt;等，如果能打开，证明梯子没问题；&lt;/li&gt;
 &lt;li&gt;另一种，就是&lt;code&gt;win+r&lt;/code&gt;打开命令行，输入&lt;code&gt;ping github.com&lt;/code&gt;看看能不能连上要使用的Github；&lt;/li&gt;
-&lt;/ul&gt;&lt;/blockquote&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
 &lt;h3 id=&#34;解决方法&#34;&gt;解决方法
 &lt;/h3&gt;&lt;p&gt;遇到上述问题，就是代理设置不正确。可以通过以下命令查看和设置理。&lt;/p&gt;
 &lt;p&gt;1、代理查询&lt;/p&gt;
@@ -705,7 +882,8 @@
 &lt;/div&gt;
 &lt;/div&gt;&lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;git config&lt;/code&gt; 是 Git 用于配置和管理各种参数的命令，可以设置和修改与 Git 相关的配置选项。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;http.proxy&lt;/code&gt; 是用于设置 Git 在进行 HTTP 或 HTTPS 连接时使用的代理服务器。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;&lt;code&gt;http.proxy&lt;/code&gt; 是用于设置 Git 在进行 HTTP 或 HTTPS 连接时使用的代理服务器。&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;3、代理设置&lt;/p&gt;
 &lt;p&gt;首先需要获取当前所使用vpn的代理服务器地址，格式为：&lt;code&gt;127.0.0.1:xxxx&lt;/code&gt;（我的是7879）。&lt;strong&gt;这里一定要注意，不要照抄网上的端口号，需要根据自己的服务器进行修改，否则报错&lt;/strong&gt;。得到代理服务器地址之后，使用如下命令配置代理&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -724,11 +902,12 @@
 &lt;li&gt;一是通过自己的vpn查看，打开自己的&lt;code&gt;vpn-设置-端口设置/端口号&lt;/code&gt;的选项，这个就是代理服务器的端口&lt;/li&gt;
 &lt;li&gt;打开电脑的&lt;code&gt;控制面板-网络和Internet-Internet选项-连接-局域网设置&lt;/code&gt;，然后就可以看到代理服务器的地址了，见图&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;通过这两种方式得到的应该是一样的。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;通过这两种方式得到的应该是一样的。&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;&lt;img src=&#34;https://xxcjw.github.io/p/%E4%BB%A3%E7%90%86-%E8%81%94%E7%BD%91%E9%97%AE%E9%A2%98/1.png&#34;
 	width=&#34;558&#34;
 	height=&#34;260&#34;
-	srcset=&#34;https://xxcjw.github.io/p/%E4%BB%A3%E7%90%86-%E8%81%94%E7%BD%91%E9%97%AE%E9%A2%98/1_hu_6837c66dfff22f41.png 480w, https://xxcjw.github.io/p/%E4%BB%A3%E7%90%86-%E8%81%94%E7%BD%91%E9%97%AE%E9%A2%98/1_hu_de59a87c140ac773.png 1024w&#34;
+	srcset=&#34;https://xxcjw.github.io/p/%E4%BB%A3%E7%90%86-%E8%81%94%E7%BD%91%E9%97%AE%E9%A2%98/1_hu_c5490f35839ef616.png 480w, https://xxcjw.github.io/p/%E4%BB%A3%E7%90%86-%E8%81%94%E7%BD%91%E9%97%AE%E9%A2%98/1_hu_3e2b48e666d197a2.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;代理服务器地址&#34;
@@ -760,7 +939,8 @@
 &lt;p&gt;通过这些步骤，VPN代理软件成功修改了您计算机的IP地址获取方式。现在，计算机使用的是VPN服务器分配的IP地址，而不是原本的IP地址。这样做可以帮助您隐藏真实的IP地址并实现匿名上网，同时提供加密保护，确保您的网络流量在传输过程中得到安全保护。同时，当我们关闭VPN后，由于电脑IP地址任然为VPN分配的IP地址（而此时我们已经关闭了代理服务器的连接），这就导致我们无法正常访问互联网了。&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;参考：&lt;a class=&#34;link&#34; href=&#34;https://blog.csdn.net/Yaoyao2024/article/details/132245249&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;使用vpn/代理后无法正常上网&lt;/a&gt;&lt;/p&gt;&lt;/blockquote&gt;
+    &gt;使用vpn/代理后无法正常上网&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
 </description>
         </item>
         <item>
@@ -1070,7 +1250,8 @@
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.xygalaxy.com/quickKeys&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;快捷键速查表 - 星云导航&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://hotkeycheatsheet.com/zh&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;快捷键备忘录&lt;/a&gt;&lt;/p&gt;&lt;/blockquote&gt;
+    &gt;快捷键备忘录&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
 </description>
         </item>
         

@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://xxcjw.github.io/p/llm%E7%B3%BB%E5%88%97-3%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%88%86%E8%AF%8D%E5%99%A8/'>
 
-<link rel="stylesheet" href="/scss/style.min.57fb1d9ded28f968745a879e9015fe74f774718f509da7194f49f738d0118235.css"><meta property='og:title' content="LLM系列-3：模型与分词器">
+<link rel="stylesheet" href="/scss/style.min.45dce5fb235c30241f867f21cd9d2e431edf7d30120e6b3bb2384fdce2d36024.css"><meta property='og:title' content="LLM系列-3：模型与分词器">
 <meta property='og:description' content="pipelines Transformers 库最基础的对象就是 pipeline() 函数，它封装了预训练模型和对应的前处理和后处理环节（分词、编解码过程）。我们只需输入文本，就能得到预期的答案。那其背后具体做了什么呢？\n">
 <meta property='og:url' content='https://xxcjw.github.io/p/llm%E7%B3%BB%E5%88%97-3%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%88%86%E8%AF%8D%E5%99%A8/'>
 <meta property='og:site_name' content='xxcjw&#39;s blog!'>
@@ -294,7 +294,8 @@
 </div><p>可以看到，输出中包含两个键 <code>input_ids</code> 和 <code>attention_mask</code>，其中 <code>input_ids</code> 对应分词之后的 tokens 映射到的数字编号列表，而 <code>attention_mask</code> 则是用来标记哪些 tokens 是被填充的（这里“1”表示是原文，“0”表示是填充字符）。</p>
 <blockquote>
 <p><code>checkpoint</code>（检查点）是指在模型训练过程中，为了避免可能出现的意外情况，定期保存模型的状态，这个状态包含了所使用的模型名称、模型的参数、优化器的状态、训练步数等信息。</p>
-<p>注意，此时的到的只是分词后token对应的ID，并没有得到经过LLM编码的高维向量。</p></blockquote>
+<p>注意，此时的到的只是分词后token对应的ID，并没有得到经过LLM编码的高维向量。</p>
+</blockquote>
 <h3 id="将预处理好的输入送入模型">将预处理好的输入送入模型
 </h3><p>预训练模型的下载/加载方式和分词器 (tokenizer) 类似，Transformers 包提供了一个 <code>AutoModel</code> 类和对应的 <code>from_pretrained()</code> 函数。</p>
 <div class="highlight"><div class="chroma">
@@ -350,7 +351,8 @@
 <ul>
 <li>这个方法加载的是专门用于因果语言模型（Causal Language Model，CLM）任务的预训练模型。因果语言模型的目标是根据前面的上下文预测下一个词，常用于文本生成任务等。该模型已经包含了一个语言建模头部（language modeling head），可以直接用于生成文本，无需额外添加特定任务的头部。</li>
 <li>使用于文本生成任务类。</li>
-</ul></blockquote>
+</ul>
+</blockquote>
 <blockquote>
 <p>完整代码示例：</p>
 <div class="highlight"><div class="chroma">
@@ -400,7 +402,8 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
-<p><code>outputs.logits</code> 是模型最终的未经过归一化处理的预测分数，如[-1.5607,  1.6123]，它们并不是概率值。只是<code>outputs</code>中的一部分信息。如果直接<code>print(outputs)</code>输出的更全。</p></blockquote>
+<p><code>outputs.logits</code> 是模型最终的未经过归一化处理的预测分数，如[-1.5607,  1.6123]，它们并不是概率值。只是<code>outputs</code>中的一部分信息。如果直接<code>print(outputs)</code>输出的更全。</p>
+</blockquote>
 <p>其输出分别为：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -473,7 +476,8 @@
 <p><code>outputs = model(**inputs)</code></p>
 <p>这种调用方式主要用于获取模型在输入数据上的中间结果，比如隐藏状态（hidden states）、未归一化的预测分数（logits）等。这些结果通常用于进一步的任务处理。</p>
 <p><code>output = model.generate(**inputs)</code></p>
-<p>此调用方式专门用于文本生成任务。它会基于输入的上下文，使用特定的生成策略（如贪心搜索、束搜索等）来生成后续的文本序列。</p></blockquote>
+<p>此调用方式专门用于文本生成任务。它会基于输入的上下文，使用特定的生成策略（如贪心搜索、束搜索等）来生成后续的文本序列。</p>
+</blockquote>
 <h2 id="底层模型">底层&ndash;模型
 </h2><p>在大部分情况下，我们都应该使用 <code>AutoModel</code> 来加载模型。这样如果我们想要使用另一个模型（比如把 BERT 换成 RoBERTa），只需修改 checkpoint，其他代码可以保持不变。</p>
 <p>所有存储在<code>HuggingFace</code>上的模型都可以通过 <code>Model.from_pretrained()</code> 来加载权重，参数可以像上面一样是 checkpoint 的名称，也可以是本地路径（预先下载的模型目录）。</p>
@@ -584,7 +588,8 @@
 <ul>
 <li><code>tokenizer.encode</code> 方法：返回的是编码后的 ID 列表</li>
 <li><code>tokenizer</code> 方法：更通用，返回一个包含更多信息的字典,如 attention_mask 、token_type_ids等</li>
-</ul></blockquote>
+</ul>
+</blockquote>
 <h3 id="分词器解码">分词器解码
 </h3><p>文本解码 (Decoding) 与编码相反，负责将 token IDs 转换回原来的字符串。注意，解码过程不是简单地将 token IDs 映射回 tokens，还需要合并那些被分为多个 token 的单词。通过 <code>decode()</code> 函数解码前面生成的 token IDs：</p>
 <div class="highlight"><div class="chroma">
@@ -913,7 +918,8 @@
 </div>
 </div><blockquote>
 <p><code>device_map=&quot;auto&quot;</code>：</p>
-<p>该参数用于指定模型在设备（如 CPU、GPU）上的分布方式。<code>&quot;auto&quot;</code> 表示让 <code>transformers</code> 库自动分配显卡，将模型拆分到多个 GPU 上，避免内存不足的问题。</p></blockquote>
+<p>该参数用于指定模型在设备（如 CPU、GPU）上的分布方式。<code>&quot;auto&quot;</code> 表示让 <code>transformers</code> 库自动分配显卡，将模型拆分到多个 GPU 上，避免内存不足的问题。</p>
+</blockquote>
 <blockquote>
 <p>注意，如果设置了<code>device_map=&quot;auto&quot;</code>，就不要在输入以下代码，这可能会覆盖之前的设备映射，导致模型被加载到单一设备上</p>
 <div class="highlight"><div class="chroma">
@@ -1024,7 +1030,7 @@
         
             2024 - 
         
-        2025 xxcjw&#39;s bolg！
+        2026 xxcjw&#39;s bolg！
     </section>
     
     <section class="powerby">

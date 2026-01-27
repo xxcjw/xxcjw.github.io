@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://xxcjw.github.io/p/mysql%E4%BD%BF%E7%94%A8/'>
 
-<link rel="stylesheet" href="/scss/style.min.57fb1d9ded28f968745a879e9015fe74f774718f509da7194f49f738d0118235.css"><meta property='og:title' content="Mysql使用">
+<link rel="stylesheet" href="/scss/style.min.45dce5fb235c30241f867f21cd9d2e431edf7d30120e6b3bb2384fdce2d36024.css"><meta property='og:title' content="Mysql使用">
 <meta property='og:description' content="mysql安装 MySQL 采用客户端 - 服务器（C/S）架构，包含两个核心组件：\n服务端 MySQL Server：管理数据库文件、处理连接请求、返回结果和数据存储 客户端 MySQL Client：发送请求、通过客户端程序（如命令行工具）连接到服务器 安装的 MySQL 软件本质上是服务器端（即 mysql-server），负责管理数据库、处理请求和存储数据。而客户端（常见的是命令行客户端）是用于连接并与 MySQL 服务器交互的工具或程序。\n">
 <meta property='og:url' content='https://xxcjw.github.io/p/mysql%E4%BD%BF%E7%94%A8/'>
 <meta property='og:site_name' content='xxcjw&#39;s blog!'>
@@ -235,7 +235,8 @@
 <li>net start mysql    启动mysql</li>
 <li>net stop mysql     停止mysql</li>
 <li>sc query mysql     验证是否停止</li>
-</ul></blockquote>
+</ul>
+</blockquote>
 <h2 id="mysql登录">mysql登录
 </h2><h3 id="账户管理">账户管理
 </h3><p>在Ubuntu中下载好mysql后，会默认创建两个账户：</p>
@@ -259,13 +260,13 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">#</span><span class="w"> </span><span class="err">创建新用户：</span><span class="n">xxcjw</span><span class="w">   </span><span class="mi">123456</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">CREATE</span><span class="w"> </span><span class="k">USER</span><span class="w"> </span><span class="s1">&#39;xxcjw&#39;</span><span class="o">@</span><span class="s1">&#39;localhost&#39;</span><span class="w"> </span><span class="n">IDENTIFIED</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="s1">&#39;123456&#39;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="k">CREATE</span><span class="w"> </span><span class="k">USER</span><span class="w"> </span><span class="s1">&#39;xxcjw&#39;</span><span class="o">@</span><span class="s1">&#39;localhost&#39;</span><span class="w"> </span><span class="n">IDENTIFIED</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="s1">&#39;123456&#39;</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="err">使用</span><span class="n">root账户赋予xxcjw任意权限</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="k">GRANT</span><span class="w"> </span><span class="k">OPTION</span><span class="err">：允许用户将自己拥有的权限转授给其他用户（需谨慎，一般不赋予）</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">GRANT</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="k">PRIVILEGES</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="o">*</span><span class="p">.</span><span class="o">*</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="s1">&#39;xxcjw&#39;</span><span class="o">@</span><span class="s1">&#39;localhost&#39;</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">GRANT</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="k">PRIVILEGES</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="o">*</span><span class="p">.</span><span class="o">*</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="s1">&#39;xxcjw&#39;</span><span class="o">@</span><span class="s1">&#39;localhost&#39;</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="k">GRANT</span><span class="w"> </span><span class="k">OPTION</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">FLUSH</span><span class="w"> </span><span class="k">PRIVILEGES</span><span class="p">;</span><span class="w">    </span><span class="o">#</span><span class="w"> </span><span class="err">重新加载权限表的</span><span class="n">sql命令</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="o">#</span><span class="w"> </span><span class="err">使用</span><span class="n">root账户赋予xxcjw任意权限</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="o">#</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="k">GRANT</span><span class="w"> </span><span class="k">OPTION</span><span class="err">：允许用户将自己拥有的权限转授给其他用户（需谨慎，一般不赋予）</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="k">GRANT</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="k">PRIVILEGES</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="o">*</span><span class="p">.</span><span class="o">*</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="s1">&#39;xxcjw&#39;</span><span class="o">@</span><span class="s1">&#39;localhost&#39;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="k">GRANT</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="k">PRIVILEGES</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="o">*</span><span class="p">.</span><span class="o">*</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="s1">&#39;xxcjw&#39;</span><span class="o">@</span><span class="s1">&#39;localhost&#39;</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="k">GRANT</span><span class="w"> </span><span class="k">OPTION</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="n">FLUSH</span><span class="w"> </span><span class="k">PRIVILEGES</span><span class="p">;</span><span class="w">    </span><span class="o">#</span><span class="w"> </span><span class="err">重新加载权限表的</span><span class="n">sql命令</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="我的账户">我的账户
@@ -356,7 +357,8 @@
 </h2><blockquote>
 <ul>
 <li>我在Ubuntu上安装好mysql后，查看mysql状态一直是start而不是runing，询问gpt可能是端口被占用，最终找到原因是本地Windows系统mysql设置的开机自启，导致端口被占用。（通过查看mysql日志找到端口被占用这个错误）</li>
-</ul></blockquote>
+</ul>
+</blockquote>
 
 </section>
 
@@ -431,7 +433,7 @@
         
             2024 - 
         
-        2025 xxcjw&#39;s bolg！
+        2026 xxcjw&#39;s bolg！
     </section>
     
     <section class="powerby">

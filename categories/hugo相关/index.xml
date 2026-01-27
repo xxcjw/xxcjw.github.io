@@ -305,7 +305,8 @@
 &lt;/ul&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://osdoc.net/md/4/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Markdown 开源文档&lt;/a&gt;&lt;/p&gt;&lt;/blockquote&gt;
+    &gt;Markdown 开源文档&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;h2 id=&#34;致谢&#34;&gt;致谢
 &lt;/h2&gt;&lt;p&gt;1、博客搭建教程&lt;/p&gt;
 &lt;p&gt;简单来说，分为几步：&lt;/p&gt;
@@ -324,7 +325,8 @@
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://sazerac-kk.github.io/p/%e6%95%99%e7%a8%8bhugo-github%e5%8d%9a%e5%ae%a2%e9%83%a8%e7%bd%b2/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Hugo+Github博客部署&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://ratmomo.github.io/p/2024/06/%e4%bd%bf%e7%94%a8-hugo--github-pages-%e9%83%a8%e7%bd%b2%e4%b8%aa%e4%ba%ba%e5%8d%9a%e5%ae%a2/#%e5%8f%91%e5%b8%83%e6%96%87%e7%ab%a0&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;使用 Hugo + Github Pages 部署个人博客&lt;/a&gt;&lt;/p&gt;&lt;/blockquote&gt;
+    &gt;使用 Hugo + Github Pages 部署个人博客&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;2、修改美化&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;首先修改dev文件夹下的&lt;code&gt;hugo.yaml&lt;/code&gt;文件&lt;/li&gt;
@@ -359,7 +361,8 @@
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://munlelee.github.io/post/hugo%e5%8d%9a%e5%ae%a2-stack%e4%b8%bb%e9%a2%98%e4%bf%ae%e6%94%b9%e7%ac%ac%e4%b8%80%e7%ab%99/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Hugo博客 | stack主题修改第一站-墨纹&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://thirdshire.com/hugo-stack-renovation/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Hugo Stack主题装修笔记-博客运行时间&lt;/a&gt;&lt;/p&gt;&lt;/blockquote&gt;
+    &gt;Hugo Stack主题装修笔记-博客运行时间&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://blog.leonus.cn/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Leonus 博客&lt;/a&gt;&lt;/p&gt;
@@ -368,13 +371,15 @@
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://blog.anheyu.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;安知鱼 - 生活明朗 万物可爱&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://blog.fiveth.cc/p/cybe/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Hugo Theme Cybe&lt;/a&gt;&lt;/p&gt;&lt;/blockquote&gt;
+    &gt;Hugo Theme Cybe&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;3、图标网站&lt;/p&gt;
 &lt;p&gt;打开stack官方文档&lt;a class=&#34;link&#34; href=&#34;https://stack.jimmycai.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Stack 官方文档&lt;/a&gt;，在``Custom Menu`栏下可以找到推荐的图标网站&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://tabler.io/icons&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Icons网站&lt;/a&gt;&lt;/p&gt;&lt;/blockquote&gt;
+    &gt;Icons网站&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
 </description>
         </item>
         <item>

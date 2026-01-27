@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://xxcjw.github.io/p/llm%E7%B3%BB%E5%88%97-2attention%E8%AF%A6%E8%A7%A3/'>
 
-<link rel="stylesheet" href="/scss/style.min.57fb1d9ded28f968745a879e9015fe74f774718f509da7194f49f738d0118235.css"><meta property='og:title' content="LLM系列-2：Attention详解">
+<link rel="stylesheet" href="/scss/style.min.45dce5fb235c30241f867f21cd9d2e431edf7d30120e6b3bb2384fdce2d36024.css"><meta property='og:title' content="LLM系列-2：Attention详解">
 <meta property='og:description' content="Attention由来 \u200b NLP 神经网络模型的本质就是对输入文本进行编码，然后基于概率的思想完成 NLU 或 NLP 任务。常规的做法是首先对句子进行分词（token），然后将每个 token 都转化为对应的词向量 (token embeddings)，这样文本就转换为一个由词语向量组成的矩阵$\\boldsymbol{X} \\in \\mathbb{R}^{n \\times d}$ 。\n">
 <meta property='og:url' content='https://xxcjw.github.io/p/llm%E7%B3%BB%E5%88%97-2attention%E8%AF%A6%E8%A7%A3/'>
 <meta property='og:site_name' content='xxcjw&#39;s blog!'>
@@ -286,10 +286,12 @@ $$<p>下面通过 Pytorch 来实现：</p>
 </div>
 </div><p>可以看到，BERT-base-uncased 模型对应的词表大小为 30522，每个词语的词向量维度为 768。Embedding 层把输入的词语序列映射到了尺寸为 <code>[batch_size, seq_len, hidden_dim]</code> 的张量。</p>
 <blockquote>
-<p>这里我们通过设置 <code>add_special_tokens=False</code> 去除了分词结果中的 <code>[CLS]</code> 和 <code>[SEP]</code>。</p></blockquote>
+<p>这里我们通过设置 <code>add_special_tokens=False</code> 去除了分词结果中的 <code>[CLS]</code> 和 <code>[SEP]</code>。</p>
+</blockquote>
 <blockquote>
 <p>input_ids 是如何得到的：</p>
-<p>分词器已经针对<code>bert-base-uncased</code>模型进行了预训练，了解该模型词汇表中的所有词元（token）。分词器会将输入文本拆分成一个个词元。把每个词元映射到词汇表中的对应索引。<code>bert-base-uncased</code>模型有一个预先定义好的词汇表，每个词元都有唯一的整数索引。</p></blockquote>
+<p>分词器已经针对<code>bert-base-uncased</code>模型进行了预训练，了解该模型词汇表中的所有词元（token）。分词器会将输入文本拆分成一个个词元。把每个词元映射到词汇表中的对应索引。<code>bert-base-uncased</code>模型有一个预先定义好的词汇表，每个词元都有唯一的整数索引。</p>
+</blockquote>
 <blockquote>
 <p>input_ids是如何转换为向量的：</p>
 <ul>
@@ -388,7 +390,8 @@ $$<p>
 </div>
 </div><p>每个头都会初始化三个独立的线性层，负责将 Q,K,V 序列映射到尺寸为 <code>[batch_size, seq_len, head_dim]</code> 的张量，其中 <code>head_dim</code> 是映射到的向量维度。（将得到的输入文本对应的词嵌入通过线性层转换得到 Q,K,V ，因为是多头，所以嵌入大小由原来的<code>embed_dim</code>变为<code>head_dim</code>）</p>
 <blockquote>
-<p>实践中一般将 <code>head_dim</code> 设置为 <code>embed_dim</code> 的因数，这样 token 嵌入式表示的维度就可以保持不变，例如 BERT 有 12 个注意力头，因此每个头的维度被设置为 768/12=64 。</p></blockquote>
+<p>实践中一般将 <code>head_dim</code> 设置为 <code>embed_dim</code> 的因数，这样 token 嵌入式表示的维度就可以保持不变，例如 BERT 有 12 个注意力头，因此每个头的维度被设置为 768/12=64 。</p>
+</blockquote>
 <p>最后只需要拼接多个注意力头的输出就可以构建出 Multi-head Attention 层了（这里在拼接后还通过一个线性变换来生成最终的输出张量）</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -503,7 +506,8 @@ $$<p>
 <h2 id="参考">参考
 </h2><blockquote>
 <p><a class="link" href="https://transformers.run/c1/attention/"  target="_blank" rel="noopener"
-    >注意力机制-第三章</a></p></blockquote>
+    >注意力机制-第三章</a></p>
+</blockquote>
 
 </section>
 
@@ -578,7 +582,7 @@ $$<p>
         
             2024 - 
         
-        2025 xxcjw&#39;s bolg！
+        2026 xxcjw&#39;s bolg！
     </section>
     
     <section class="powerby">

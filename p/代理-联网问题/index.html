@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://xxcjw.github.io/p/%E4%BB%A3%E7%90%86-%E8%81%94%E7%BD%91%E9%97%AE%E9%A2%98/'>
 
-<link rel="stylesheet" href="/scss/style.min.57fb1d9ded28f968745a879e9015fe74f774718f509da7194f49f738d0118235.css"><meta property='og:title' content="代理 & 联网问题">
+<link rel="stylesheet" href="/scss/style.min.45dce5fb235c30241f867f21cd9d2e431edf7d30120e6b3bb2384fdce2d36024.css"><meta property='og:title' content="代理 & 联网问题">
 <meta property='og:description' content="git设置代理 开vpn之后，当你还在为能正常打开Github、Youtobe而窃喜时，不知道你是否也遇到过这种情况：\n但当你使用git工具将本地代码文件上传Github时，却总是出现Failed to connect to github.com port 443: Timed out或者OpenSSL SSL_read: Connection was reset, errno 10054等git push失败的情况，让人火大。 或者发现git clone命令速度特别慢，有时还经常卡掉，这很让人着急。 总之，就四个字：失败、火大！于是搜各种教程，经过各种折腾，终于找到解决方案，归根结底还是因为代理设置的不正确！！！本文记录一下解决的方案。\n">
 <meta property='og:url' content='https://xxcjw.github.io/p/%E4%BB%A3%E7%90%86-%E8%81%94%E7%BD%91%E9%97%AE%E9%A2%98/'>
 <meta property='og:site_name' content='xxcjw&#39;s blog!'>
@@ -201,7 +201,8 @@
 <li>最简单的当然就是打开一个国外网站，比如<a class="link" href="https://www.youtube.com/"  target="_blank" rel="noopener"
     >YouTube</a>等，如果能打开，证明梯子没问题；</li>
 <li>另一种，就是<code>win+r</code>打开命令行，输入<code>ping github.com</code>看看能不能连上要使用的Github；</li>
-</ul></blockquote>
+</ul>
+</blockquote>
 <h3 id="解决方法">解决方法
 </h3><p>遇到上述问题，就是代理设置不正确。可以通过以下命令查看和设置理。</p>
 <p>1、代理查询</p>
@@ -231,7 +232,8 @@
 </div>
 </div><blockquote>
 <p><code>git config</code> 是 Git 用于配置和管理各种参数的命令，可以设置和修改与 Git 相关的配置选项。</p>
-<p><code>http.proxy</code> 是用于设置 Git 在进行 HTTP 或 HTTPS 连接时使用的代理服务器。</p></blockquote>
+<p><code>http.proxy</code> 是用于设置 Git 在进行 HTTP 或 HTTPS 连接时使用的代理服务器。</p>
+</blockquote>
 <p>3、代理设置</p>
 <p>首先需要获取当前所使用vpn的代理服务器地址，格式为：<code>127.0.0.1:xxxx</code>（我的是7879）。<strong>这里一定要注意，不要照抄网上的端口号，需要根据自己的服务器进行修改，否则报错</strong>。得到代理服务器地址之后，使用如下命令配置代理</p>
 <div class="highlight"><div class="chroma">
@@ -250,11 +252,12 @@
 <li>一是通过自己的vpn查看，打开自己的<code>vpn-设置-端口设置/端口号</code>的选项，这个就是代理服务器的端口</li>
 <li>打开电脑的<code>控制面板-网络和Internet-Internet选项-连接-局域网设置</code>，然后就可以看到代理服务器的地址了，见图</li>
 </ul>
-<p>通过这两种方式得到的应该是一样的。</p></blockquote>
+<p>通过这两种方式得到的应该是一样的。</p>
+</blockquote>
 <p><img src="/p/%E4%BB%A3%E7%90%86-%E8%81%94%E7%BD%91%E9%97%AE%E9%A2%98/1.png"
 	width="558"
 	height="260"
-	srcset="/p/%E4%BB%A3%E7%90%86-%E8%81%94%E7%BD%91%E9%97%AE%E9%A2%98/1_hu_6837c66dfff22f41.png 480w, /p/%E4%BB%A3%E7%90%86-%E8%81%94%E7%BD%91%E9%97%AE%E9%A2%98/1_hu_de59a87c140ac773.png 1024w"
+	srcset="/p/%E4%BB%A3%E7%90%86-%E8%81%94%E7%BD%91%E9%97%AE%E9%A2%98/1_hu_c5490f35839ef616.png 480w, /p/%E4%BB%A3%E7%90%86-%E8%81%94%E7%BD%91%E9%97%AE%E9%A2%98/1_hu_3e2b48e666d197a2.png 1024w"
 	loading="lazy"
 	
 		alt="代理服务器地址"
@@ -286,7 +289,8 @@
 <p>通过这些步骤，VPN代理软件成功修改了您计算机的IP地址获取方式。现在，计算机使用的是VPN服务器分配的IP地址，而不是原本的IP地址。这样做可以帮助您隐藏真实的IP地址并实现匿名上网，同时提供加密保护，确保您的网络流量在传输过程中得到安全保护。同时，当我们关闭VPN后，由于电脑IP地址任然为VPN分配的IP地址（而此时我们已经关闭了代理服务器的连接），这就导致我们无法正常访问互联网了。</p>
 <blockquote>
 <p>参考：<a class="link" href="https://blog.csdn.net/Yaoyao2024/article/details/132245249"  target="_blank" rel="noopener"
-    >使用vpn/代理后无法正常上网</a></p></blockquote>
+    >使用vpn/代理后无法正常上网</a></p>
+</blockquote>
 
 </section>
 
@@ -361,7 +365,7 @@
         
             2024 - 
         
-        2025 xxcjw&#39;s bolg！
+        2026 xxcjw&#39;s bolg！
     </section>
     
     <section class="powerby">
