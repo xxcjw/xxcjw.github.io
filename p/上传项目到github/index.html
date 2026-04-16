@@ -10,7 +10,7 @@
 <meta property='og:description' content="第一步：在 GitHub 上创建新的远程仓库 打开你的 GitHub 网站，创建新的仓库，填写仓库名称、描述等信息。 创建时不要勾选Add a README file；开源协议随便选一个就行。 创建好的仓库页面，其中包含了远程仓库的 URL。复制这个 URL，我们稍后会用到。 第二步：在本地项目中初始化 Git 打开 VS Code，导航到你的本地项目文件夹 创建并编辑 .gitignore 文件，一个常见的 Python 项目 .gitignore 示例如下 1 2 3 4 5 venv/ __pycache__/ *.pyc *.log *.DS_Store 运行 git init 初始化本地 Git 仓库，这会在你的项目目录下创建一个 .git 文件夹。本地仓库初始化后，默认的初始分支名称通常是 master。 第三步：链接本地仓库和远程仓库 在 VS Code 的终端中，运行以下命令，将你的 GitHub 仓库 URL 添加为远程仓库 origin（即上面复制的仓库URL） 1 git remote add origin https://github.com/peter-zx/IDfenxi.git 第四步：修改本地仓库名称 (如果需要) GitHub 新创建的仓库默认分支名称通常是 main，而本地 git init 后的默认分支可能是 master（如上图所示）。为了保持一致，推荐修改本地分支名称。 在 VS Code 的终端中运行，这会将你的本地 master 分支重命名为 main。如果你本地仓库已经是 main，则跳过此步骤 1 git branch -M main 第五步：拉取远程仓库内容到本地（可选） 由于远程仓库可能包含 README、LICENSE 等文件，我们需要先将其拉取到本地，以避免推送时的冲突。 打开 VS Code 的终端，运行以下命令来拉取远程 origin 的 main 分支内容到你的本地 main 分支 1 git pull origin main 这个命令会将远程 origin/main 分支的更改合并到你当前的本地 main 分支。如果这是第一次拉取，它会下载远程仓库的文件。\n">
 <meta property='og:url' content='https://xxcjw.github.io/p/%E4%B8%8A%E4%BC%A0%E9%A1%B9%E7%9B%AE%E5%88%B0github/'>
 <meta property='og:site_name' content='xxcjw&#39;s blog!'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2026-01-27T14:44:44&#43;08:00'/><meta property='article:modified_time' content='2026-01-27T17:50:24&#43;08:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2026-01-27T14:44:44&#43;08:00'/><meta property='article:modified_time' content='2026-04-16T13:48:53&#43;08:00'/>
 <meta name="twitter:title" content="上传项目到github">
 <meta name="twitter:description" content="第一步：在 GitHub 上创建新的远程仓库 打开你的 GitHub 网站，创建新的仓库，填写仓库名称、描述等信息。 创建时不要勾选Add a README file；开源协议随便选一个就行。 创建好的仓库页面，其中包含了远程仓库的 URL。复制这个 URL，我们稍后会用到。 第二步：在本地项目中初始化 Git 打开 VS Code，导航到你的本地项目文件夹 创建并编辑 .gitignore 文件，一个常见的 Python 项目 .gitignore 示例如下 1 2 3 4 5 venv/ __pycache__/ *.pyc *.log *.DS_Store 运行 git init 初始化本地 Git 仓库，这会在你的项目目录下创建一个 .git 文件夹。本地仓库初始化后，默认的初始分支名称通常是 master。 第三步：链接本地仓库和远程仓库 在 VS Code 的终端中，运行以下命令，将你的 GitHub 仓库 URL 添加为远程仓库 origin（即上面复制的仓库URL） 1 git remote add origin https://github.com/peter-zx/IDfenxi.git 第四步：修改本地仓库名称 (如果需要) GitHub 新创建的仓库默认分支名称通常是 main，而本地 git init 后的默认分支可能是 master（如上图所示）。为了保持一致，推荐修改本地分支名称。 在 VS Code 的终端中运行，这会将你的本地 master 分支重命名为 main。如果你本地仓库已经是 main，则跳过此步骤 1 git branch -M main 第五步：拉取远程仓库内容到本地（可选） 由于远程仓库可能包含 README、LICENSE 等文件，我们需要先将其拉取到本地，以避免推送时的冲突。 打开 VS Code 的终端，运行以下命令来拉取远程 origin 的 main 分支内容到你的本地 main 分支 1 git pull origin main 这个命令会将远程 origin/main 分支的更改合并到你当前的本地 main 分支。如果这是第一次拉取，它会下载远程仓库的文件。\n">
     <link rel="shortcut icon" href="/favicon.ico" />
@@ -86,6 +86,7 @@
     <li><a href="#第五步拉取远程仓库内容到本地可选">第五步：拉取远程仓库内容到本地（可选）</a></li>
     <li><a href="#第六步暂存和提交你的本地代码">第六步：暂存和提交你的本地代码</a></li>
     <li><a href="#第七步补充文件">第七步：补充文件</a></li>
+    <li><a href="#创建独立分支">创建独立分支</a></li>
     <li><a href="#参考链接">参考链接</a></li>
   </ol>
 </nav>
@@ -136,7 +137,7 @@
             <div>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" stroke-width="2"> <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4"></path> <path d="M13.5 6.5l4 4"></path> <path d="M16 19h6"></path> </svg> 
                 <time class="article-words">
-                    993 字
+                    1180 字
                 </time>
             </div>
         
@@ -153,7 +154,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 2 分钟
+                    阅读时长: 3 分钟
                 </time>
             </div>
         
@@ -331,6 +332,40 @@
 </li>
 </ul>
 </blockquote>
+<h2 id="创建独立分支">创建独立分支
+</h2><blockquote>
+<p>如果想创建独立分支，方便随时切换查看两个版本，可以创建独立分支。</p>
+<p>首先要确保上述的流程执行过，已经存在有main分支。</p>
+</blockquote>
+<blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># 查看当前分支（应该是 main）
+</span></span><span class="line"><span class="cl">git branch
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 创建并切换到 v2（可以自定义命名） 分支
+</span></span><span class="line"><span class="cl">git checkout -b v2
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 在 v2 分支上提交你的升级代码
+</span></span><span class="line"><span class="cl">git add .
+</span></span><span class="line"><span class="cl">git commit -m &#34;升级至 v2 版本&#34;
+</span></span><span class="line"><span class="cl">git push origin v2
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这时候处于<code>v2</code>分支，当前在哪个分支，<code>git push</code> 就推送到哪个版本。</p>
+</blockquote>
 <h2 id="参考链接">参考链接
 </h2><blockquote>
 <p><a class="link" href="https://developer.aliyun.com/article/1662278"  target="_blank" rel="noopener"
@@ -364,7 +399,7 @@
 
 
         <span>
-            最后更新于 2026-01-27 17:50
+            最后更新于 2026-04-16 13:48
         </span>
     </section></footer>
 
